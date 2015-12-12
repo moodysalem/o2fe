@@ -35,7 +35,7 @@ app.get('/*', function (req, res) {
 /**
  * Serve on 3000
  */
-var server = app.listen(3000, function () {
+var server = app.listen(env.port || 3000, function () {
   var host = server.address().address;
   var port = server.address().port;
 
