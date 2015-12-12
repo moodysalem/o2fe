@@ -6,8 +6,6 @@ var util = rbs.util,
 var mdl = Backbone.Model;
 var cl = Backbone.Collection;
 
-var API_URL = "/";
-
 var APPLICATIONS_URL = util.path(API_URL, "applications");
 var PUBLIC_APPLICATIONS_URL = util.path(API_URL, "publicapplications");
 var SCOPES_URL = util.path(API_URL, "scopes");

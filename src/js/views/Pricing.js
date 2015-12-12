@@ -1,64 +1,62 @@
-define(function(require, exports, module){
-  'use strict';
-  var React = require('react');
-  var rbs = require('react-backstrap');
-  var _ = require('underscore');
-  var btn = rbs.components.controls.Button;
-  var cm = require('./ContactModal');
-    
-    var util = rbs.util;
-    var d = React.DOM;
-    var rpt = React.PropTypes;
+'use strict';
+var React = require('react');
+var rbs = require('react-backstrap');
+var _ = require('underscore');
+var btn = rbs.components.controls.Button;
+var cm = require('./ContactModal');
 
-    module.exports = util.rf({
-      displayName: "Pricing",
+var util = rbs.util;
+var d = React.DOM;
+var rpt = React.PropTypes;
 
-      getInitialState: function () {
-        return {
-          contactOpen: false
-        };
-      },
+module.exports = util.rf({
+  displayName: "Pricing",
 
-      openContact: function () {
-        this.setState({
-          contactOpen: true
-        });
-      },
+  getInitialState: function () {
+    return {
+      contactOpen: false
+    };
+  },
 
-      closeContact: function () {
-        this.setState({
-          contactOpen: false
-        });
-      },
-
-      render: function () {
-        return d.div({ className: "container" }, [
-          d.h2({ key: "h2", className: "page-header" }, [
-            btn({
-              type: "success",
-              key: "cu",
-              caption: "Contact Us",
-              icon: "question",
-              size: "sm",
-              className: "pull-right",
-              onClick: this.openContact
-            }),
-            "Pricing"
-          ]),
-          d.p({ key: "lead", className: "lead" }, [
-            "One-tenth of a cent ($0.001 USD) per API call, or 1000 calls per dollar."
-          ]),
-          d.p({ key: "more" }, [
-            "That excludes any calls made to the administrative API to manage users, clients, scopes or tokens. " +
-            "Each Application gets 10000 free calls per month. Bills are calculated on the first of the month."
-          ]),
-          d.small({
-            key: "small",
-            className: "sm-margin-bottom"
-          }, "* These pricing terms may change at any time. " +
-            "Best efforts will be made to accommodate existing users, and export your data if necessary. At least 1 month of notice will be given for pricing increases."),
-          cm({ key: "cm", open: this.state.contactOpen, onClose: this.closeContact })
-        ]);
-      }
+  openContact: function () {
+    this.setState({
+      contactOpen: true
     });
-  });
+  },
+
+  closeContact: function () {
+    this.setState({
+      contactOpen: false
+    });
+  },
+
+  render: function () {
+    return d.div({ className: "container" }, [
+      d.h2({ key: "h2", className: "page-header" }, [
+        btn({
+          type: "success",
+          key: "cu",
+          caption: "Contact Us",
+          icon: "question",
+          size: "sm",
+          className: "pull-right",
+          onClick: this.openContact
+        }),
+        "Pricing"
+      ]),
+      d.p({ key: "lead", className: "lead" }, [
+        "One-tenth of a cent ($0.001 USD) per API call, or 1000 calls per dollar."
+      ]),
+      d.p({ key: "more" }, [
+        "That excludes any calls made to the administrative API to manage users, clients, scopes or tokens. " +
+        "Each Application gets 10000 free calls per month. Bills are calculated on the first of the month."
+      ]),
+      d.small({
+        key: "small",
+        className: "sm-margin-bottom"
+      }, "* These pricing terms may change at any time. " +
+        "Best efforts will be made to accommodate existing users, and export your data if necessary. At least 1 month of notice will be given for pricing increases."),
+      cm({ key: "cm", open: this.state.contactOpen, onClose: this.closeContact })
+    ]);
+  }
+});

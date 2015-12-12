@@ -173,7 +173,7 @@ module.exports = util.rf({
             model: this.state.app,
             onSubmit: _.bind(function () {
               this.state.app.save().then(function (mdl) {
-                r.navigate(util.path("applications", mdl.id), { trigger: true });
+                //r.navigate(util.path("applications", mdl.id), { trigger: true });
               });
             }, this)
           }),

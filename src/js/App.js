@@ -1,5 +1,5 @@
 "use strict";
-
+require('../css/App.css');
 var rbs = require('react-backstrap');
 var oauth2 = require('./OAuth2');
 var $ = require('jquery');
@@ -75,10 +75,8 @@ $(document).ajaxSend(function (event, jqXhr, ajaxOptions) {
 
 util.debug("initializing oauth2");
 oauth2.init({
-  clientId: window.clientId,
-  token: null,
-  authorizeUrl: "/oauth/authorize",
-  tokenInfoUrl: "/oauth/token/info"
+  clientId: "6a63c1f1f10df85df6f918d68cb8c13e1e44856f7d861b05cbdd63bf7ea009f4",
+  token: null
 });
 
 util.debug("getting login status");

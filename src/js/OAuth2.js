@@ -152,7 +152,7 @@ var logout = function () {
 };
 
 var login = function () {
-  window.location.href = getLoginUrl(window.location.href, true);
+  window.location.href = getLoginUrl(window.location.href, false);
 };
 
 module.exports = {

@@ -34,8 +34,6 @@ var wrapper = util.rf({
 var app = $("#app").get(0);
 var nav = $("#nav").get(0);
 
-var Applications = require('./views/Applications');
-var NotFound = require('./views/NotFound');
 
 // the actual backbone router
 module.exports = Backbone.Router.extend({
@@ -57,34 +55,34 @@ module.exports = Backbone.Router.extend({
 
   routes: {
     "applications": "applications",
-    //"docs": "docs",
+    "docs": "docs",
     //"applications/:id": "app",
     //"applications/:id/scopes": "scopes",
     //"applications/:id/clients": "clients",
     //"applications/:id/users": "users",
     //"clients": "myclients",
-    //"findapplications": "findApplications",
+    "findapplications": "findApplications",
     //"registerclient/:id": "registerClient",
-    //"pricing": "pricing",
-    //"(/)": "home",
+    "pricing": "pricing",
+    "(/)": "home",
     "*splat": "notFound"
   },
 
   applications: function () {
-    this.renderPage(Applications, {});
+    this.renderPage(require('./views/Applications'), {}, 'Applications');
   },
 
-  //docs: function () {
-  //  renderFile("js/views/Documentation", {}, "Documentation");
-  //},
+  docs: function () {
+    this.renderPage(require('./views/Documentation'), {}, "Documentation");
+  },
   //
   //app: function (id) {
   //  renderFile("js/views/Application", { id: id }, "Application");
   //},
   //
-  //home: function () {
-  //  renderFile("js/views/Home", {});
-  //},
+  home: function () {
+    this.renderPage(require('./views/Home'), {}, "Home");
+  },
   //
   //scopes: function (id) {
   //  renderFile("js/views/Scopes", { applicationId: id }, "Scopes");
@@ -98,9 +96,9 @@ module.exports = Backbone.Router.extend({
   //  renderFile("js/views/MyClients", {}, "My Clients");
   //},
   //
-  //findApplications: function () {
-  //  renderFile("js/views/FindApplications", {}, "Find Applications");
-  //},
+  findApplications: function () {
+    this.renderPage(require("./views/FindApplications"), {}, "Find Applications");
+  },
   //
   //registerClient: function (id) {
   //  renderFile("js/views/RegisterClient", { applicationId: id }, "Register Client");
@@ -110,11 +108,11 @@ module.exports = Backbone.Router.extend({
   //  renderFile("js/views/Users", { applicationId: id }, "Users");
   //},
   //
-  //pricing: function () {
-  //  renderFile("js/views/Pricing", {}, "Pricing");
-  //},
+  pricing: function () {
+    this.renderPage(require('./views/Pricing'), {}, "Pricing");
+  },
 
   notFound: function () {
-    this.renderPage(NotFound);
+    this.renderPage(require('./views/NotFound'), {}, 'Page Not Found');
   }
 });

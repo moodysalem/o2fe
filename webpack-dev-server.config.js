@@ -5,6 +5,7 @@ var base = require('./webpack-base.config.js');
 
 module.exports = Object.assign({}, base, {
   devServer: {
-    historyApiFallback: true
+    historyApiFallback: true,
+    hot: true
   }
 });
