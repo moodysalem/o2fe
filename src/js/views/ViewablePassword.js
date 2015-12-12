@@ -1,0 +1,50 @@
+define(function(require, exports, module){
+  'use strict';
+  var React = require('react');
+  var rbs = require('react-backstrap');
+  var model = rbs.mixins.Model;
+  var btn = rbs.components.controls.Button;
+        var util = rbs.util;
+
+    var d = React.DOM;
+    var rpt = React.PropTypes;
+
+    module.exports = util.rf({
+      displayName: "password with view",
+      mixins: [ model ],
+      getInitialState: function () {
+        return {
+          visible: false
+        };
+      },
+
+      show: function () {
+        this.setState({
+          visible: true
+        });
+      },
+
+      hide: function () {
+        this.setState({
+          visible: false
+        });
+      },
+
+      render: function () {
+        return d.div({
+          className: "position-relative"
+        }, [
+          d.input(_.extend({}, this.props, { type: this.state.visible ? "text" : "password", key: "input" }), null),
+          btn({
+            key: "b",
+            caption: (this.state.visible) ? "Hide" : "Show",
+            icon: "key",
+            onClick: (this.state.visible) ? this.hide : this.show,
+            size: "xs",
+            className: "right-absolute"
+          })
+        ]);
+      }
+    });
+
+  });

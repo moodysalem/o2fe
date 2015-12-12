@@ -1,0 +1,30 @@
+{
+  "name": "o2fe",
+  "private": true,
+  "version": "1.0.0",
+  "description": "OAuth2Cloud front-end",
+  "main": "server.js",
+  "scripts": {
+    "clean": "rimraf dist",
+    "test": "echo \"Warning: no tests\" && exit 0",
+    "dev": "webpack-dev-server --config webpack-dev-server.config.js",
+    "prebuild": "npm run clean",
+    "build": "webpack --config webpack-prd.config.js",
+    "prestart": "npm run build"
+  },
+  "files": [
+    "dist"
+  ],
+  "author": "Moody Salem <moody.salem@gmail.com>",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "express": "^4.13.3",
+    "react-backstrap": "^0.1.11"
+  },
+  "devDependencies": {
+    "html-webpack-plugin": "^1.7.0",
+    "rimraf": "^2.4.4",
+    "webpack": "^1.12.9",
+    "webpack-dev-server": "^1.14.0"
+  }
+}
