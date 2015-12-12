@@ -19,6 +19,7 @@
   "license": "UNLICENSED",
   "dependencies": {
     "express": "^4.13.3",
+    "prerender-node": "^2.1.0",
     "react-backstrap": "^0.1.11"
   },
   "devDependencies": {
