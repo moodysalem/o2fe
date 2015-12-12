@@ -3,14 +3,15 @@
   "private": true,
   "version": "1.0.0",
   "description": "OAuth2Cloud front-end",
-  "main": "server.js",
+  "main": "main.js",
   "scripts": {
     "clean": "rimraf dist",
     "test": "echo \"Warning: no tests\" && exit 0",
     "dev": "webpack-dev-server --config webpack-dev-server.config.js",
     "prebuild": "npm run clean",
     "build": "webpack --config webpack-prd.config.js",
-    "prestart": "npm run build"
+    "prestart": "npm run build",
+    "start": "node main.js"
   },
   "files": [
     "dist"
