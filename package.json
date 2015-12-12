@@ -9,11 +9,10 @@
     "test": "echo \"Warning: no tests\" && exit 0",
     "dev": "webpack-dev-server --config webpack-dev-server.config.js",
     "prebuild": "npm run clean",
-    "build": "webpack --config webpack-prd.config.js",
-    "prestart": "npm run build",
-    "start": "node main.js"
+    "build": "webpack --config webpack-prd.config.js"
   },
   "files": [
+    "server.js",
     "dist"
   ],
   "author": "Moody Salem <moody.salem@gmail.com>",
