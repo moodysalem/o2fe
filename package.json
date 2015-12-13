@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "description": "OAuth2Cloud front-end",
-  "main": "main.js",
+  "main": "server.js",
   "scripts": {
     "clean": "rimraf dist",
     "test": "echo \"Warning: no tests\" && exit 0",
