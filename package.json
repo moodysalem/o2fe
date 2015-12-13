@@ -19,6 +19,7 @@
   "author": "Moody Salem <moody.salem@gmail.com>",
   "license": "UNLICENSED",
   "dependencies": {
+    "compression": "^1.6.0",
     "express": "^4.13.3",
     "prerender-node": "^2.1.0",
     "react-backstrap": "^0.1.11"

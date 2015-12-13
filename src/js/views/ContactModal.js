@@ -75,7 +75,7 @@ module.exports = util.rf({
               error: null
             });
             $.ajax({
-              url: util.path(API_URL, "support"),
+              url: util.path(config.API_URL, "support"),
               method: "POST",
               contentType: "application/json",
               data: JSON.stringify(this.state.md.toJSON())

@@ -49,7 +49,7 @@ define(function(require, exports, module){
       createClient: function () {
         $.ajax({
           method: "POST",
-          url: util.path(API_URL, "publicclients"),
+          url: util.path(config.API_URL, "publicclients"),
           data: JSON.stringify(this.state.newClient.toJSON())
         }).then(_.bind(function () {
 

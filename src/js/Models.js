@@ -5,13 +5,13 @@ var util = rbs.util,
 
 var mdl = Backbone.Model;
 var cl = Backbone.Collection;
-
-var APPLICATIONS_URL = util.path(API_URL, "applications");
-var PUBLIC_APPLICATIONS_URL = util.path(API_URL, "publicapplications");
-var SCOPES_URL = util.path(API_URL, "scopes");
-var CLIENTS_URL = util.path(API_URL, "clients");
-var CLIENT_SCOPES_URL = util.path(API_URL, "clientscopes");
-var USERS_URL = util.path(API_URL, "users");
+var au = config.API_URL;
+var APPLICATIONS_URL = util.path(au, "applications");
+var PUBLIC_APPLICATIONS_URL = util.path(au, "publicapplications");
+var SCOPES_URL = util.path(au, "scopes");
+var CLIENTS_URL = util.path(au, "clients");
+var CLIENT_SCOPES_URL = util.path(au, "clientscopes");
+var USERS_URL = util.path(au, "users");
 
 module.exports = {
   Application: mdl.extend({
