@@ -12,7 +12,9 @@ app.use('/', express.static('dist'));
 /**
  * Use prerender.io for SEO
  */
-app.use(require('prerender-node').set('prerenderToken', env.PRERENDER_TOKEN));
+if (typeof env.PRERENDER_TOKEN === "string") {
+  app.use(require('prerender-node').set('prerenderToken', env.PRERENDER_TOKEN));
+}
 
 /**
  * Pass the configuration stored in environment variables to the client via a script tag
