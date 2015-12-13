@@ -9,9 +9,12 @@
     "test": "echo \"Warning: no tests\" && exit 0",
     "dev": "DEV_MODE=true npm start",
     "prebuild": "npm run clean",
-    "build": "NODE_ENV=production webpack --config webpack-prd.config.js",
+    "build": "webpack --config webpack-prd.config.js",
     "preeb": "npm run build",
-    "eb": "bestzip eb-$npm_package_name-$npm_package_version.zip server.js package.json dist/ .ebextensions/"
+    "eb": "bestzip eb-$npm_package_name-$npm_package_version.zip server.js package.json dist/ .ebextensions/",
+    "patch": "release patch",
+    "minor": "release minor",
+    "major": "release major"
   },
   "files": [
     "server.js",
@@ -31,6 +34,7 @@
     "file-loader": "^0.8.5",
     "html-webpack-plugin": "^1.7.0",
     "image-webpack-loader": "^1.6.2",
+    "npm-release": "^1.0.0",
     "postcss-loader": "^0.8.0",
     "rimraf": "^2.4.4",
     "style-loader": "^0.13.0",

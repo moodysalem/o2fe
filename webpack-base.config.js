@@ -3,6 +3,7 @@
  */
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var autoprefixer = require('autoprefixer');
+var webpack = require('webpack');
 
 var webpackConfig = {
   entry: './src/js/App.js',
@@ -13,6 +14,9 @@ var webpackConfig = {
   },
 
   plugins: [
+    //new webpack.DefinePlugin({
+    //  "process.env.NODE_ENV": ""
+    //}),
     new HtmlWebpackPlugin({
       title: "OAuth2 Cloud",
       template: './src/index.template.html',
@@ -39,9 +43,7 @@ var webpackConfig = {
 
   postcss: function () {
     return [ autoprefixer ];
-  },
-
-  historyApiFallback: false
+  }
 };
 
 module.exports = webpackConfig;

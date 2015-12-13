@@ -1,8 +1,11 @@
+/**
+ * This is the HTTP server
+ */
 var express = require('express');
 var path = require('path');
 var app = express();
 
-// shortcut for system properties
+// SHORTCUT for system properties
 var env = process.env;
 
 var DEV_MODE = env.DEV_MODE === "true";
@@ -17,7 +20,7 @@ if (DEV_MODE) {
   var compiler = webpack(require('./webpack-base.config'));
 
   wbdm = webpackDevMiddleware(compiler, {
-    // options
+    // webpack dev middleware options
   });
   app.use(wbdm);
 } else {
@@ -33,7 +36,7 @@ if (typeof env.PRERENDER_TOKEN === "string") {
 }
 
 /**
- * Pass the configuration stored in environment variables to the client via a script tag
+ * Pass the client configuration stored in environment variables to the client via a script tag
  */
 app.get('/config.js', function (req, res) {
   res.setHeader('Content-Type', 'application/javascript');
