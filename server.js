@@ -1,6 +1,5 @@
 var express = require('express');
 var path = require('path');
-var compression = require('compression');
 var app = express();
 
 var env = process.env;
@@ -16,11 +15,6 @@ app.use('/', express.static('dist'));
 if (typeof env.PRERENDER_TOKEN === "string") {
   app.use(require('prerender-node').set('prerenderToken', env.PRERENDER_TOKEN));
 }
-
-/**
- * GZip responses
- */
-app.use(compression());
 
 /**
  * Pass the configuration stored in environment variables to the client via a script tag

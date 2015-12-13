@@ -14,7 +14,8 @@ var webpackConfig = {
     new HtmlWebpackPlugin({
       title: "OAuth2 Cloud",
       template: './src/index.template.html',
-      inject: 'body' // Inject all scripts into the body
+      inject: 'body', // Inject all scripts into the body
+      favicon: './favicon.ico'
     })
   ],
   module: {
