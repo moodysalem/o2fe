@@ -73,18 +73,20 @@ $(document).ajaxSend(function (event, jqXhr, ajaxOptions) {
   }
 });
 
-util.debug("initializing oauth2");
-oauth2.init({
-  clientId: "6a63c1f1f10df85df6f918d68cb8c13e1e44856f7d861b05cbdd63bf7ea009f4",
-  token: null
-});
+start();
 
-util.debug("getting login status");
-oauth2.getLoginStatus().then(function (token) {
-  util.debug("logged in");
-  m.set("token", token);
-  start();
-}, function (err) {
-  util.debug("not logged in", err);
-  start();
-});
+//util.debug("initializing oauth2");
+//oauth2.init({
+//  clientId: "6a63c1f1f10df85df6f918d68cb8c13e1e44856f7d861b05cbdd63bf7ea009f4",
+//  token: null
+//});
+//
+//util.debug("getting login status");
+//oauth2.getLoginStatus().then(function (token) {
+//  util.debug("logged in");
+//  m.set("token", token);
+//  start();
+//}, function (err) {
+//  util.debug("not logged in", err);
+//  start();
+//});

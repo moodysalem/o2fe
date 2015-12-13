@@ -9,7 +9,8 @@
     "test": "echo \"Warning: no tests\" && exit 0",
     "dev": "webpack-dev-server --config webpack-dev-server.config.js",
     "prebuild": "npm run clean",
-    "build": "webpack --config webpack-prd.config.js"
+    "build": "webpack --config webpack-prd.config.js",
+    "package": "bestzip deploy.zip server.js package.json dist/"
   },
   "files": [
     "server.js",
@@ -24,6 +25,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^6.1.2",
+    "bestzip": "^1.1.2",
     "css-loader": "^0.23.0",
     "file-loader": "^0.8.5",
     "html-webpack-plugin": "^1.7.0",
