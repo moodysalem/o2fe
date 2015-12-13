@@ -90,4 +90,4 @@ node_modules
 
 
 dist/
-deploy.zip
+eb-*.zip
