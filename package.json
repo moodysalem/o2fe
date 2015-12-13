@@ -7,7 +7,7 @@
   "scripts": {
     "clean": "rimraf dist",
     "test": "echo \"Warning: no tests\" && exit 0",
-    "dev": "webpack-dev-server --config webpack-dev-server.config.js",
+    "dev": "DEV_MODE=true npm start",
     "prebuild": "npm run clean",
     "build": "webpack --config webpack-prd.config.js",
     "package": "rimraf deploy.zip && bestzip deploy.zip server.js package.json dist/ .ebextensions/"
@@ -34,6 +34,7 @@
     "rimraf": "^2.4.4",
     "style-loader": "^0.13.0",
     "webpack": "^1.12.9",
+    "webpack-dev-middleware": "^1.4.0",
     "webpack-dev-server": "^1.14.0"
   }
 }

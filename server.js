@@ -2,12 +2,28 @@ var express = require('express');
 var path = require('path');
 var app = express();
 
+// shortcut for system properties
 var env = process.env;
 
+var DEV_MODE = env.DEV_MODE === "true";
 /**
- * Serve all static files on the root
+ * Serve static assets
  */
-app.use('/', express.static('dist'));
+var wbdm;
+if (DEV_MODE) {
+  var webpackDevMiddleware = require("webpack-dev-middleware");
+  var webpack = require("webpack");
+
+  var compiler = webpack(require('./webpack-base.config'));
+
+  wbdm = webpackDevMiddleware(compiler, {
+    // options
+  });
+  app.use(wbdm);
+} else {
+  // just serve the static assets from dist
+  app.use('/', express.static('dist'));
+}
 
 /**
  * Use prerender.io for SEO
@@ -30,8 +46,13 @@ app.get('/config.js', function (req, res) {
 /**
  * Send all requests for other files to index html
  */
-app.get('/*', function (req, res) {
-  res.sendFile(path.join(__dirname, 'dist/index.html'));
+app.get('*', function (req, res) {
+  var indexPath = path.join(__dirname, 'dist/index.html');
+  if (DEV_MODE) {
+    res.end(wbdm.fileSystem.readFileSync(indexPath));
+  } else {
+    res.end(indexPath);
+  }
 });
 
 /**

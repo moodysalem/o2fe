@@ -6,10 +6,12 @@ var autoprefixer = require('autoprefixer');
 
 var webpackConfig = {
   entry: './src/js/App.js',
+
   output: {
     path: __dirname + '/dist',
     filename: 'App-[hash].js'
   },
+
   plugins: [
     new HtmlWebpackPlugin({
       title: "OAuth2 Cloud",
@@ -18,6 +20,7 @@ var webpackConfig = {
       favicon: './favicon.ico'
     })
   ],
+
   module: {
     loaders: [
       {
@@ -33,9 +36,12 @@ var webpackConfig = {
       }
     ]
   },
+
   postcss: function () {
     return [ autoprefixer ];
-  }
+  },
+
+  historyApiFallback: false
 };
 
 module.exports = webpackConfig;
