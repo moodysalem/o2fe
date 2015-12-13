@@ -10,7 +10,8 @@
     "dev": "DEV_MODE=true npm start",
     "prebuild": "npm run clean",
     "build": "webpack --config webpack-prd.config.js",
-    "package": "rimraf deploy.zip && bestzip deploy.zip server.js package.json dist/ .ebextensions/"
+    "prepackage": "npm run build",
+    "eb": "rimraf deploy.zip && bestzip deploy.zip server.js package.json dist/ .ebextensions/"
   },
   "files": [
     "server.js",
