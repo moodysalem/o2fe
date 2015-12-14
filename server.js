@@ -7,8 +7,16 @@ var app = express();
 
 // SHORTCUT for system properties
 var env = process.env;
-
 var DEV_MODE = env.DEV_MODE === "true";
+
+/**
+ * GZIP content
+ */
+console.log('using compression');
+app.use(require('compression')({
+  level: 4
+}));
+
 /**
  * Serve static assets
  */
@@ -36,7 +44,7 @@ if (typeof env.PRERENDER_TOKEN === "string") {
 }
 
 /**
- * Pass the client configuration stored in environment variables to the client via a script tag
+ * Pass some client configuration stored in environment variables to the client via a script tag
  */
 app.get('/config.js', function (req, res) {
   res.setHeader('Content-Type', 'application/javascript');
@@ -58,7 +66,7 @@ app.get('*', function (req, res) {
 });
 
 /**
- * Serve on 3000
+ * Serve on 3000 or the passed in port
  */
 var server = app.listen(env.PORT || 3000, function () {
   var host = server.address().address;
