@@ -12,7 +12,6 @@ var DEV_MODE = env.DEV_MODE === "true";
 /**
  * GZIP content
  */
-console.log('using compression');
 app.use(require('compression')({
   level: 4
 }));
@@ -49,7 +48,8 @@ if (typeof env.PRERENDER_TOKEN === "string") {
 app.get('/config.js', function (req, res) {
   res.setHeader('Content-Type', 'application/javascript');
   res.send('var config = ' + JSON.stringify({
-      API_URL: env.API_URL
+      API_URL: env.API_URL,
+      DEBUG: typeof env.DEBUG !== "undefined"
     }) + ';');
 });
 

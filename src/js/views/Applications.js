@@ -12,6 +12,8 @@ var alerts = rbs.components.collection.Alerts;
 var pag = rbs.components.controls.Pagination;
 var mbli = require('./MustBeLoggedIn');
 var util = rbs.util;
+var _ = require('underscore');
+
 
 var d = React.DOM;
 
@@ -120,9 +122,7 @@ module.exports = util.rf({
   },
 
   render: function () {
-    if (!m.isLoggedIn()) {
-      return mbli();
-    }
+
     return d.div({
       className: "container"
     }, [

@@ -45,17 +45,12 @@ module.exports = util.rf({
         "Pricing"
       ]),
       d.p({ key: "lead", className: "lead" }, [
-        "One-tenth of a cent ($0.001 USD) per API call, or 1000 calls per dollar."
+        "Billing is calculated at a flat rate of 1,000 OAuth2 API calls per dollar."
       ]),
       d.p({ key: "more" }, [
-        "That excludes any calls made to the administrative API to manage users, clients, scopes or tokens. " +
-        "Each Application gets 10000 free calls per month. Bills are calculated on the first of the month."
+        "Calls to the administrative API to manage users, clients, scopes or tokens are excluded. " +
+        "Each Application gets 10,000 free calls per month. Bills are calculated on the first of each month."
       ]),
-      d.small({
-        key: "small",
-        className: "sm-margin-bottom"
-      }, "* These pricing terms may change at any time. " +
-        "Best efforts will be made to accommodate existing users, and export your data if necessary. At least 1 month of notice will be given for pricing increases."),
       cm({ key: "cm", open: this.state.contactOpen, onClose: this.closeContact })
     ]);
   }

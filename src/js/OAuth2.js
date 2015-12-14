@@ -1,34 +1,60 @@
 'use strict';
 var $ = require('jquery');
+var Promise = require('promise-polyfill');
 
-var AUTHORIZE_URL = "https://api.oauth2cloud.com/oauth/authorize";
-var TOKEN_INFO_URL = "https://api.oauth2cloud.com/oauth/token/info";
+var ORIGIN = "https://api.oauth2cloud.com";
+var getAuthorizeUrl = function () {
+  return ORIGIN + "/oauth/authorize";
+};
+var getTokenInfoUrl = function () {
+  return ORIGIN + "/oauth/token/info";
+};
+var getLoginStatusUrl = function () {
+  return ORIGIN + "/oauth/loginstatus";
+};
+var getLogoutUrl = function () {
+  return ORIGIN + "/oauth/logout";
+};
 
 var clientId;
 
-var getLoginUrl = function (callback, logout) {
-  return AUTHORIZE_URL + "?" +
-    "client_id=" + encodeURIComponent(clientId) +
-    "&response_type=token" +
-    "&redirect_uri=" + ((typeof callback === "string") ? encodeURIComponent(callback) : encodeURIComponent(window.location.origin)) +
-    ((logout) ? "&logout=true" : "")
+/**
+ * Construct a URL for logging in
+ */
+var getLoginUrl = function (redirectUri, logout) {
+  var redirectTo = ((typeof redirectUri === "string") ? redirectUri : window.location.origin);
+  return getAuthorizeUrl() + "?" + $.param({
+      client_id: clientId,
+      response_type: "token",
+      redirect_uri: redirectTo,
+      logout: (logout === true)
+    });
 };
 
-// for caching the token so we don't get a new one unnecessarily
+/**
+ * Tokens are cached using localStorage so we don't repeatedly make calls to the API unnecessarily
+ */
 var TOKEN_KEY = "_oauth2cloud_login_token";
 var getCachedToken = function () {
   return window.localStorage.getItem(TOKEN_KEY);
 };
 
+/**
+ * Save a token to localStorage
+ */
 var setCachedToken = function (token) {
   window.localStorage.setItem(TOKEN_KEY, token);
 };
 
+/**
+ * Save a token to localStorage
+ */
 var clearCachedToken = function () {
   window.localStorage.removeItem(TOKEN_KEY);
 };
 
 var INITIALIZE_ERROR = "Must initialize the oauth2 library before calling any other functions";
+
 // gets info for a token
 var getTokenInfo = function (token) {
   return new Promise(function (resolve, reject) {
@@ -38,11 +64,13 @@ var getTokenInfo = function (token) {
       return;
     }
     if (typeof token === "string" && token.length > 0) {
-      var d = "client_id=" + encodeURIComponent(clientId) + "&token=" + encodeURIComponent(token);
       $.ajax({
-        url: TOKEN_INFO_URL,
+        url: getTokenInfoUrl(),
         method: "POST",
-        data: d,
+        data: $.param({
+          client_id: clientId,
+          token: token
+        }),
         success: function (resp) {
           resolve(resp);
         },
@@ -56,7 +84,16 @@ var getTokenInfo = function (token) {
   });
 };
 
-// checks if we're logged in to the oauth site already
+/**
+ * What we use to listen to postMessage is different across browsers
+ */
+var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
+var eventer = window[ eventMethod ];
+var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
+
+/**
+ * Check to see if we're already logged in to the site, and resolve to a token if we are logged in
+ */
 var checkAlreadyLoggedIn = function () {
   return new Promise(function (resolve, reject) {
     if (typeof clientId !== "string" || clientId === null) {
@@ -67,31 +104,25 @@ var checkAlreadyLoggedIn = function () {
 
     var ifr = document.createElement('iframe');
     ifr.style.visibility = "hidden";
-    ifr.src = getLoginUrl();
+    ifr.src = getLoginStatusUrl() + "?" + $.param({
+        client_id: clientId
+      });
     document.body.appendChild(ifr);
-    ifr.onload = function () {
-      try {
-        var url = ifr.contentWindow.location.href;
-        var hash = url.split("#")[ 1 ];
-        if (typeof hash !== "string" || hash.length === 0) {
-          reject("Hash not found in URL");
-        } else {
-          var pcs = hash.split("&");
-          var i;
-          var obj = {};
-          for (i = 0; i < pcs.length; i++) {
-            var pp = pcs[ i ].split("=");
-            var n = pp[ 0 ], v = pp[ 1 ];
 
-            obj[ decodeURIComponent(n) ] = decodeURIComponent(v);
-          }
-          resolve(getTokenInfo(obj.access_token));
-        }
-      } catch (e) {
-        reject("Incorrect domain for url");
+    // Listen to message from child window
+    eventer(messageEvent, function (event) {
+      if (event.origin !== ORIGIN) {
+        return;
+      }
+      var d = event.data;
+      if (d.status === "logged_out") {
+        reject('Not logged in.');
+      } else {
+        resolve(d.token);
       }
       ifr.parentNode.removeChild(ifr);
-    };
+    }, false);
+
   });
 };
 
@@ -121,18 +152,18 @@ var getLoginStatus = function () {
   });
 };
 
-var init = function (object) {
-  if (typeof object.clientId === "string") {
-    clientId = object.clientId;
+var init = function (options) {
+  if (typeof options.clientId === "string") {
+    clientId = options.clientId;
   }
-  if (typeof object.token === "string") {
-    setCachedToken(object.token);
+  if (typeof options.token === "string") {
+    setCachedToken(options.token);
   }
-  if (typeof object.authorizeUrl === "string") {
-    AUTHORIZE_URL = object.authorizeUrl;
+  if (typeof options.origin === "string") {
+    ORIGIN = options.origin;
   }
-  if (typeof object.tokenInfoUrl === "string") {
-    TOKEN_INFO_URL = object.tokenInfoUrl;
+  if (typeof options.token === "string") {
+    setCachedToken(options.token);
   }
 };
 
@@ -140,7 +171,7 @@ var logout = function () {
   clearCachedToken();
   return new Promise(function (resolve, reject) {
     $.ajax({
-      url: AUTHORIZE_URL + "/logout?client_id=" + encodeURIComponent(clientId),
+      url: getLogoutUrl() + $.param({ client_id: clientId }),
       success: function () {
         resolve();
       },
