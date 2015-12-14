@@ -61,7 +61,7 @@ app.get('*', function (req, res) {
   if (DEV_MODE) {
     res.end(wbdm.fileSystem.readFileSync(indexPath));
   } else {
-    res.end(indexPath);
+    res.sendFile(indexPath);
   }
 });
 
