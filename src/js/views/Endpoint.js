@@ -30,13 +30,15 @@ module.exports = util.rf({
       })
     ).isRequired,
     contentType: types,
-    noSend: rpt.bool
+    noSend: rpt.bool,
+    openUrl: rpt.bool
   },
 
   getDefaultProps: function () {
     return {
       contentType: "application/x-www-form-urlencoded",
-      noSend: false
+      noSend: false,
+      openUrl: false
     };
   },
 
@@ -183,6 +185,11 @@ module.exports = util.rf({
     var data = this.getBody(false);
     var hdrs = this.getParamObj("header");
 
+    if (this.props.openUrl) {
+      window.open(this.getEndpoint(), "_blank");
+      return;
+    }
+
     // we can just use AJAX here since it's on the same domain and thus not a CORS request
     $.ajax({
       method: this.props.method,
@@ -261,7 +268,7 @@ module.exports = util.rf({
           this.getHeaders()
         ])),
         (this.props.noSend ? null : d.div({ key: "response", className: "col-sm-2" }, btn({
-          icon: "paper-plane",
+          icon: (this.props.openUrl) ? "share" : "paper-plane",
           type: "primary",
           ajax: true,
           block: true,
@@ -270,8 +277,10 @@ module.exports = util.rf({
         })))
       ]),
       this.getParameterTable(),
-      d.h5({ key: "resheader" }, "Response"),
-      this.getResponse()
+      this.props.noSend ? null : d.div({ key: "res-info" }, [
+        d.h5({ key: "resheader" }, "Response"),
+        this.getResponse()
+      ])
     ])
   }
 });

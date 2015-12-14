@@ -1,8 +1,8 @@
 'use strict';
 var $ = require('jquery');
 
-var AUTHORIZE_URL = "https://oauth2cloud.com/oauth/authorize";
-var TOKEN_INFO_URL = "https://oauth2cloud.com/oauth/token/info";
+var AUTHORIZE_URL = "https://api.oauth2cloud.com/oauth/authorize";
+var TOKEN_INFO_URL = "https://api.oauth2cloud.com/oauth/token/info";
 
 var clientId;
 

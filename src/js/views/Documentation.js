@@ -10,7 +10,7 @@ var rpt = React.PropTypes;
 
 var GRANT_TYPE_DESCRIPTION = "The grant_type is one of the following values: 'authorization_code', 'password', 'client_credentials', 'refresh', or 'temporary_token'";
 
-var OAUTH = util.path(window.location.origin, "oauth");
+var OAUTH = util.path(config.API_URL, "oauth");
 var AUTHORIZE = util.path(OAUTH, "authorize");
 var TOKEN = util.path(OAUTH, "token");
 var TOKEN_INFO = util.path(TOKEN, "info");
@@ -89,6 +89,7 @@ module.exports = util.rf({
             ep({
               key: "2",
               method: "GET",
+              openUrl: true,
               endpoint: AUTHORIZE,
               parameters: [
                 {
