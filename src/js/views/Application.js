@@ -4,7 +4,7 @@ var rbs = require('react-backstrap');
 var af = require('./ApplicationForm');
 var mdls = require('../Models');
 var btn = rbs.components.controls.Button;
-var events = rbs.mixins.Events;
+var _ = require('underscore');
 
 var modal = rbs.components.layout.Modal;
 var alt = rbs.components.layout.Alert;
@@ -17,7 +17,7 @@ var d = React.DOM;
 module.exports = util.rf({
   displayName: "app",
 
-  mixins: [ events ],
+  mixins: [ rbs.mixins.Events ],
 
   getInitialState: function () {
     return {
@@ -29,10 +29,7 @@ module.exports = util.rf({
   },
 
   componentDidMount: function () {
-    this.listenTo(this.state.app, "sync", this.showClientsButton);
-    if (m.isLoggedIn()) {
-      this.state.app.fetch();
-    }
+    this.state.app.fetch();
   },
 
   closeDeleteModal: function () {
@@ -44,10 +41,6 @@ module.exports = util.rf({
   },
 
   render: function () {
-    if (!m.isLoggedIn()) {
-      return mbli();
-    }
-
     var dn = "Edit Application";
     return d.div({ className: "container" }, [
       d.h2({

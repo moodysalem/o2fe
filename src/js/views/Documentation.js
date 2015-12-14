@@ -14,6 +14,7 @@ var OAUTH = util.path(config.API_URL, "oauth");
 var AUTHORIZE = util.path(OAUTH, "authorize");
 var TOKEN = util.path(OAUTH, "token");
 var TOKEN_INFO = util.path(TOKEN, "info");
+var GET_LOGIN_STATUS = util.path(OAUTH, "loginstatus");
 
 module.exports = util.rf({
   displayName: "Docs",
@@ -41,7 +42,8 @@ module.exports = util.rf({
             d.li({ key: "3" }, d.a({ href: "#client_credentials" }, "Client Credentials")),
             d.li({ key: "4" }, d.a({ href: "#refresh_token" }, "Refresh Token")),
             d.li({ key: "5" }, d.a({ href: "#temporary_token" }, "Temporary Token")),
-            d.li({ key: "6" }, d.a({ href: "#token_info" }, "Token Info"))
+            d.li({ key: "6" }, d.a({ href: "#token_info" }, "Token Info")),
+            d.li({ key: "7" }, d.a({ href: "#get_login_status" }, "Get Login Status"))
           ]),
           d.li({ key: "a2" }, d.a({ href: "#admin" }, "Admin"))
         ]),
@@ -54,17 +56,17 @@ module.exports = util.rf({
 
     return d.div({ className: "container-fluid" }, [
       d.div({ className: "row", key: "1" }, [
-        d.div({ key: "c", className: "col-md-8 col-lg-7 col-xl-6 col-lg-offset-1" }, d.h2({
+        d.div({ key: "c", className: "col-lg-9" }, d.h2({
           key: "1",
           className: "page-header"
         }, "Documentation"))
       ]),
       d.div({ className: "row", key: "2" }, [
-        d.div({ className: "visible-xs visible-sm", key: "toc-small" }, d.div({
+        d.div({ className: "hidden-lg some-padding", key: "toc-small" }, d.div({
           className: "well",
           key: "toc"
         }, toc)),
-        d.div({ className: "col-md-8 col-lg-7 col-lg-offset-1", key: "content" }, [
+        d.div({ className: "col-lg-9", key: "content" }, [
           d.h3({ key: "intro", id: "intro" }, "Introduction"),
           d.p({ key: "ip" }, "Applications often require users to authenticate to access their own data and use services. These " +
             " services often store and transmit user data, such as e-mails, passwords, and names. Completing a secure and reliable OAuth2 " +
@@ -346,6 +348,23 @@ module.exports = util.rf({
                   desc: "The ID of the application making the request. The application ID OR the application ID is required."
                 }
               ]
+            }),
+            d.h5({ key: "getloginstatus", id: "get_login_status" }, "Get Login Status"),
+            d.p({ key: "getloginstatus_p" }, "Use this endpoint to get the user's login status for your application. This endpoint does not allow CORS, so you must access it via an iFrame. It communicates to the parent window via postMessage, and can only be opened as an iFrame for pages with redirect URIs matching the client's allowed redirect URIs."),
+            ep({
+              key: "getloginstatus_ep",
+              method: "GET",
+              endpoint: GET_LOGIN_STATUS,
+              noSend: true,
+              parameters: [
+                {
+                  req: true,
+                  name: "client_id",
+                  type: "string",
+                  loc: "query",
+                  desc: "The ID of the client checking the login status"
+                }
+              ]
             })
           ]),
           d.h4({ key: "admin", id: "admin" }, "Admin"),
@@ -385,7 +404,7 @@ module.exports = util.rf({
         ]),
         d.div({
           key: "col2",
-          className: "col-md-4 col-lg-3 hidden-xs hidden-sm"
+          className: "col-lg-3 hidden-xs hidden-sm hidden-md"
         }, fixToTop({ key: "toc-big", className: "well" }, toc))
       ])
     ]);

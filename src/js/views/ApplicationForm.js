@@ -2,7 +2,7 @@
 var React = require('react');
 var rbs = require('react-backstrap');
 var lw = require('./Loading');
-
+var _ = require('underscore');
 var form = rbs.components.layout.Form;
 var row = rbs.components.model.GridRow;
 var util = rbs.util;
@@ -155,7 +155,6 @@ module.exports = util.rf({
   displayName: "appform",
 
   render: function () {
-
     var formProps = _.extend({}, this.props, { autoComplete: false, ref: "f" });
 
     return d.div(_.extend({}, this.props), [

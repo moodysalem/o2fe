@@ -23,24 +23,6 @@
     animation: 0.5s spin linear infinite;
 }
 
-@-moz-keyframes spin {
-    from {
-        -moz-transform: rotate(0deg);
-    }
-    to {
-        -moz-transform: rotate(360deg);
-    }
-}
-
-@-webkit-keyframes spin {
-    from {
-        -webkit-transform: rotate(0deg);
-    }
-    to {
-        -webkit-transform: rotate(360deg);
-    }
-}
-
 @keyframes spin {
     from {
         transform: rotate(0deg);
@@ -95,6 +77,15 @@
 .team-thumb-name {
     border-bottom: 1px solid rgba(0, 0, 0, 0.5);
     padding: 0.3em;
+    transition: color 0.5s, border 0.5s;
+    cursor: pointer;
+    text-decoration: none !important;
+    color: #000 !important;
+}
+
+.team-thumb-name:hover {
+    color: blue !important;
+    border-bottom: 1px solid rgba(0, 0, 255, 0.5);
 }
 
 .nowrap-scroll {
@@ -121,10 +112,6 @@ table.vertical-align-middle td {
     position: absolute;
     right: 0.5em;
     top: 50%;
-    -webkit-transform: translateY(-50%);
-    -moz-transform: translateY(-50%);
-    -ms-transform: translateY(-50%);
-    -o-transform: translateY(-50%);
     transform: translateY(-50%);
 }
 
@@ -151,10 +138,6 @@ table.vertical-align-middle td {
 
     visibility: hidden;
     opacity: 0;
-    -webkit-transition: visibility 0s linear 0.5s, opacity 0.5s linear;
-    -moz-transition: visibility 0s linear 0.5s, opacity 0.5s linear;
-    -ms-transition: visibility 0s linear 0.5s, opacity 0.5s linear;
-    -o-transition: visibility 0s linear 0.5s, opacity 0.5s linear;
     transition: visibility 0s linear 0.5s, opacity 0.5s linear;
 }
 
@@ -182,8 +165,10 @@ table.vertical-align-middle td {
 
 .iframe-response {
     width: 100%;
-    -webkit-box-shadow: 0 0 1px gray;
-    -moz-box-shadow: 0 0 1px gray;
     box-shadow: 0 0 1px gray;
     max-height: 300px;
+}
+
+.some-padding {
+    padding: 0.5em;
 }

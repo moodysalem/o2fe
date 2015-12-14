@@ -1,9 +1,8 @@
-define(function(require, exports, module){
   'use strict';
   var React = require('react');
   var rbs = require('react-backstrap');
   var fm = rbs.components.model.Form;
-  var mdls = require('js/Models');
+  var mdls = require('../Models');
   var model = rbs.mixins.Model;
   var btn = rbs.components.controls.Button;
   var multitext = require('./MultiText');
@@ -123,4 +122,3 @@ define(function(require, exports, module){
         })
       }
     });
-  });

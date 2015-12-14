@@ -1,93 +1,89 @@
-define(function(require, exports, module){
-  'use strict';
-  var React = require('react');
-  var rbs = require('react-backstrap');
-  var _ = require('underscore');
-  var btn = rbs.components.controls.Button;
-  var modernizr = require('modernizr');
-    
-    var util = rbs.util;
+'use strict';
+var React = require('react');
+var rbs = require('react-backstrap');
+var _ = require('underscore');
+var btn = rbs.components.controls.Button;
 
-    var d = React.DOM;
-    var rpt = React.PropTypes;
+var util = rbs.util;
 
-    var urlInputType = modernizr.inputtypes.url ? "url" : "text";
+var d = React.DOM;
+var rpt = React.PropTypes;
 
-    var KEY_ENTER = 13;
 
-    module.exports = util.rf({
-      displayName: "multitext",
+var KEY_ENTER = 13;
 
-      removeValue: function (ix) {
-        var val = _.clone(this.props.value);
-        val.splice(ix, 1);
-        this.props.onChange(val);
-      },
+module.exports = util.rf({
+  displayName: "multitext",
 
-      getInitialState: function () {
-        return {
-          newValue: ""
-        };
-      },
+  removeValue: function (ix) {
+    var val = _.clone(this.props.value);
+    val.splice(ix, 1);
+    this.props.onChange(val);
+  },
 
-      setNewValue: function (e) {
-        var val = e.target.value;
-        this.setState({
-          newValue: val
-        });
-      },
+  getInitialState: function () {
+    return {
+      newValue: ""
+    };
+  },
 
-      addValue: function (focus, e) {
-        var val = this.state.newValue;
-        if (typeof val !== "string" || val.length === 0) {
-          return;
-        }
-        this.setState({
-          newValue: ""
-        }, function () {
-          var newVal = (_.isArray(this.props.value)) ? this.props.value.concat([ val ]) : [ val ];
-          this.props.onChange(newVal);
-          if (focus) {
-            this.refs.newValue.focus();
-          }
-        });
-      },
+  setNewValue: function (e) {
+    var val = e.target.value;
+    this.setState({
+      newValue: val
+    });
+  },
 
-      handleEnter: function (e) {
-        if (e.keyCode === KEY_ENTER) {
-          this.addValue(true);
-        }
-      },
-
-      render: function () {
-        var i = 0;
-        var children = _.map(this.props.value, function (val) {
-          return d.div({ key: "val-" + val, className: "position-relative multitext-value" }, [
-            d.input({ key: "in", type: urlInputType, className: this.props.className, value: val, readOnly: true }),
-            btn({
-              key: "btn",
-              className: "right-absolute",
-              type: "danger",
-              size: "xs",
-              icon: "trash",
-              onClick: _.bind(this.removeValue, this, i++)
-            })
-          ]);
-        }, this);
-
-        children.push(d.input({
-          key: "newValue",
-          ref: "newValue",
-          className: this.props.className,
-          type: urlInputType,
-          onChange: this.setNewValue,
-          value: this.state.newValue,
-          onBlur: _.bind(this.addValue, this, false),
-          placeholder: this.props.placeholder,
-          onKeyDown: this.handleEnter
-        }));
-
-        return d.div({}, children);
+  addValue: function (focus, e) {
+    var val = this.state.newValue;
+    if (typeof val !== "string" || val.length === 0) {
+      return;
+    }
+    this.setState({
+      newValue: ""
+    }, function () {
+      var newVal = (_.isArray(this.props.value)) ? this.props.value.concat([ val ]) : [ val ];
+      this.props.onChange(newVal);
+      if (focus) {
+        this.refs.newValue.focus();
       }
     });
-  });
+  },
+
+  handleEnter: function (e) {
+    if (e.keyCode === KEY_ENTER) {
+      this.addValue(true);
+    }
+  },
+
+  render: function () {
+    var i = 0;
+    var children = _.map(this.props.value, function (val) {
+      return d.div({ key: "val-" + val, className: "position-relative multitext-value" }, [
+        d.input({ key: "in", type: "url", className: this.props.className, value: val, readOnly: true }),
+        btn({
+          key: "btn",
+          className: "right-absolute",
+          type: "danger",
+          size: "xs",
+          icon: "trash",
+          onClick: _.bind(this.removeValue, this, i++)
+        })
+      ]);
+    }, this);
+
+    children.push(d.input({
+      key: "newValue",
+      ref: "newValue",
+      className: this.props.className,
+      type: "url",
+      onChange: this.setNewValue,
+      value: this.state.newValue,
+      onBlur: _.bind(this.addValue, this, false),
+      placeholder: this.props.placeholder,
+      onKeyDown: this.handleEnter
+    }));
+
+    return d.div({}, children);
+  }
+});

@@ -86,19 +86,20 @@ module.exports = util.rf({
         ]),
         d.hr({ key: "hr4" }),
         d.div({ key: "the-team" }, [
-          d.h5({ key: "tctt", className: "text-center the-team" }, "The Team"),
+          d.h5({ key: "tctt", className: "text-center the-team" }, "Team"),
           d.div({ key: "row", className: "row" }, [
             d.div({
               key: "1",
               className: "col-sm-4 col-sm-offset-4"
             }, d.div({ className: "text-center card-inverse" }, [
               d.img({ key: "img", className: "team-thumb moody" }),
-              d.h5({ key: "name" }, d.span({ className: "team-thumb-name" }, "Moody Salem")),
-              d.p({ key: "info" }, [ "I created this site to provide login for my own small projects. I hope you'll also use it and benefit from it. If you have " +
-              "any questions or would like to help, please contact me at ", d.a({
-                key: "email",
-                href: "mailto:moody@oauth2cloud.com"
-              }, "moody@oauth2cloud.com") ])
+              d.h5({ key: "name" }, d.a({
+                href: "mailto:moody@oauth2cloud.com",
+                className: "team-thumb-name"
+              }, "Moody Salem")),
+              d.p({ key: "info" }, [
+                "I started this project to provide login for my other projects. Let me know if you have any questions."
+              ])
             ]))
           ])
         ])

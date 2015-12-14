@@ -56,10 +56,10 @@ module.exports = Backbone.Router.extend({
   routes: {
     "applications": "applications",
     "docs": "docs",
-    //"applications/:id": "app",
-    //"applications/:id/scopes": "scopes",
-    //"applications/:id/clients": "clients",
-    //"applications/:id/users": "users",
+    "applications/:id": "app",
+    "applications/:id/scopes": "scopes",
+    "applications/:id/clients": "clients",
+    "applications/:id/users": "users",
     //"clients": "myclients",
     "findapplications": "findApplications",
     //"registerclient/:id": "registerClient",
@@ -75,27 +75,31 @@ module.exports = Backbone.Router.extend({
   docs: function () {
     this.renderPage(require('./views/Documentation'), {}, "Documentation");
   },
-  //
-  //app: function (id) {
-  //  renderFile("js/views/Application", { id: id }, "Application");
-  //},
-  //
+
+  app: function (id) {
+    this.renderPage(require("./views/Application"), { id: id }, "Application");
+  },
+
   home: function () {
     this.renderPage(require('./views/Home'), {}, "Home");
   },
-  //
-  //scopes: function (id) {
-  //  renderFile("js/views/Scopes", { applicationId: id }, "Scopes");
-  //},
-  //
-  //clients: function (id) {
-  //  renderFile("js/views/Clients", { applicationId: id }, "Clients");
-  //},
-  //
+
+  scopes: function (id) {
+    this.renderPage(require("./views/Scopes"), { applicationId: id }, "Scopes");
+  },
+
+  clients: function (id) {
+    this.renderPage(require("./views/Clients"), { applicationId: id }, "Clients");
+  },
+
+  users: function (id) {
+    this.renderPage(require("./views/Users"), { applicationId: id }, "Users");
+  },
+
   //myclients: function () {
-  //  renderFile("js/views/MyClients", {}, "My Clients");
+  //  this.renderPage("./views/MyClients", {}, "My Clients");
   //},
-  //
+
   findApplications: function () {
     this.renderPage(require("./views/FindApplications"), {}, "Find Applications");
   },
@@ -104,9 +108,7 @@ module.exports = Backbone.Router.extend({
   //  renderFile("js/views/RegisterClient", { applicationId: id }, "Register Client");
   //},
   //
-  //users: function (id) {
-  //  renderFile("js/views/Users", { applicationId: id }, "Users");
-  //},
+
   //
   pricing: function () {
     this.renderPage(require('./views/Pricing'), {}, "Pricing");
