@@ -41,8 +41,7 @@ if (typeof env.PRERENDER_TOKEN === "string") {
 app.get('/config.js', function (req, res) {
   res.setHeader('Content-Type', 'application/javascript');
   res.send('var config = ' + JSON.stringify({
-      API_URL: env.API_URL,
-      CLIENT_ID: env.CLIENT_ID
+      API_URL: env.API_URL
     }) + ';');
 });
 
