@@ -171,7 +171,7 @@ var logout = function () {
   clearCachedToken();
   return new Promise(function (resolve, reject) {
     $.ajax({
-      url: getLogoutUrl() + $.param({ client_id: clientId }),
+      url: getLogoutUrl() + "?" + $.param({ client_id: clientId }),
       success: function () {
         resolve();
       },
