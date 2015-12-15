@@ -12,9 +12,9 @@
     "build": "webpack --config webpack-prd.config.js",
     "preeb": "npm run build",
     "eb": "bestzip eb-$npm_package_name-$npm_package_version.zip server.js package.json dist/",
-    "patch": "release patch",
-    "minor": "release minor",
-    "major": "release major"
+    "patch": "npm-release patch",
+    "minor": "npm-release minor",
+    "major": "npm-release major"
   },
   "files": [
     "server.js",
