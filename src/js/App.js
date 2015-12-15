@@ -98,6 +98,9 @@ var start = function () {
  * AJAX calls to the API should include the token
  */
 $(document).ajaxSend(function (event, jqXhr, ajaxOptions) {
+  if (ajaxOptions.headers && ajaxOptions.headers.Authorization) {
+    return;
+  }
   var url = ajaxOptions.url;
   if (url.indexOf(config.API_URL) === 0) {
     if (m.has("token.access_token")) {

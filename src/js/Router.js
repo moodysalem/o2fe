@@ -36,6 +36,14 @@ var wrapper = util.rf({
 var app = $("#app").get(0);
 var nav = $("#nav").get(0);
 
+var originalTitle = document.title;
+var setTitle = function (newtitle) {
+  if (typeof newtitle !== "string" || newtitle.length === 0) {
+    document.title = originalTitle;
+  } else {
+    document.title = util.concatWS(" | ", newtitle, originalTitle);
+  }
+};
 
 // the actual backbone router
 module.exports = Backbone.Router.extend({
@@ -52,9 +60,11 @@ module.exports = Backbone.Router.extend({
    * the application model changes
    * @param comp component being rendered into #app
    * @param properties properties to pass to the component
+   * @param title to give the page
    */
-  renderPage: function (comp, properties) {
+  renderPage: function (comp, properties, title) {
     dom.render(wrapper({ view: comp, props: properties, model: this.model }), app);
+    setTitle(title);
   },
 
   routes: {
