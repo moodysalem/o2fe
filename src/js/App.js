@@ -41,11 +41,7 @@ window.history.replaceState("", document.title, window.location.pathname);
 /**
  * This model stores application state
  */
-var m = new (bb.Model.extend({
-  isLoggedIn: function () {
-    return this.has("token");
-  }
-}))();
+var m = new bb.Model();
 
 // stores the instance of the router controlling the application
 var rtr;
@@ -98,7 +94,6 @@ var start = function () {
   bb.history.start({ pushState: true });
 };
 
-
 /**
  * AJAX calls to the API should include the token
  */
@@ -128,4 +123,7 @@ oauth2.getLoginStatus().then(function (token) {
   // this function returns the token
   m.set("token", token);
   start();
-}, start);
+}, function (error) {
+  console.log(error);
+  start();
+});

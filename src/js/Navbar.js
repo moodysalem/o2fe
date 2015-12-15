@@ -68,15 +68,15 @@ module.exports = util.rf({
         {
           text: "Log Out",
           icon: "sign-out",
-          onClick: function (e) {
+          onClick: _.bind(function (e) {
             e.preventDefault();
-            m.clear();
+            this.props.model.clear();
             oauth2.logout().then(function () {
               util.debug("loggedout");
             }, function () {
               util.debug("loggedout with error");
             });
-          }
+          }, this)
         });
     } else {
       rightLinks.push({

@@ -88,8 +88,7 @@ module.exports = util.rf({
         key: "rows",
         collection: this.state.pa,
         modelComponent: publicApp,
-        xs: 6,
-        sm: 4,
+        xs: 12, sm: 6, md: 4,
         emptyNode: alt({
           key: "empty",
           icon: "info",

@@ -27,7 +27,9 @@ var wrapper = util.rf({
 
   render: function () {
     util.debug("wrapper rendered.");
-    return tp({}, this.props.view(this.props.props));
+    return tp({}, this.props.view(_.extend({}, this.props.props, {
+      model: this.state.model
+    })));
   }
 });
 
@@ -40,7 +42,9 @@ module.exports = Backbone.Router.extend({
   initialize: function (options) {
     // nav is mounted just once with the model we are passed
     this.model = options.model;
-    dom.render(navbar({ model: this.model }), nav);
+    dom.render(navbar({
+      model: this.model
+    }), nav);
   },
 
   /**

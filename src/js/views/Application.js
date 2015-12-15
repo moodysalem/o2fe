@@ -41,6 +41,10 @@ module.exports = util.rf({
   },
 
   render: function () {
+    if (!this.props.model.token) {
+      return mbli();
+    }
+
     var dn = "Edit Application";
     return d.div({ className: "container" }, [
       d.h2({
