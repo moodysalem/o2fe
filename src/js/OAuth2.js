@@ -172,6 +172,9 @@ var logout = function () {
   return new Promise(function (resolve, reject) {
     $.ajax({
       url: getLogoutUrl() + "?" + $.param({ client_id: clientId }),
+      xhrFields: {
+        withCredentials: true
+      },
       success: function () {
         resolve();
       },
