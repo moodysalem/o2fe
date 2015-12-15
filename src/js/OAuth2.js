@@ -13,7 +13,7 @@ var getLoginStatusUrl = function () {
   return ORIGIN + "/oauth/loginstatus";
 };
 var getLogoutUrl = function () {
-  return ORIGIN + "/oauth/logout";
+  return ORIGIN + "/oauth/authorize/logout";
 };
 
 var clientId;
