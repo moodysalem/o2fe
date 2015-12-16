@@ -155,6 +155,19 @@ module.exports = util.rf({
     }
   },
 
+  findUnusedScope: function () {
+    var unused = this.state.scopes.filter(function (scope) {
+      return !this.state.clientScopes.some(function (cs) {
+        return cs.get("scope.id") === scope.get("id");
+      })
+    }, this);
+    if (unused.length > 0) {
+      return unused[ 0 ].toJSON();
+    } else {
+      return null;
+    }
+  },
+
   render: function () {
     return modal(_.extend({}, this.props, {}), [
       d.div({
@@ -181,7 +194,7 @@ module.exports = util.rf({
         btn({
           key: "done",
           ajax: true,
-          icon: "Done",
+          icon: "ban",
           onClick: this.props.onClose,
           caption: "Done"
         }),
@@ -192,7 +205,14 @@ module.exports = util.rf({
           type: "primary",
           caption: "Add",
           onClick: _.bind(function () {
-            this.state.clientScopes.add({ client: { id: this.props.clientId, approved: true } });
+            this.state.clientScopes.add({
+              priority: "ASK",
+              scope: this.findUnusedScope(),
+              client: {
+                id: this.props.clientId
+              },
+              approved: true
+            });
           }, this)
         }),
         btn({
