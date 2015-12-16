@@ -33,6 +33,13 @@ var wrapper = util.rf({
   }
 });
 
+
+var pv = function () {
+  if (typeof ga === "function") {
+    ga('send', 'pageview');
+  }
+};
+
 var app = $("#app").get(0);
 var nav = $("#nav").get(0);
 
@@ -65,6 +72,7 @@ module.exports = Backbone.Router.extend({
   renderPage: function (comp, properties, title) {
     dom.render(wrapper({ view: comp, props: properties, model: this.model }), app);
     setTitle(title);
+    pv();
   },
 
   routes: {
