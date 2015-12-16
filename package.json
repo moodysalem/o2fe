@@ -1,7 +1,7 @@
 {
   "name": "o2fe",
   "private": true,
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "OAuth2Cloud front-end",
   "main": "server.js",
   "scripts": {
