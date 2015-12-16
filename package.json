@@ -27,7 +27,7 @@
     "express": "^4.13.3",
     "prerender-node": "^2.1.0",
     "promise-polyfill": "^2.1.0",
-    "react-backstrap": "^0.1.14",
+    "react-backstrap": "^0.1.17",
     "backbone": "^1.2.3",
     "jquery": "^2.1.4",
     "moment": "^2.10.6",
