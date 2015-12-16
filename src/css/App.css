@@ -95,9 +95,7 @@
 
 .scope-thumbnail {
     width: 100%;
-    max-width: 150px;
-    border-radius: 100%;
-    box-shadow: 0 0 1px inset;
+    max-width: 125px;
 }
 
 table.vertical-align-middle td {

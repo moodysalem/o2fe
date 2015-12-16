@@ -192,7 +192,7 @@ module.exports = util.rf({
           type: "primary",
           caption: "Add",
           onClick: _.bind(function () {
-            this.state.clientScopes.add({ client: { id: this.props.clientId } });
+            this.state.clientScopes.add({ client: { id: this.props.clientId, approved: true } });
           }, this)
         }),
         btn({
