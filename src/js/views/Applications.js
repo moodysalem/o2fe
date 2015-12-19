@@ -175,9 +175,9 @@ module.exports = util.rf({
             attributes: fA,
             model: this.state.app,
             onSubmit: _.bind(function () {
-              this.state.app.save().then(function (mdl) {
-                //r.navigate(util.path("applications", mdl.id), { trigger: true });
-              });
+              this.state.app.save().then(_.bind(function (mdl) {
+                this.props.router.navigate(util.path("applications", mdl.id), { trigger: true });
+              }, this));
             }, this)
           }),
           alerts({

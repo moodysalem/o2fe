@@ -20,6 +20,7 @@ var wrapper = util.rf({
 
   propTypes: {
     view: rpt.func.isRequired,
+    router: rpt.object.isRequired,
     props: rpt.object
   },
 
@@ -28,7 +29,8 @@ var wrapper = util.rf({
   render: function () {
     util.debug("wrapper rendered.");
     return tp({}, this.props.view(_.extend({}, this.props.props, {
-      model: this.state.model
+      model: this.state.model,
+      router: this.props.router
     })));
   }
 });
@@ -70,7 +72,7 @@ module.exports = Backbone.Router.extend({
    * @param title to give the page
    */
   renderPage: function (comp, properties, title) {
-    dom.render(wrapper({ view: comp, props: properties, model: this.model }), app);
+    dom.render(wrapper({ view: comp, props: properties, model: this.model, router: this }), app);
     setTitle(title);
     pv();
   },

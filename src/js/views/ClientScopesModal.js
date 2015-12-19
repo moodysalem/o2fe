@@ -67,7 +67,9 @@ module.exports = util.rf({
   },
 
   render: function () {
-    var mProps = _.extend({}, this.props);
+    var mProps = _.extend({
+      ref: "modal"
+    }, this.props);
     return modal(mProps, [
       d.div({
         key: "mb",
@@ -128,7 +130,10 @@ module.exports = util.rf({
           ajax: true,
           type: "success",
           onClick: _.bind(function () {
-            this.state.clientScopes.save();
+            this.state.clientScopes.save()
+              .then(_.bind(function () {
+                this.refs.modal.close();
+              }, this));
           }, this),
           caption: "Save"
         })

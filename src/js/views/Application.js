@@ -131,9 +131,9 @@ module.exports = util.rf({
             icon: "trash",
             onClick: _.bind(function () {
               if (confirm("Please confirm this deletion. All clients, scopes, and users will be permanently deleted.")) {
-                this.state.app.destroy().then(function () {
-                  r.navigate("applications", { trigger: true });
-                });
+                this.state.app.destroy({ wait: true }).then(_.bind(function () {
+                  this.props.router.navigate("applications", { trigger: true });
+                },this));
               }
             }, this)
           })
