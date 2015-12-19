@@ -1,5 +1,4 @@
 'use strict';
-var $ = require('jquery');
 var _ = require('underscore');
 var React = require('react');
 var rbs = require('react-backstrap');
@@ -74,8 +73,8 @@ module.exports = util.rf({
     return {
       app: new mdls.Application({ id: this.props.applicationId }),
       clients: (new mdls.Clients()).setParam("applicationId", this.props.applicationId),
-      createOpen: false,
       client: (new mdls.Client()),
+      createOpen: false,
       search: "",
       lastSearch: ""
     };

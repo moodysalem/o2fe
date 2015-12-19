@@ -170,3 +170,9 @@ table.vertical-align-middle td {
 .some-padding {
     padding: 0.5em;
 }
+
+.client-scope {
+    padding: 1.2em;
+    margin: 0.8em;
+    box-shadow: 0 0 1px rgba(0,0,0,0.5);
+}

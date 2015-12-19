@@ -1,24 +1,24 @@
-var rbs = require('react-backstrap');
-var util = rbs.util;
-var model = rbs.mixins.Model;
+var _ = require('underscore');
 var mdls = require('../Models');
 
+var rbs = require('react-backstrap');
+var util = rbs.util;
+var alerts = rbs.components.collection.Alerts;
+var modal = rbs.components.layout.Modal;
+
 var React = require('react');
+var d = React.DOM;
 
 var btn = rbs.components.controls.Button;
-var _ = require('underscore');
 var clientUrlsModal = require('./ClientURLsModal');
 var delModal = require('./ConfirmDeleteModal');
 var cf = require('./ClientForm');
-var alerts = rbs.components.collection.Alerts;
-var modal = rbs.components.layout.Modal;
 var clientScopesModal = require('./ClientScopesModal');
-var d = React.DOM;
 
 module.exports = util.rf({
   displayName: "actions for client",
 
-  mixins: [ model ],
+  mixins: [ rbs.mixins.Model ],
 
   getInitialState: function () {
     return {

@@ -33,31 +33,40 @@ module.exports = util.rf({
     var uris = this.state.model.uris;
     var cid = this.state.model.identifier;
     return _.map(flows, function (oneF) {
+      var uriInputs = uris.length > 0 ? _.map(uris, function (uri) {
+        var params = {
+          redirect_uri: uri,
+          response_type: oneF === "CODE" ? "code" : "token",
+          client_id: cid
+        };
+
+        return d.div({
+          key: "input-" + uri,
+          className: "form-group"
+        }, [
+          d.label({ key: "label" }, uri),
+          d.input({
+            key: "input",
+            value: AUTHORIZE_URL + "?" + $.param(params),
+            type: "text",
+            className: "form-control",
+            readOnly: true
+          })
+        ]);
+      }, this) : null;
+
+      if (uriInputs == null) {
+        uriInputs = rbs.components.layout.Alert({
+          icon: "info",
+          level: "info",
+          strong: "Info",
+          message: "No redirect URIs have been assigned to this client."
+        });
+      }
+
       return d.div({ className: "form-group", key: oneF }, [
         d.h4({ key: "header" }, [ oneF, " Flow URL" ]),
-        d.div({ key: "uris" },
-          _.map(uris, function (uri) {
-            var params = {
-              redirect_uri: uri,
-              response_type: oneF === "CODE" ? "code" : "token",
-              client_id: cid
-            };
-
-            return d.div({
-              key: "input-" + uri,
-              className: "form-group"
-            }, [
-              d.label({ key: "label" }, uri),
-              d.input({
-                key: "input",
-                value: AUTHORIZE_URL + "?" + $.param(params),
-                type: "text",
-                className: "form-control",
-                readOnly: true
-              })
-            ]);
-          }, this)
-        )
+        d.div({ key: "uris" }, uriInputs)
       ]);
     }, this);
   },

@@ -5,114 +5,17 @@ var _ = require('underscore');
 var lw = require('./Loading');
 var alerts = rbs.components.collection.Alerts;
 var mdls = require('../Models');
-var table = rbs.components.combo.Table;
 var btn = rbs.components.controls.Button;
 var modal = rbs.components.layout.Modal;
 var model = rbs.mixins.Model;
-
+var alt = rbs.components.layout.Alert;
 var util = rbs.util;
 
 var d = React.DOM;
 var rpt = React.PropTypes;
 
-var nameComp = util.rf({
-  displayName: "name component",
-  mixins: [ model ],
-  render: function () {
-    return d.div({}, this.state.model.name);
-  }
-});
-
-var scopeAttributes = [
-  {
-    attribute: "priority",
-    valueAttribute: "name",
-    searchOn: "name",
-    label: "Priority",
-    component: "select",
-    className: "form-control input-sm",
-    collection: mdls.ClientScopePriorities,
-    modelComponent: nameComp
-  },
-  {
-    attribute: "reason",
-    label: "Reason",
-    component: "textarea",
-    className: "form-control input-sm",
-    placeholder: "Reason for scope"
-  },
-  {
-    attribute: "approved",
-    label: "Approved",
-    component: "checkbox"
-  },
-  {
-    component: util.rf({
-      displayName: "delete button",
-      getInitialState: function () {
-        return {
-          confirm: false
-        };
-      },
-
-      cancel: function () {
-        this.setState({
-          confirm: false
-        });
-      },
-      confirm: function () {
-        this.setState({
-          confirm: true
-        });
-      },
-
-      getButtons: function () {
-        if (this.state.confirm) {
-          return [
-            btn({
-              key: "cancel",
-              caption: "Cancel",
-              size: "xs",
-              ajax: true,
-              onClick: this.cancel
-            }),
-            btn({
-              key: "btn",
-              type: "danger",
-              caption: "Confirm",
-              icon: "ban",
-              size: "xs",
-              ajax: true,
-              onClick: _.bind(function () {
-                this.props.model.destroy({ wait: true });
-              }, this)
-            })
-          ];
-        } else {
-          return [
-            btn({
-              key: "btn",
-              type: "danger",
-              caption: "Delete",
-              icon: "ban",
-              size: "xs",
-              ajax: true,
-              onClick: this.confirm
-            })
-          ];
-        }
-      },
-
-      render: function () {
-        return d.div({ className: "text-center" }, d.div({ className: "btn-group" }, this.getButtons()));
-      }
-    })
-  }
-];
-
-
 module.exports = util.rf({
-  displayName: "client scopes modal",
+  displayName: "Client Scopes Modal",
 
   propTypes: {
     // used for fetching the scopes that are currently assigned
@@ -126,40 +29,35 @@ module.exports = util.rf({
   },
 
   getInitialState: function () {
-    var scopes = new mdls.Scopes().setParam("applicationId");
     return {
       clientScopes: new mdls.ClientScopes(),
-      scopes: scopes,
-      attributes: [
-        {
-          attribute: "scope",
-          label: "Scope",
-          searchOn: "name",
-          component: "select",
-          className: "form-control input-sm",
-          collection: scopes,
-          modelComponent: nameComp
-        }
-      ].concat(scopeAttributes)
+      scopes: new mdls.Scopes()
     };
   },
 
+  /**
+   * When it opens, refresh the client scopes and scopes list
+   */
   componentDidUpdate: function (prevProps) {
-    this.state.clientScopes.setParam("clientId", this.props.clientId);
-    this.state.scopes.setParam("applicationId", this.props.applicationId);
     if (!prevProps.open && this.props.open) {
+      this.state.clientScopes.setParam("clientId", this.props.clientId);
       this.state.clientScopes.reset();
       this.state.clientScopes.fetch();
+
+      this.state.scopes.setParam("applicationId", this.props.applicationId);
       this.state.scopes.reset();
       this.state.scopes.fetch();
     }
   },
 
+  /**
+   * Find a scope that isn't already used
+   */
   findUnusedScope: function () {
     var unused = this.state.scopes.filter(function (scope) {
       return !this.state.clientScopes.some(function (cs) {
         return cs.get("scope.id") === scope.get("id");
-      })
+      });
     }, this);
     if (unused.length > 0) {
       return unused[ 0 ].toJSON();
@@ -169,7 +67,8 @@ module.exports = util.rf({
   },
 
   render: function () {
-    return modal(_.extend({}, this.props, {}), [
+    var mProps = _.extend({}, this.props);
+    return modal(mProps, [
       d.div({
         key: "mb",
         className: "modal-body"
@@ -177,9 +76,17 @@ module.exports = util.rf({
         lw({
           key: "tbl",
           watch: [ this.state.clientScopes, this.state.scopes ]
-        }, table({
+        }, rbs.components.collection.Div({
           collection: this.state.clientScopes,
-          attributes: this.state.attributes
+          modelComponentProps: { scopes: this.state.scopes },
+          modelComponent: require('./ClientScope'),
+          emptyNode: alt({
+            key: "at",
+            icon: "info",
+            level: "info",
+            strong: "Info",
+            message: "No scopes have been assigned to this client."
+          })
         })),
         alerts({
           watch: this.state.clientScopes,
