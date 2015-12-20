@@ -2,7 +2,6 @@
 var React = require('react');
 var rbs = require('react-backstrap');
 var mdls = require('../Models');
-var table = rbs.components.combo.Table;
 var btn = rbs.components.controls.Button;
 var lw = require('./Loading');
 var modal = rbs.components.layout.Modal;
@@ -17,67 +16,30 @@ var _ = require('underscore');
 
 var d = React.DOM;
 
-var appTableColumns = [
-  {
-    label: "ID",
-    attribute: "id",
-    sortOn: "id",
-    component: d.span
-  },
-  {
-    label: "Name",
-    attribute: "name",
-    sortOn: "name",
-    component: d.span
-  },
-  {
-    label: "Support E-mail",
-    attribute: "supportEmail",
-    sortOn: "supportEmail",
-    component: d.span
-  },
-  {
-    key: "btn",
-    component: util.rf({
-      mixins: [ model ],
-      render: function () {
-        return d.div({ className: "text-center btn-container" }, [
-          btn({
-            key: "edit",
-            size: "xs",
-            type: "warning",
-            caption: "Edit",
-            icon: "pencil",
-            href: util.path("applications", this.state.model.id)
-          }),
-          btn({
-            key: "mc",
-            size: "xs",
-            caption: "Clients",
-            icon: "sitemap",
-            href: util.path("applications", this.state.model.id, "clients")
-          }),
-          btn({
-            key: "u",
-            size: "xs",
-            type: "info",
-            caption: "Users",
-            icon: "users",
-            href: util.path("applications", this.state.model.id, "users")
-          }),
-          btn({
-            key: "scp",
-            size: "xs",
-            type: "primary",
-            caption: "Scopes",
-            icon: "book",
-            href: util.path("applications", this.state.model.id, "scopes")
-          })
-        ])
-      }
-    })
-  }
-];
+//var appTableColumns = [
+//  {
+//    label: "ID",
+//    attribute: "id",
+//    sortOn: "id",
+//    component: d.span
+//  },
+//  {
+//    label: "Name",
+//    attribute: "name",
+//    sortOn: "name",
+//    component: d.span
+//  },
+//  {
+//    label: "Support E-mail",
+//    attribute: "supportEmail",
+//    sortOn: "supportEmail",
+//    component: d.span
+//  },
+//  {
+//    key: "btn",
+//    component: require('./ApplicationButtons')
+//  }
+//];
 
 var fA = [
   {
@@ -149,17 +111,22 @@ module.exports = util.rf({
         key: "t",
         watch: this.state.apps
       }, [
-        table({
-          className: "vertical-align-middle",
-          key: "apps",
+        rbs.components.collection.Rows({
+          key: "rows",
           collection: this.state.apps,
-          attributes: appTableColumns
-        }),
-        d.div({ className: "text-center", key: "pag" },
-          pag({
-            collection: this.state.apps
+          modelComponent: require('./ApplicationThumbnail'),
+          xs: 12, sm: 6, md: 4,
+          emptyNode: rbs.components.layout.Alert({
+            key: "empty",
+            icon: "info",
+            level: "info",
+            strong: "Info",
+            message: "No public applications found." + ((this.state.lastSearch !== "") ? " Please try a different search term." : "")
           })
-        )
+        }),
+        d.div({ className: "text-center", key: "pag" }, pag({
+          collection: this.state.apps
+        }))
       ]),
 
       modal({

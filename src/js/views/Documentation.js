@@ -136,7 +136,8 @@ module.exports = util.rf({
             }),
             d.p({ key: "3" }, "To exchange an authorization code for a token, or exchange a refresh token for another " +
               "access token, use the token endpoint. Each of these actions requires a different grant_type."),
-            d.h5({ key: "h51", id: "authorization_code" }, "Authorization Code"),
+            d.h5({ className: "section-header", key: "h51", id: "authorization_code" }, "Authorization Code"),
+            d.p({ key: "authorization_code_p"}, "Use this endpoint to exchange an authorization code for an ACCESS token."),
             ep({
               key: "4",
               method: "POST",
@@ -180,7 +181,10 @@ module.exports = util.rf({
                 }
               ]
             }),
-            d.h5({ key: "h52", id: "resource_owner_password" }, "Resource Owner Password"),
+            d.h5({ className: "section-header", key: "h52", id: "resource_owner_password" }, "Resource Owner Password"),
+            d.p({ key: "resource_owner_password_p" }, "Use this endpoint to exchange user credentials (e-mail and password) for " +
+              "an access token. Since this credential flow does not prompt the user for permission to access specific scopes, " +
+              "provide this only for clients that you can trust."),
             ep({
               key: "password",
               method: "POST",
@@ -214,10 +218,20 @@ module.exports = util.rf({
                   type: "string",
                   loc: "body",
                   desc: "The password of the user."
+                },
+                {
+                  req: false,
+                  name: "scope",
+                  type: "string",
+                  loc: "query",
+                  desc: "A space-delimited list of scopes that the client requires. Listing scopes that the client cannot access here will " +
+                  "cause an error to be displayed to the user."
                 }
               ]
             }),
-            d.h5({ key: "h53", id: "client_credentials" }, "Client Credentials"),
+            d.h5({ className: "section-header", key: "h53", id: "client_credentials" }, "Client Credentials"),
+            d.p({ key: "client_credentials_p" }, "Use this endpoint to receive a CLIENT access token, which represents " +
+              "an application rather than an individual user."),
             ep({
               key: "client_credentials",
               method: "POST",
@@ -247,7 +261,10 @@ module.exports = util.rf({
                 }
               ]
             }),
-            d.h5({ key: "h54", id: "refresh_token" }, "Refresh Token"),
+            d.h5({ className: "section-header", key: "h54", id: "refresh_token" }, "Refresh Token"),
+            d.p({ key: "refresh_token_p" }, "Use this endpoint to retrieve a new ACCESS token for the client associated " +
+              "with the passed refresh token. The new access token will have the same scopes as the refresh token, limited " +
+              "further by the scopes specified in the scope parameter."),
             ep({
               key: "refresh",
               method: "POST",
@@ -286,7 +303,7 @@ module.exports = util.rf({
                 }
               ]
             }),
-            d.h5({ key: "temporary_token", id: "temporary_token" }, "Temporary Token"),
+            d.h5({ className: "section-header", key: "temporary_token", id: "temporary_token" }, "Temporary Token"),
             d.p({ key: "temporary_tokenp" }, "Use this endpoint to retrieve a short-lived token. This short-lived lasts five minutes" +
               " and is intended to be used where the token cannot be communicated via header, e.g. private file download links."),
             ep({
@@ -319,8 +336,8 @@ module.exports = util.rf({
                 }
               ]
             }),
-            d.h5({ key: "tokeninfo", id: "token_info" }, "Token Info"),
-            d.p({ key: "tokeninfo_p" }, "This endpoint is used by the client and server to validate the token and retrieve basic information about the user."),
+            d.h5({ className: "section-header", key: "tokeninfo", id: "token_info" }, "Token Info"),
+            d.p({ key: "tokeninfo_p" }, "Use this endpoint on the client and server to validate the token and retrieve basic information about the user."),
             ep({
               key: "tokeninfo_ep",
               method: "POST",
@@ -349,7 +366,7 @@ module.exports = util.rf({
                 }
               ]
             }),
-            d.h5({ key: "getloginstatus", id: "get_login_status" }, "Get Login Status"),
+            d.h5({ className: "section-header", key: "getloginstatus", id: "get_login_status" }, "Get Login Status"),
             d.p({ key: "getloginstatus_p" }, "Use this endpoint to get the user's login status for your application. This endpoint does not allow CORS, so you must access it via an iFrame. It communicates to the parent window via postMessage, and can only be opened as an iFrame for pages with redirect URIs matching the client's allowed redirect URIs."),
             ep({
               key: "getloginstatus_ep",
