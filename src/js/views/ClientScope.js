@@ -46,7 +46,7 @@ module.exports = util.rf({
                 label: "Scope",
                 component: d.span,
                 tip: "The name of the scope.",
-                sm: 8
+                sm: 6
               } : {
                 attribute: "scope",
                 searchOn: "name",
@@ -56,7 +56,7 @@ module.exports = util.rf({
                 className: "form-control input-sm",
                 collection: this.props.scopes,
                 modelComponent: opt,
-                sm: 8
+                sm: 6
               },
               {
                 attribute: "priority",
@@ -64,11 +64,10 @@ module.exports = util.rf({
                 searchOn: "name",
                 label: "Priority",
                 tip: "Whether the scope is optional to log in, required to log in, or is even displayed to the user.",
-                component: "select",
-                className: "form-control input-sm",
+                component: require('./ButtonToggle'),
                 collection: mdls.ClientScopePriorities,
                 modelComponent: opt,
-                sm: 4
+                sm: 6
               }
             ]
           }),
