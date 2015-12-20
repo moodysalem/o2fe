@@ -33,9 +33,10 @@ module.exports = util.rf({
       d.div({ key: "cap", className: "caption" }, [
         d.h3({ key: "name" }, m.name),
         d.p({ key: "descrip" }, m.description),
-        d.p({ key: "btns" }, buttons({
+        buttons({
+          key: "btns",
           model: this.props.model
-        }))
+        })
       ])
     ]);
   }

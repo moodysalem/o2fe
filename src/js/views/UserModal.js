@@ -14,16 +14,6 @@ var util = rbs.util;
 var d = React.DOM;
 var rpt = React.PropTypes;
 
-var verifiedRow = [
-  {
-    attribute: "verified",
-    label: "Verified",
-    tip: "Whether the e-mail address has been verified.",
-    component: "checkbox",
-    xs: 12
-  }
-];
-
 var nameRow = [
   {
     attribute: "firstName",
@@ -69,7 +59,6 @@ module.exports = util.rf({
             });
           }, this)
         }, [
-          row({ key: "name", model: this.props.model, attributes: nameRow }),
           row({
             key: "e-mail",
             model: this.props.model,
@@ -81,12 +70,20 @@ module.exports = util.rf({
                 placeholder: "E-mail address",
                 component: "email",
                 required: true,
-                xs: 12,
+                sm: 9,
                 readOnly: existing
+              },
+              {
+                attribute: "verified",
+                label: "Verified",
+                tip: "Whether the e-mail address has been verified.",
+                component: require('./OnOffSwitch'),
+                sm: 3
               }
             ]
           }),
-          row({ key: "verified", model: this.props.model, attributes: verifiedRow }),
+          row({ key: "name", model: this.props.model, attributes: nameRow }),
+          d.hr({ key: "sep" }),
           row({
             key: "password",
             model: this.props.model,
