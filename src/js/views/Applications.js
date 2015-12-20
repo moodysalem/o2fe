@@ -121,7 +121,7 @@ module.exports = util.rf({
             icon: "info",
             level: "info",
             strong: "Info",
-            message: "No public applications found." + ((this.state.lastSearch !== "") ? " Please try a different search term." : "")
+            message: "You have not created any applications."
           })
         }),
         d.div({ className: "text-center", key: "pag" }, pag({
