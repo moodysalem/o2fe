@@ -15,7 +15,7 @@ module.exports = util.rf({
   mixins: [ rbs.mixins.Model ],
 
   render: function () {
-    return d.div({ className: "text-center btn-container" }, [
+    return d.div({ className: "btn-container" }, [
       btn({
         key: "edit",
         size: "xs",

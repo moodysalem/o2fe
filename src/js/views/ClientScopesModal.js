@@ -101,10 +101,11 @@ module.exports = util.rf({
         className: "modal-footer"
       }, [
         btn({
-          key: "done",
+          key: "Cancel",
           ajax: true,
+          icon: "ban",
           onClick: this.props.onClose,
-          caption: "Done"
+          caption: "Cancel"
         }),
         btn({
           key: "add",
