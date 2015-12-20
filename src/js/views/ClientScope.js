@@ -85,7 +85,6 @@ module.exports = util.rf({
                 placeholder: "Reason for scope",
                 xs: 12
               }
-
             ]
           })
         ]),
