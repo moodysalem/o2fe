@@ -103,7 +103,6 @@ module.exports = util.rf({
         btn({
           key: "done",
           ajax: true,
-          icon: "ban",
           onClick: this.props.onClose,
           caption: "Done"
         }),

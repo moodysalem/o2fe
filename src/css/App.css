@@ -176,3 +176,37 @@ table.vertical-align-middle td {
     margin: 0.8em;
     box-shadow: 0 0 1px rgba(0,0,0,0.5);
 }
+
+/*on off switch*/
+.onoffswitch {
+    position: relative; width: 46px;
+    user-select: none;
+}
+.onoffswitch-checkbox {
+    display: none;
+}
+.onoffswitch-label {
+    display: block; overflow: hidden; cursor: pointer;
+    height: 22px; padding: 0; line-height: 22px;
+    border: 2px solid #CCCCCC; border-radius: 22px;
+    background-color: #B5B5B5;
+    transition: background-color 0.1s ease-in;
+}
+.onoffswitch-label:before {
+    content: "";
+    display: block; width: 22px; margin: 0;
+    background: #FFFFFF;
+    position: absolute; top: 0; bottom: 0;
+    right: 22px;
+    border: 2px solid #CCCCCC; border-radius: 22px;
+    transition: all 0.1s ease-in 0s;
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label {
+    background-color: #49E845;
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label, .onoffswitch-checkbox:checked + .onoffswitch-label:before {
+    border-color: #49E845;
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label:before {
+    right: 0;
+}
