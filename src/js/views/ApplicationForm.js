@@ -80,6 +80,14 @@ var stylesheetUrl = [
     tip: "Enter the URL of a CSS stylesheet that should be used as the theme of the login page.",
     component: "url",
     xs: 12
+  },
+  {
+    attribute: "faviconUrl",
+    label: "Favicon URL",
+    tip: "Enter a URL for a favicon that will appear when visiting the login, password reset and verify e-mail pages.",
+    placeholder: "Favicon URL",
+    component: "url",
+    xs: 12
   }
 ];
 
