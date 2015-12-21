@@ -221,6 +221,10 @@ module.exports = util.rf({
   },
 
   render: function () {
+    if (!this.props.model.token) {
+      return mbli();
+    }
+
     return d.div({ className: "container" }, [
       ah({
         title: "Scopes",
