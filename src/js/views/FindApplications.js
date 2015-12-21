@@ -59,7 +59,7 @@ module.exports = util.rf({
       d.p({
         key: "lead",
         className: "lead"
-      }, "Use this page to find other applications and create clients."),
+      }, "Use this page to register a client for an application that you do not own."),
       d.div({
         key: "search",
         className: "row"

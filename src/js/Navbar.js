@@ -10,6 +10,7 @@ var oauth2 = require('./OAuth2');
 var tp = rbs.components.controls.Tappable;
 
 var util = rbs.util;
+var d = React.DOM;
 
 module.exports = util.rf({
   displayName: "OAuth2Cloud Navbar",
@@ -91,8 +92,8 @@ module.exports = util.rf({
     }
 
     return tp({}, navbar({
-      brand: React.DOM.span({}, [
-        icon({ key: "i", name: "chain", style: { color: "cornflowerblue" } }),
+      brand: d.span({}, [
+        d.img({ src: "https://s3.amazonaws.com/oauth2cloud-static-assets/logo.svg", className: "navbar-brand-logo" }),
         "OAuth2 Cloud"
       ])
     }, [

@@ -178,6 +178,13 @@ table.vertical-align-middle td {
 }
 
 .section-header {
-    padding-bottom:0.2em;
+    padding-bottom: 0.2em;
     border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.navbar-brand-logo {
+    height: 32px;
+    width: auto;
+    margin-right: 0.5em;
+    margin-top:-0.2em;
 }

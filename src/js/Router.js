@@ -86,7 +86,7 @@ module.exports = Backbone.Router.extend({
     "applications/:id/users": "users",
     //"clients": "myclients",
     "findapplications": "findApplications",
-    //"registerclient/:id": "registerClient",
+    "registerclient/:id": "registerClient",
     "pricing": "pricing",
     "(/)": "home",
     "*splat": "notFound"
@@ -127,13 +127,12 @@ module.exports = Backbone.Router.extend({
   findApplications: function () {
     this.renderPage(require("./views/FindApplications"), {}, "Find Applications");
   },
-  //
-  //registerClient: function (id) {
-  //  renderFile("js/views/RegisterClient", { applicationId: id }, "Register Client");
-  //},
-  //
 
-  //
+  registerClient: function (id) {
+    this.notFound();
+    //this.renderPage(require("./views/RegisterClient"), { applicationId: id }, "Register Client");
+  },
+
   pricing: function () {
     this.renderPage(require('./views/Pricing'), {}, "Pricing");
   },
