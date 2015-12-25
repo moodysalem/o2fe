@@ -105,14 +105,16 @@ module.exports = util.rf({
       d.div({ key: "mf", className: "modal-footer" }, [
         btn({
           key: "c",
+          ajax: true,
           caption: "Cancel",
           onClick: this.props.onClose
         }),
         btn({
           key: "b",
-          icon: "plus",
+          icon: existing ? 'save' : 'plus',
+          ajax: true,
           type: "success",
-          caption: "Save",
+          caption: existing ? 'Save' : 'Create',
           onClick: _.bind(function () {
             this.refs.f.submit();
           }, this)

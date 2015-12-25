@@ -97,15 +97,15 @@ var userAttributes = [
               type: "warning",
               size: "xs",
               onClick: this.openEdit
-            }),
-            btn({
-              key: "del",
-              icon: "trash",
-              caption: "Delete",
-              size: "xs",
-              type: "danger",
-              onClick: this.openDelete
             })
+            //btn({
+            //  key: "del",
+            //  icon: "trash",
+            //  caption: "Delete",
+            //  size: "xs",
+            //  type: "danger",
+            //  onClick: this.openDelete
+            //})
           ]),
           um({
             key: "modal",
