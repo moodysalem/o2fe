@@ -95,7 +95,7 @@ module.exports = util.rf({
       brand: d.span({}, [
         d.img({
           key: "logo",
-          src: "https://s3.amazonaws.com/oauth2cloud-static-assets/logo.svg",
+          src: "https://s3.amazonaws.com/oauth2cloud-static-assets/logo.png",
           className: "navbar-brand-logo"
         }),
         "OAuth2 Cloud"
