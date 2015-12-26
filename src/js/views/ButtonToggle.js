@@ -3,6 +3,7 @@ var rbs = require('react-backstrap');
 var _ = require('underscore');
 
 var util = rbs.util;
+var tip = rbs.components.layout.Tip;
 
 var d = React.DOM;
 var rpt = React.PropTypes;

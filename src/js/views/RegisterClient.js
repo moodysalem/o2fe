@@ -64,31 +64,45 @@ module.exports = util.rf({
     }
 
     return d.div({ className: "container" }, [
+      // app header
       header({ key: "hdr", model: this.state.pa }),
-      form({
-        key: "F",
-        model: this.state.newClient,
-        onSubmit: this.createClient,
-        attributes: [
-          {
-            attribute: "name",
-            component: "text",
-            label: "Client Name",
-            required: true,
-            placeholder: "Client Name",
-            tip: "Enter the name for your client."
-          },
-          {
-            component: btn,
-            caption: "Submit",
-            submit: true,
-            block: true,
-            ajax: true,
-            type: "primary",
-            icon: "plus"
-          }
-        ]
-      })
+
+      // form and info
+      d.div({
+        key: 'row',
+        className: 'row'
+      }, [
+        // app info
+        d.div({ className: 'col-sm-6', key: 'info' }, [
+          d.p({ className: 'lead', key: 'info' }, 'Use this form to register a client for this application.')
+        ]),
+
+        // form
+        d.div({ className: 'col-sm-6', key: 'form' }, form({
+          key: "F",
+          model: this.state.newClient,
+          onSubmit: this.createClient,
+          attributes: [
+            {
+              attribute: "name",
+              component: "text",
+              label: "Client Name",
+              required: true,
+              placeholder: "Client Name",
+              tip: "Enter the name for your client."
+            },
+            {
+              component: btn,
+              caption: "Submit",
+              submit: true,
+              block: true,
+              ajax: true,
+              type: "primary",
+              icon: "plus"
+            }
+          ]
+        }))
+      ])
     ]);
   }
 });

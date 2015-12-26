@@ -1,7 +1,9 @@
 'use strict';
 var React = require('react');
+var dom = require('react-dom');
 var rbs = require('react-backstrap');
 var _ = require('underscore');
+var $ = require('jquery');
 var ep = require('./Endpoint');
 var fixToTop = rbs.components.layout.FixToTop;
 var util = rbs.util;
@@ -19,8 +21,70 @@ var GET_LOGIN_STATUS = util.path(OAUTH, "loginstatus");
 module.exports = util.rf({
   displayName: "Docs",
 
+  propTypes: {
+    router: rpt.object.isRequired,
+    section: rpt.string
+  },
+
+  getDefaultProps: function () {
+    return {
+      section: null
+    };
+  },
+
   getInitialState: function () {
     return {};
+  },
+
+  componentDidMount: function () {
+    //this.navigateToSection = _.debounce(_.bind(this._navigateToSection, this), 100);
+    //$(window).on('scroll resize', this.navigateToSection);
+
+    if (this.props.section !== null) {
+      this.scrollToSection(this.props.section);
+    }
+  },
+
+  componentWillReceiveProps: function (nextProps) {
+    if (this.props.section !== nextProps.section) {
+      this.scrollToSection(nextProps.section, true);
+    }
+  },
+
+  componentWillUnmount: function () {
+    $(window).off('scroll resize', this.navigateToSection);
+  },
+
+  _navigateToSection: function () {
+    var sects = $(this.refs.container).find('[id]'),
+      wst = $(window).scrollTop();
+    var scrolledAt = $(_.find(sects, function (oneSect) {
+      var s = $(oneSect);
+      var t = s.offset().top;
+      return t > wst;
+    })).attr('id');
+
+    this.props.router.navigate(util.path('docs', scrolledAt), { replace: true });
+  },
+
+  scrollToSection: function (sectionName, animate) {
+    if (sectionName === null || typeof sectionName !== 'string') {
+      return;
+    }
+
+    var cnt = $(this.refs.container);
+    var sect = cnt.find('#' + sectionName);
+
+    if (sect.length == 1) {
+      var st = sect.offset().top - 10;
+      if (st > 0) {
+        if (animate === true) {
+          $("html, body").animate({ scrollTop: st + "px" });
+        } else {
+          $(window).scrollTop(st);
+        }
+      }
+    }
   },
 
   render: function () {
@@ -28,33 +92,33 @@ module.exports = util.rf({
       d.h5({ key: "h5" }, "Table of Contents"),
       d.hr({ key: "hr" }),
       d.ul({ key: "ul" }, [
-        d.li({ key: "intro" }, d.a({ href: "#intro" }, "Introduction")),
+        d.li({ key: "intro" }, d.a({ href: "docs/intro" }, "Introduction")),
         d.ul({ key: "sub" }, [
-          d.li({ key: "purpose" }, d.a({ href: "#purpose" }, "Purpose")),
-          d.li({ key: "structure" }, d.a({ href: "#structure" }, "Application Structure"))
+          d.li({ key: "purpose" }, d.a({ href: "docs/purpose" }, "Purpose")),
+          d.li({ key: "structure" }, d.a({ href: "docs/structure" }, "Application Structure"))
         ]),
-        d.li({ key: "api" }, d.a({ href: "#api" }, "Developer API")),
+        d.li({ key: "api" }, d.a({ href: "docs/api" }, "Developer API")),
         d.ul({ key: "subapi" }, [
-          d.li({ key: "a" }, d.a({ href: "#oauth2" }, "OAuth2")),
+          d.li({ key: "a" }, d.a({ href: "docs/oauth2" }, "OAuth2")),
           d.ul({ key: "suboauth" }, [
-            d.li({ key: "1" }, d.a({ href: "#authorization_code" }, "Authorization Code")),
-            d.li({ key: "2" }, d.a({ href: "#resource_owner_password" }, "Resource Owner Password")),
-            d.li({ key: "3" }, d.a({ href: "#client_credentials" }, "Client Credentials")),
-            d.li({ key: "4" }, d.a({ href: "#refresh_token" }, "Refresh Token")),
-            d.li({ key: "5" }, d.a({ href: "#temporary_token" }, "Temporary Token")),
-            d.li({ key: "6" }, d.a({ href: "#token_info" }, "Token Info")),
-            d.li({ key: "7" }, d.a({ href: "#get_login_status" }, "Get Login Status"))
+            d.li({ key: "1" }, d.a({ href: "docs/authorization_code" }, "Authorization Code")),
+            d.li({ key: "2" }, d.a({ href: "docs/resource_owner_password" }, "Resource Owner Password")),
+            d.li({ key: "3" }, d.a({ href: "docs/client_credentials" }, "Client Credentials")),
+            d.li({ key: "4" }, d.a({ href: "docs/refresh_token" }, "Refresh Token")),
+            d.li({ key: "5" }, d.a({ href: "docs/temporary_token" }, "Temporary Token")),
+            d.li({ key: "6" }, d.a({ href: "docs/token_info" }, "Token Info")),
+            d.li({ key: "7" }, d.a({ href: "docs/get_login_status" }, "Get Login Status"))
           ]),
-          d.li({ key: "a2" }, d.a({ href: "#admin" }, "Admin"))
+          d.li({ key: "a2" }, d.a({ href: "docs/admin" }, "Admin"))
         ]),
-        d.li({ key: "addtl" }, d.a({ href: "#addtl" }, "Additional Features")),
+        d.li({ key: "addtl" }, d.a({ href: "docs/addtl" }, "Additional Features")),
         d.ul({ key: "subaddtl" }, [
-          d.li({ key: "a" }, d.a({ href: "#legacy" }, "Legacy Integration"))
+          d.li({ key: "a" }, d.a({ href: "docs/legacy" }, "Legacy Integration"))
         ])
       ])
     ]);
 
-    return d.div({ className: "container-fluid" }, [
+    return d.div({ className: "container-fluid", ref: 'container' }, [
       d.div({ className: "row", key: "1" }, [
         d.div({ key: "c", className: "col-lg-9" }, d.h2({
           key: "1",
@@ -85,7 +149,7 @@ module.exports = util.rf({
           d.h3({ key: "api", id: "api" }, "Developer API"),
           d.p({ key: "apiinfo" }, "OAuth2Cloud provides the typical OAuth2 specification authorize and token endpoints in addition to an API for " +
             " managing your OAuth2 resources. In order to access the administrative API, you must register a client with the OAuth2Cloud application."),
-          d.h4({ key: "oauth2", id: "oauth2" }, "OAuth2"),
+          d.h4({ key: "oauth2", id: "oauth2", className: 'section-header' }, "OAuth2"),
           d.div({ key: "oauth2info" }, [
             d.p({ key: "1" }, "To access the login screen for your application, use the authorize endpoint."),
             ep({
@@ -137,7 +201,7 @@ module.exports = util.rf({
             d.p({ key: "3" }, "To exchange an authorization code for a token, or exchange a refresh token for another " +
               "access token, use the token endpoint. Each of these actions requires a different grant_type."),
             d.h5({ className: "section-header", key: "h51", id: "authorization_code" }, "Authorization Code"),
-            d.p({ key: "authorization_code_p"}, "Use this endpoint to exchange an authorization code for an ACCESS token."),
+            d.p({ key: "authorization_code_p" }, "Use this endpoint to exchange an authorization code for an ACCESS token."),
             ep({
               key: "4",
               method: "POST",

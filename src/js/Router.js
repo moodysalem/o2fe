@@ -79,7 +79,7 @@ module.exports = Backbone.Router.extend({
 
   routes: {
     "applications": "applications",
-    "docs": "docs",
+    "docs(/)(*section)": "docs",
     "applications/:id": "app",
     "applications/:id/scopes": "scopes",
     "applications/:id/clients": "clients",
@@ -96,8 +96,10 @@ module.exports = Backbone.Router.extend({
     this.renderPage(require('./views/Applications'), {}, 'Applications');
   },
 
-  docs: function () {
-    this.renderPage(require('./views/Documentation'), {}, "Documentation");
+  docs: function (section) {
+    this.renderPage(require('./views/Documentation'), {
+      section: section
+    }, "Documentation");
   },
 
   app: function (id) {
