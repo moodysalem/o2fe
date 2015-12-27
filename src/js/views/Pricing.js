@@ -38,7 +38,6 @@ module.exports = util.rf({
           key: "cu",
           caption: "Contact Us",
           icon: "question",
-          size: "sm",
           className: "pull-right",
           onClick: this.openContact
         }),
