@@ -70,9 +70,12 @@
     height: 100px;
 }
 
-.team-thumb.moody {
-    background-image: url('./moody.jpg');
-}
+/*.logo-img-placeholder {*/
+/*background-image: url('./placeholder.jpg');*/
+/*-webkit-border-radius:;*/
+/*-moz-border-radius:;*/
+/*border-radius:;*/
+/*}*/
 
 .team-thumb-name {
     border-bottom: 1px solid rgba(0, 0, 0, 0.5);
@@ -186,5 +189,9 @@ table.vertical-align-middle td {
     height: 32px;
     width: auto;
     margin-right: 0.5em;
-    margin-top:-0.2em;
+    margin-top: -0.2em;
+}
+
+.quarter-opacity {
+    opacity: 0.25;
 }

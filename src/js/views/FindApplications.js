@@ -55,11 +55,11 @@ module.exports = util.rf({
   render: function () {
 
     return d.div({ className: "container" }, [
-      d.h2({ key: "h1", className: "page-header" }, "Public Applications"),
+      d.h2({ key: "h1", className: "page-header" }, "Find Applications"),
       d.p({
         key: "lead",
         className: "lead"
-      }, "Use this page to register a client for an application that you do not own."),
+      }, "Use this page to register a client for an application that you do not manage."),
       d.div({
         key: "search",
         className: "row"

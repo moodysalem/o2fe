@@ -92,7 +92,7 @@ module.exports = util.rf({
               key: "1",
               className: "col-sm-4 col-sm-offset-4"
             }, d.div({ className: "text-center card-inverse" }, [
-              d.img({ key: "img", className: "team-thumb moody" }),
+              d.img({ key: "img", className: "team-thumb moody", src: require('./res/moody.jpg') }),
               d.h5({ key: "name" }, d.a({
                 href: "mailto:moody@oauth2cloud.com",
                 className: "team-thumb-name"

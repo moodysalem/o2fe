@@ -13,23 +13,14 @@ module.exports = util.rf({
 
   mixins: [ rbs.mixins.Model ],
 
-  getImage: function () {
-    var m = this.state.model;
-    if (m.logoUrl !== null) {
-      return d.img({
-        key: "logo",
-        src: m.logoUrl,
-        alt: m.name + " logo"
-      });
-    }
-    return null;
-  },
-
   render: function () {
     var m = this.state.model;
 
     return d.div({ className: "application-thumbnail thumbnail" }, [
-      this.getImage(),
+      require('./AppLogo')({
+        key: 'al',
+        url: m.logoUrl
+      }),
       d.div({ key: "cap", className: "caption" }, [
         d.h3({ key: "name" }, m.name),
         d.p({ key: "descrip" }, m.description),
