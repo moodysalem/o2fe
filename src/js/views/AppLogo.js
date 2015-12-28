@@ -13,12 +13,14 @@ module.exports = util.rf({
   displayName: 'Application Logo',
 
   propTypes: {
-    url: rpt.string
+    url: rpt.string,
+    alt: rpt.string
   },
 
   getDefaultProps: function () {
     return {
-      url: null
+      url: null,
+      alt: null
     };
   },
 
@@ -28,9 +30,14 @@ module.exports = util.rf({
       return d.img({
         key: "logo",
         src: lu,
-        alt: m.name + " Logo"
+        alt: this.props.alt
       });
     }
-    return d.img({ key: 'lp', src: require('./res/empty-logo.png'), className: 'some-padding quarter-opacity' });
+    return d.img({
+      key: 'lp',
+      src: require('./res/empty-logo.png'),
+      className: 'some-padding quarter-opacity',
+      alt: this.props.alt
+    });
   }
 });

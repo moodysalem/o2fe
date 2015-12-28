@@ -18,7 +18,8 @@ module.exports = util.rf({
     return d.div({ className: "thumbnail" }, [
       require('./AppLogo')({
         key: 'log',
-        url: m.logoUrl
+        url: m.logoUrl,
+        alt: util.concatWS(' ', m.name, 'Logo')
       }),
       d.div({ className: "caption", key: "c" }, [
         d.h3({ key: "name" }, m.name),
