@@ -62,9 +62,8 @@ module.exports = util.rf({
 
   render: function () {
     return modal(_.extend({
-      title: "Contact Us"
-    }, this.props), [
-      d.div({ key: "mb", className: "modal-body" }, [
+      title: "Contact Us",
+      body: [
         form({
           key: "F",
           ref: "f",
@@ -97,8 +96,8 @@ module.exports = util.rf({
           }, this)
         }),
         this.state.error
-      ]),
-      d.div({ key: "mf", className: "modal-footer" }, [
+      ],
+      footer: [
         btn({
           ajax: true,
           key: "cancel",
@@ -115,7 +114,7 @@ module.exports = util.rf({
             this.refs.f.submit();
           }, this)
         })
-      ])
-    ])
+      ]
+    }, this.props))
   }
 });

@@ -174,12 +174,8 @@ module.exports = util.rf({
         open: this.state.createOpen,
         title: "Add Client",
         size: "lg",
-        onClose: this.closeCreate
-      }, [
-        d.div({
-          key: "mb",
-          className: "modal-body"
-        }, [
+        onClose: this.closeCreate,
+        body: [
           cf({
             key: "cf",
             ref: "cf",
@@ -196,11 +192,8 @@ module.exports = util.rf({
             key: "alts",
             showSuccess: false
           })
-        ]),
-        d.div({
-          key: "mf",
-          className: "modal-footer"
-        }, [
+        ],
+        footer: [
           btn({
             key: "cancel",
             ajax: true,
@@ -218,8 +211,8 @@ module.exports = util.rf({
             }, this),
             caption: "Add"
           })
-        ])
-      ])
+        ]
+      })
     ]);
   }
 });

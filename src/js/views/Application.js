@@ -105,17 +105,14 @@ module.exports = util.rf({
         key: "dm",
         open: this.state.deleteModalOpen,
         title: "Delete Application",
-        onClose: this.closeDeleteModal
-      }, [
-        d.div({ className: "modal-body", key: "mb" }, [
-          alt({
-            key: "p",
-            level: "danger",
-            strong: "Warning!",
-            message: "Please confirm that you would like to delete this application. This cannot be undone."
-          })
-        ]),
-        d.div({ className: "modal-footer", key: "mf" }, [
+        onClose: this.closeDeleteModal,
+        body: alt({
+          key: "p",
+          level: "danger",
+          strong: "Warning!",
+          message: "Please confirm that you would like to delete this application. This cannot be undone."
+        }),
+        footer: [
           btn({
             key: "cancel",
             caption: "Cancel",
@@ -133,12 +130,12 @@ module.exports = util.rf({
               if (confirm("Please confirm this deletion. All clients, scopes, and users will be permanently deleted.")) {
                 this.state.app.destroy({ wait: true }).then(_.bind(function () {
                   this.props.router.navigate("applications", { trigger: true });
-                },this));
+                }, this));
               }
             }, this)
           })
-        ])
-      ])
+        ]
+      })
     ]);
   }
 });

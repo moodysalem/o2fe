@@ -72,17 +72,15 @@ module.exports = util.rf({
   },
 
   render: function () {
-    return modal(_.extend({}, this.props), [
-      d.div({ className: "modal-body", key: "mb" }, [
+    return modal(_.extend({
+      body: [
         this.getUrls()
-      ]),
-      d.div({ className: "modal-footer", key: "mf" }, [
-        btn({
-          key: "close",
-          caption: "Done",
-          onClick: this.props.onClose
-        })
-      ])
-    ]);
+      ],
+      footer: btn({
+        key: "close",
+        caption: "Done",
+        onClick: this.props.onClose
+      })
+    }, this.props));
   }
 });

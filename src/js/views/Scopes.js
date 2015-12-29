@@ -142,12 +142,8 @@ var ta = [
             key: "modal",
             open: this.state.editOpen,
             title: "Edit Scope",
-            onClose: this.closeEdit
-          }, [
-            d.div({
-              key: "mb",
-              className: "modal-body"
-            }, [
+            onClose: this.closeEdit,
+            body: [
               sf({
                 key: "sf",
                 ref: "sf",
@@ -164,11 +160,8 @@ var ta = [
                 key: "alts",
                 showSuccess: false
               })
-            ]),
-            d.div({
-              key: "mf",
-              className: "modal-footer"
-            }, [
+            ],
+            footer: [
               btn({
                 key: "cancel",
                 ajax: true,
@@ -186,8 +179,8 @@ var ta = [
                 }, this),
                 caption: "Save"
               })
-            ])
-          ])
+            ]
+          })
         ]);
       }
     })
@@ -263,12 +256,8 @@ module.exports = util.rf({
         key: "modal",
         open: this.state.createOpen,
         title: "Add Scope",
-        onClose: this.closeCreate
-      }, [
-        d.div({
-          key: "mb",
-          className: "modal-body"
-        }, [
+        onClose: this.closeCreate,
+        body: [
           sf({
             key: "sf",
             ref: "sf",
@@ -285,11 +274,8 @@ module.exports = util.rf({
             key: "alts",
             showSuccess: false
           })
-        ]),
-        d.div({
-          key: "mf",
-          className: "modal-footer"
-        }, [
+        ],
+        footer: [
           btn({
             key: "cancel",
             ajax: true,
@@ -307,8 +293,8 @@ module.exports = util.rf({
             }, this),
             caption: "Add"
           })
-        ])
-      ])
+        ]
+      })
     ]);
   }
 });

@@ -47,8 +47,8 @@ module.exports = util.rf({
   render: function () {
     var existing = this.state.model.id > 0;
 
-    return modal(_.extend({}, this.props), [
-      d.div({ key: "mb", className: "modal-body" }, [
+    return modal(_.extend({
+      body: [
         form({
           key: "mb",
           ref: "f",
@@ -101,8 +101,8 @@ module.exports = util.rf({
           })
         ]),
         alerts({ key: "alts", watch: this.props.model, showSuccess: false })
-      ]),
-      d.div({ key: "mf", className: "modal-footer" }, [
+      ],
+      footer: [
         btn({
           key: "c",
           ajax: true,
@@ -119,7 +119,7 @@ module.exports = util.rf({
             this.refs.f.submit();
           }, this)
         })
-      ])
-    ]);
+      ]
+    }, this.props));
   }
 });

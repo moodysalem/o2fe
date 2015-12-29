@@ -68,13 +68,8 @@ module.exports = util.rf({
 
   render: function () {
     var mProps = _.extend({
-      ref: "modal"
-    }, this.props);
-    return modal(mProps, [
-      d.div({
-        key: "mb",
-        className: "modal-body"
-      }, [
+      ref: "modal",
+      body: [
         lw({
           key: "tbl",
           watch: [ this.state.clientScopes, this.state.scopes ]
@@ -95,11 +90,8 @@ module.exports = util.rf({
           key: "alts",
           showSuccess: false
         })
-      ]),
-      d.div({
-        key: "mf",
-        className: "modal-footer"
-      }, [
+      ],
+      footer: [
         btn({
           key: "Cancel",
           ajax: true,
@@ -137,7 +129,8 @@ module.exports = util.rf({
           }, this),
           caption: "Save"
         })
-      ])
-    ]);
+      ]
+    }, this.props);
+    return modal(mProps);
   }
 });

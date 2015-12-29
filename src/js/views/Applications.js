@@ -133,9 +133,8 @@ module.exports = util.rf({
         key: "ca",
         open: this.state.createOpen,
         title: "Create New Application",
-        onClose: this.closeCreate
-      }, [
-        d.div({ className: "modal-body", key: "mb" }, [
+        onClose: this.closeCreate,
+        body: [
           form({
             key: "f",
             ref: "_f",
@@ -152,8 +151,8 @@ module.exports = util.rf({
             watch: this.state.app,
             showSuccess: false
           })
-        ]),
-        d.div({ className: "modal-footer", key: "mf" }, [
+        ],
+        footer: [
           btn({
             key: "cancel",
             caption: "Cancel",
@@ -171,8 +170,8 @@ module.exports = util.rf({
               this.refs._f.submit();
             }, this)
           })
-        ])
-      ])
+        ]
+      })
     ]);
   }
 });

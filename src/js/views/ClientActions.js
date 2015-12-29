@@ -139,12 +139,8 @@ module.exports = util.rf({
         open: this.state.editOpen,
         title: "Edit " + this.state.model.name,
         size: "lg",
-        onClose: this.closeEdit
-      }, [
-        d.div({
-          key: "mb",
-          className: "modal-body"
-        }, [
+        onClose: this.closeEdit,
+        body: [
           cf({
             allFields: true,
             key: "cf",
@@ -162,11 +158,8 @@ module.exports = util.rf({
             key: "alts",
             showSuccess: false
           })
-        ]),
-        d.div({
-          key: "mf",
-          className: "modal-footer"
-        }, [
+        ],
+        footer: [
           btn({
             key: "cancel",
             ajax: true,
@@ -184,8 +177,8 @@ module.exports = util.rf({
             }, this),
             caption: "Save"
           })
-        ])
-      ]),
+        ]
+      }),
 
       clientScopesModal({
         key: "scopes",

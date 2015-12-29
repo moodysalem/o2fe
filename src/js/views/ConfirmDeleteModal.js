@@ -20,24 +20,15 @@ module.exports = util.rf({
 
   render: function () {
     return modal(_.extend({
-      title: "Confirm Delete"
-    }, this.props), [
-      d.div({
-        key: "mb",
-        className: "modal-body"
-      }, [
-        alert({
-          key: "warning",
-          strong: "Warning",
-          message: this.props.deleteMessage,
-          level: "danger",
-          icon: "exclamation-triangle"
-        })
-      ]),
-      d.div({
-        key: "mf",
-        className: "modal-footer"
-      }, [
+      title: "Confirm Delete",
+      body: alert({
+        key: "warning",
+        strong: "Warning",
+        message: this.props.deleteMessage,
+        level: "danger",
+        icon: "exclamation-triangle"
+      }),
+      footer: [
         btn({
           key: "cancel",
           ajax: true,
@@ -53,7 +44,7 @@ module.exports = util.rf({
           onClick: this.props.onDelete,
           caption: "Delete"
         })
-      ])
-    ]);
+      ]
+    }, this.props));
   }
 });
