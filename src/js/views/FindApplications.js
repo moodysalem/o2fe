@@ -90,7 +90,6 @@ module.exports = util.rf({
         modelComponent: publicApp,
         xs: 12, sm: 6, md: 4,
         emptyNode: alt({
-          key: "empty",
           icon: "info",
           level: "info",
           strong: "Info",

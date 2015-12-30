@@ -117,7 +117,6 @@ module.exports = util.rf({
           modelComponent: require('./ApplicationThumbnail'),
           xs: 12, sm: 6, md: 4,
           emptyNode: rbs.components.layout.Alert({
-            key: "empty",
             icon: "info",
             level: "info",
             strong: "Info",

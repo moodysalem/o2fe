@@ -78,7 +78,6 @@ module.exports = util.rf({
           modelComponentProps: { scopes: this.state.scopes },
           modelComponent: require('./ClientScope'),
           emptyNode: alt({
-            key: "at",
             icon: "info",
             level: "info",
             strong: "Info",

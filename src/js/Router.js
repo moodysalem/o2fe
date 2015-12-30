@@ -88,8 +88,7 @@ module.exports = Backbone.Router.extend({
     "findapplications": "findApplications",
     "registerclient/:id": "registerClient",
     "pricing": "pricing",
-    "home": "home",
-    '/': 'goHome',
+    "(/)": "home",
     "*splat": "notFound"
   },
 
@@ -108,7 +107,7 @@ module.exports = Backbone.Router.extend({
   },
 
   goHome: function () {
-    this.navigate('home', { replace: true });
+    this.navigate('home', { replace: true, trigger: true });
   },
 
   home: function () {

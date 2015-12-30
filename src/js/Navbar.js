@@ -23,7 +23,7 @@ module.exports = util.rf({
       {
         text: "Home",
         icon: "home",
-        href: "/home"
+        href: "/"
       },
       {
         text: "Documentation",
