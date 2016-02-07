@@ -7,11 +7,10 @@
   "scripts": {
     "clean": "rimraf dist/ eb-*.zip",
     "test": "echo \"Warning: no tests\" && exit 0",
-    "dev": "DEV_MODE=true npm start",
     "prebuild": "npm run clean",
     "build": "webpack --config webpack-prd.config.js",
     "preeb": "npm run build",
-    "eb": "bestzip eb-$npm_package_name-$npm_package_version.zip server.js package.json dist/",
+    "eb": "bestzip eb-$npm_package_name.zip server.js package.json dist/",
     "patch": "npm-release patch",
     "minor": "npm-release minor",
     "major": "npm-release major"
@@ -23,23 +22,23 @@
   "author": "Moody Salem <moody.salem@gmail.com>",
   "license": "UNLICENSED",
   "dependencies": {
-    "backbone": "^1.2.3",
     "compression": "^1.6.0",
     "express": "^4.13.3",
+    "prerender-node": "^2.2.0"
+  },
+  "devDependencies": {
+    "backbone": "^1.2.3",
     "jquery": "^2.1.4",
     "moment": "^2.10.6",
-    "prerender-node": "^2.2.0",
     "promise-polyfill": "^2.1.0",
+    "autoprefixer": "^6.1.2",
     "raf": "^3.1.0",
     "react": "^0.14.5",
     "react-addons-pure-render-mixin": "^0.14.5",
     "react-addons-transition-group": "^0.14.5",
-    "react-backstrap": "^0.1.32",
+    "react-backstrap": "^0.2.13",
     "react-dom": "^0.14.5",
-    "underscore": "^1.8.3"
-  },
-  "devDependencies": {
-    "autoprefixer": "^6.1.2",
+    "underscore": "^1.8.3",
     "bestzip": "^1.1.2",
     "css-loader": "^0.23.0",
     "file-loader": "^0.8.5",
