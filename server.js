@@ -45,12 +45,11 @@ if (typeof env.PRERENDER_TOKEN === "string") {
 /**
  * Pass some client configuration stored in environment variables to the client via a script tag
  */
-app.get('/config.js', function (req, res) {
-  res.setHeader('Content-Type', 'application/javascript');
-  res.send('var config = ' + JSON.stringify({
-      API_URL: env.API_URL,
-      DEBUG: typeof env.DEBUG !== "undefined"
-    }) + ';');
+app.get('/config.json', function (req, res) {
+  res.setHeader('Content-Type', 'application/json');
+  res.send(JSON.stringify({
+    API_URL: env.API_URL
+  }));
 });
 
 /**
