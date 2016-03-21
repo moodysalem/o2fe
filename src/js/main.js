@@ -1,6 +1,5 @@
 require('../css/main.css');
 
-import App from './appcomponent';
 import request from 'superagent';
 import {browserHistory, Router, Route} from 'react-router';
 import home from './pages/home';
