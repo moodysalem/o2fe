@@ -1,10 +1,10 @@
 /**
  * Production build configuration
  */
-var webpack = require('webpack');
-var base = require('./webpack-base.config.js');
+const webpack = require('webpack'),
+  base = require('./webpack.config.js');
 
-var webpackConfig = Object.assign(base, {
+const webpackConfig = Object.assign(base, {
   plugins: base.plugins.concat([
     new webpack.optimize.UglifyJsPlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),

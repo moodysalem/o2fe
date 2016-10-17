@@ -11,20 +11,13 @@
     <meta name="fragment" content="!">
     <base href="/"/>
 
-    <title>{%= o.htmlWebpackPlugin.options.title %}</title>
+    <title>OAuth2Cloud</title>
     <link rel="icon" href="https://s3.amazonaws.com/oauth2cloud-static-assets/favicon-logo.ico?v=2"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.0.0/normalize.min.css">
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"
-            integrity="sha384-FFgGfda92tXC8nCNOxrCQ3R8x1TNkMFqDZVQdDaaJiiVbjkPBXIJBx0o7ETjy8Bh"
-            crossorigin="anonymous"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"
-            integrity="sha384-ZoaMbDF+4LeFxg6WdScQ9nnR1QC2MIRxA1O9KWEXQwns1G8UNyIEZIQidzb0T1fo"
-            crossorigin="anonymous"></script>
-    <![endif]-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css"
+          integrity="sha256-AIodEDkC8V/bHBkfyxzolUMw57jeQ9CauwhVW6YJ9CA=" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css"
+          integrity="sha256-bZkavcZrFlXfus3527w/pLbvXgyqnrHbNdMpwNXf1dA=" crossorigin="anonymous"/>
 </head>
 <body>
 
@@ -37,12 +30,12 @@
 <!-- google analytics -->
 <script>
     (function (m, oo, d, y, is, a, boss) {
-        m[ 'GoogleAnalyticsObject' ] = is;
-        m[ is ] = m[ is ] || function () {
-                    (m[ is ].q = m[ is ].q || []).push(arguments)
-                }, m[ is ].l = 1 * new Date();
+        m['GoogleAnalyticsObject'] = is;
+        m[is] = m[is] || function () {
+                    (m[is].q = m[is].q || []).push(arguments)
+                }, m[is].l = 1 * new Date();
         a = oo.createElement(d),
-                boss = oo.getElementsByTagName(d)[ 0 ];
+                boss = oo.getElementsByTagName(d)[0];
         a.async = 1;
         a.src = y;
         boss.parentNode.insertBefore(a, boss)

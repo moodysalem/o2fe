@@ -7,23 +7,19 @@ const HtmlWebpackPlugin = require('html-webpack-plugin'),
   webpack = require('webpack');
 
 const webpackConfig = {
-  entry: './src/js/main.js',
+  entry: ['whatwg-fetch', './src/js/main.js'],
 
   output: {
     path: __dirname + '/dist',
-    filename: 'main-[hash].js'
+    filename: '[hash].js'
   },
 
   plugins: [
     new HtmlWebpackPlugin({
-      title: "OAuth2 Cloud",
       template: './src/index.template.html',
       inject: 'body' // Inject all scripts into the body
     }),
     new webpack.ProvidePlugin({
-      React: 'react',
-      ReactDOM: 'react-dom',
-      request: 'superagent',
       Promise: 'bluebird'
     })
   ],
@@ -31,8 +27,8 @@ const webpackConfig = {
   module: {
     loaders: [
       {
-        test: /\.css$/,
-        loader: "style-loader!css-loader?importLoaders=1!postcss-loader"
+        test: /\.scss$/,
+        loader: "style!css?importLoaders=1!postcss!sass"
       },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
@@ -50,19 +46,26 @@ const webpackConfig = {
         ],
 
         // Only run `.js` and `.jsx` files through Babel
-        test: /\.jsx?$/,
-
-        // Options to configure babel with
-        query: {
-          plugins: [ 'transform-runtime' ],
-          presets: [ 'es2015', 'react' ]
-        }
+        test: /\.jsx?$/
       }
     ]
   },
 
+  devServer: {
+    proxy: {
+      '/config.json': {
+        target: 'file://' + process.env.CONFIG_PATH,
+        secure: false,
+        changeOrigin: true
+      }
+    }
+  },
+
+
+  resolve: {extensions: ['', '.js', '.jsx']},
+
   postcss: function () {
-    return [ autoprefixer ];
+    return [autoprefixer];
   }
 };
 

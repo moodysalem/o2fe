@@ -1,31 +1,18 @@
-require('../css/main.css');
+import config from "file?name=config.json!../config.json";
+import React from "react";
+import {render} from "react-dom";
+import App from "./App";
 
-import request from 'superagent';
-import {browserHistory, Router, Route} from 'react-router';
-import home from './pages/home';
-import nomatch from './pages/nomatch';
-import navbar from './nav';
+const appEl = document.getElementById('app');
 
-const rpt = React.PropTypes;
+fetch(config)
+  .then(
+    res => res.json()
+  )
+  .then(
+    config => render(<App config={config}/>, appEl)
+  )
+  .catch(
+    err => render(<div>{err.message}</div>, appEl)
+  );
 
-class App extends React.Component {
-  render() {
-    return (
-      <Router history={browserHistory}>
-        <Route path="*" component={navbar}/>
-        <Route path="/home" component={home}/>
-        <Route path="*" component={nomatch}/>
-      </Router>
-    );
-  }
-}
-
-App.propTypes = {
-  config: rpt.shape({
-    API_URL: rpt.string
-  }).isRequired
-};
-
-request.get('/config.json').end(function (err, res) {
-  ReactDOM.render(<App config={res.body} history={history}></App>, document.getElementById('app'));
-});

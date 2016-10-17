@@ -1,10 +1,7 @@
-'use strict';
+const join = require('url-join');
 
-const urlJoin = require('url-join'),
-  Promise = require('bluebird'),
-  request = require('superagent');
+export default class DAO {
+  constructor(url) {
 
-
-module.exports = function (apiUrl) {
-  return {};
-};
+  }
+}

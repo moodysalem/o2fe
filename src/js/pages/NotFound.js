@@ -1,8 +1,6 @@
-'use strict';
+import React, {Component} from "react";
 
-import React from 'react';
-
-export default class NoMatch extends React.Component {
+export default class NotFound extends Component {
   render() {
     return (
       <div>
