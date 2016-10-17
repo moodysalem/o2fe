@@ -10,7 +10,7 @@ const webpackConfig = {
   entry: ['whatwg-fetch', './src/js/main.js'],
 
   output: {
-    path: __dirname + '/dist',
+    path: __dirname + '/docs',
     filename: '[hash].js'
   },
 
@@ -50,17 +50,6 @@ const webpackConfig = {
       }
     ]
   },
-
-  devServer: {
-    proxy: {
-      '/config.json': {
-        target: 'file://' + process.env.CONFIG_PATH,
-        secure: false,
-        changeOrigin: true
-      }
-    }
-  },
-
 
   resolve: {extensions: ['', '.js', '.jsx']},
 

@@ -5,12 +5,16 @@ import Nav from "./pages/comps/Nav";
 import Docs from "./pages/Docs";
 import {browserHistory, Router, Route, IndexRoute} from "react-router";
 import {CONFIG_SHAPE} from "./constants";
+import PageFooter from "./pages/comps/PageFooter";
 
 const NavWrapper = ({children, ...rest}) => {
   return (
-    <div>
+    <div className="display-flex flex-direction-column" style={{minHeight: '100vh'}}>
       <Nav {...rest}/>
-      {children}
+      <main className="flex-grow-1">
+        {children}
+      </main>
+      <PageFooter/>
     </div>
   );
 };

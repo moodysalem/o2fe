@@ -6,7 +6,7 @@ export default class Docs extends Component {
 
   render() {
     return (
-      <div>
+      <div className="container">
         <h1>Documentation</h1>
       </div>
     );

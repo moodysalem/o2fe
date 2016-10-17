@@ -1,10 +1,10 @@
-import React, {Component, PropTypes} from "react";
+import React, {Component, PureComponent, PropTypes} from "react";
 import {Link} from "react-router";
 import cx from "classnames";
 import join from "url-join";
 import {CONFIG_SHAPE} from "../../constants";
 
-class LinkContainer extends Component {
+class NavLink extends PureComponent {
   static propTypes = {
     location: PropTypes.shape({
       pathname: PropTypes.string.isRequired
@@ -15,7 +15,6 @@ class LinkContainer extends Component {
     const {to, children, className, location, ...rest} = this.props;
     const {pathname} = location;
 
-
     return (
       <li {...rest} className={cx(className, {'active': join('', pathname) == join('', to)})}>
         <Link to={to}>{children}</Link>
@@ -24,7 +23,9 @@ class LinkContainer extends Component {
   }
 }
 
-export default class Navbar extends Component {
+const ORIGIN = window.location.origin;
+
+export default class Navbar extends PureComponent {
   static propTypes = {
     location: PropTypes.object.isRequired
   };
@@ -51,25 +52,36 @@ export default class Navbar extends Component {
   open = () => this.setState({open: true});
   close = () => this.setState({open: false});
 
+  getLoginUrl() {
+    const {config} = this.context;
+    const {API_URL, CLIENT_ID} = config;
+
+    return `${join(API_URL, 'authorize')}` +
+      `?client_id=${encodeURIComponent(CLIENT_ID)}` +
+      `&response_type=token` +
+      `&redirect_uri=${join(ORIGIN, 'login')}`;
+  }
+
   render() {
-    const {user, config} = this.context,
+    const {user} = this.context,
       {location} = this.props,
       {open} = this.state;
 
-    const {API_URL} = config;
-
     const links = [
-      <LinkContainer location={location} key="home" to="">Home</LinkContainer>,
-      <LinkContainer location={location} key="docs" to="docs">Docs</LinkContainer>,
+      <NavLink location={location} key="home" to="">Home</NavLink>,
+      <NavLink location={location} key="docs" to="docs">Docs</NavLink>,
       user != null ?
         <li key="admin"><Link to="admin">Admin</Link></li> :
-        <li key="login"><a href={join(API_URL, 'authorize')}>Log In</a></li>
+        <li key="login"><a href={this.getLoginUrl()}>Log In</a></li>
     ];
 
     return (
-      <nav className="blue lighten-3">
-        <div className="nav-wrapper" style={{paddingLeft: 8, paddingRight: 8}}>
-          <a href="" className="brand-logo">OAuth2Cloud</a>
+      <nav className="indigo darken-2">
+        <div className="nav-wrapper container">
+          <a href="" className="brand-logo">
+            <i className="fa fa-cloud" style={{float: 'none'}}/>
+            OAuth2Cloud
+          </a>
           <a className="button-collapse" onClick={this.open}>
             <i className="fa fa-bars" style={{cursor: 'pointer'}}/>
           </a>
