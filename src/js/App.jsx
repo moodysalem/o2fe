@@ -2,35 +2,49 @@ import React, {DOM, PropTypes, Component, PureComponent} from "react";
 import NotFound from "./pages/NotFound";
 import Home from "./pages/Home";
 import Nav from "./pages/comps/Nav";
-import {browserHistory, Router, Route} from "react-router";
+import Docs from "./pages/Docs";
+import {browserHistory, Router, Route, IndexRoute} from "react-router";
+import {CONFIG_SHAPE} from "./constants";
+
+const NavWrapper = ({children, ...rest}) => {
+  return (
+    <div>
+      <Nav {...rest}/>
+      {children}
+    </div>
+  );
+};
 
 export default class App extends Component {
   static propTypes = {
-    config: PropTypes.shape({
-      API_URL: PropTypes.string
-    }).isRequired
+    config: CONFIG_SHAPE
   };
 
   static defaultProps = {};
 
   state = {
-    user: null
+    token: null
   };
 
   static childContextTypes = {
-    user: PropTypes.object
+    token: PropTypes.object,
+    config: CONFIG_SHAPE
   };
 
   getChildContext() {
-    return this.state.user;
+    const {token} = this.state;
+    const {config} = this.props;
+    return {token, config};
   }
 
   render() {
     return (
       <Router history={browserHistory}>
-        <Route path="*" component={Nav}/>
-        <Route path="/home" component={Home}/>
-        <Route path="*" component={NotFound}/>
+        <Route path="/" component={NavWrapper}>
+          <IndexRoute component={Home}/>
+          <Route path="/docs" component={Docs}/>
+          <Route path="*" component={NotFound}/>
+        </Route>
       </Router>
     );
   }
