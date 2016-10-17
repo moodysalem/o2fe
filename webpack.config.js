@@ -7,7 +7,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin'),
   webpack = require('webpack');
 
 const webpackConfig = {
-  entry: ['whatwg-fetch', './src/js/main.js'],
+  entry: ['whatwg-fetch', './src/js/main.jsx'],
 
   output: {
     path: __dirname + '/docs',

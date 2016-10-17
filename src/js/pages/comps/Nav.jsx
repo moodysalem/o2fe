@@ -2,7 +2,7 @@ import React, {Component, PureComponent, PropTypes} from "react";
 import {Link} from "react-router";
 import cx from "classnames";
 import join from "url-join";
-import {CONFIG_SHAPE} from "../../constants";
+import {CONFIG_SHAPE} from "../../util/constants";
 
 class NavLink extends PureComponent {
   static propTypes = {
