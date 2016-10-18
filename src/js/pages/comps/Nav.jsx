@@ -41,12 +41,13 @@ export default class Navbar extends PureComponent {
   };
 
   state = {
-    open: false
+    open: false,
+    adminOpen: false
   };
 
   componentWillReceiveProps({location:nextLocation}) {
     if (nextLocation.pathname != this.props.location.pathname) {
-      this.close();
+      this.setState({open: false, adminOpen: false});
     }
   }
 
@@ -68,20 +69,40 @@ export default class Navbar extends PureComponent {
     this.context.onLogOut();
   };
 
+  toggleAdmin = (e) => {
+    e.preventDefault();
+    this.setState({adminOpen: !this.state.adminOpen});
+  };
+
   render() {
     const {token} = this.context,
       {location} = this.props,
-      {open} = this.state;
+      {open, adminOpen} = this.state;
 
     const links = [
       <NavLink location={location} key="home" to="">Home</NavLink>,
       <NavLink location={location} key="docs" to="docs">Docs</NavLink>,
       token != null ?
-        <li key="admin"><Link to="admin">Admin</Link></li> :
-        <li key="login"><a href={this.getLoginUrl()}>Log In</a></li>,
-      token != null ?
-        <li key="log-out"><a href="#" onClick={this.logout}>Log Out</a></li> :
-        null
+        <li key="admin" style={{position: 'relative'}}>
+          <a className="dropdown-button" href="#!" onClick={this.toggleAdmin}>
+            {token.user.email} <i className="fa fa-caret-down"/>
+          </a>
+          <ul className="dropdown-content"
+              style={{
+                width: 143,
+                left: '50%',
+                transform: 'translateX(-50%)',
+                position: 'absolute',
+                opacity: 1,
+                display: adminOpen ? 'block' : 'none'
+              }}>
+            <NavLink location={location} key="apps" to="applications">Applications</NavLink>
+            <NavLink location={location} key="clients" to="clients">Clients</NavLink>
+            <li className="divider"/>
+            <li><a href="#" onClick={this.logout}>Log Out</a></li>
+          </ul>
+        </li> :
+        <li key="login"><a href={this.getLoginUrl()}>Log In</a></li>
     ];
 
     return (
@@ -97,19 +118,21 @@ export default class Navbar extends PureComponent {
           <ul className="right hide-on-med-and-down">
             {links}
           </ul>
-          {
-            open ? <div style={{
-              position: 'fixed',
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              backgroundColor: 'rgba(0,0,0,0.2)'
-            }} onClick={this.close}></div> : null
-          }
-          <ul className="side-nav" style={{transform: `translateX(${open ? 0 : '-100%'})`}}>
-            {links}
-          </ul>
+          <div className="hide-on-large-only">
+            {
+              open ? <div style={{
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                backgroundColor: 'rgba(0,0,0,0.2)'
+              }} onClick={this.close}></div> : null
+            }
+            <ul className="side-nav" style={{transform: `translateX(${open ? 0 : '-100%'})`}}>
+              {links}
+            </ul>
+          </div>
         </div>
       </nav>
     );
