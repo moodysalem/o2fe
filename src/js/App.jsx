@@ -5,9 +5,24 @@ import Docs from "./pages/Docs";
 import {browserHistory, Router, Route, IndexRoute} from "react-router";
 import {CONFIG_SHAPE, TOKEN_SHAPE} from "./util/constants";
 import ProgressBar from "./pages/comps/ProgressBar";
-import {readHash} from "./util/hash-util";
+import {readHash} from "./util/hash";
 import ContentWrapper from "./pages/comps/ContentWrapper";
 import DAO from "./util/DAO";
+
+const TOKEN_KEY = 'o2fe_token';
+const getToken = () => {
+  try {
+    return JSON.parse(localStorage.getItem(TOKEN_KEY));
+  } catch (err) {
+    return null;
+  }
+};
+const saveToken = (token) => {
+  localStorage.setItem(TOKEN_KEY, JSON.stringify(token));
+};
+const removeToken = () => {
+  localStorage.clear();
+};
 
 export default class App extends Component {
   state = {
@@ -18,22 +33,60 @@ export default class App extends Component {
 
   static childContextTypes = {
     token: TOKEN_SHAPE,
-    config: CONFIG_SHAPE
+    config: CONFIG_SHAPE,
+    onLogOut: PropTypes.func.isRequired
   };
 
   getChildContext() {
     const {token, config} = this.state;
-    return {token, config};
+    return {token, config, onLogOut: this.logout};
   }
 
+  logout = () => {
+    removeToken();
+
+    this.setState({token: null});
+  };
 
   componentDidMount() {
+    // get the config
     DAO.getConfig()
+    // put it in state
       .then(config => {
-        this.setState({config});
-        return DAO.loadToken({config, hash: readHash()});
+        return new Promise((resolve, reject) => {
+          this.setState({config}, () => resolve());
+        });
+      })
+      // get the token out of the URL
+      .then(() => {
+        const {config} = this.state,
+          hash = readHash();
+
+        // if there is a hash, check it
+        if (hash && hash.access_token) {
+          return DAO.tokenInfo({config, accessToken: hash.access_token});
+        } else {
+          return null;
+        }
       })
       .then(token => {
+        const {config} =this.state;
+        // if that succeeded, use it
+        // otherwise check localStorage
+        if (token != null) {
+          return token;
+        } else {
+          const storage = getToken();
+          if (storage != null) {
+            return DAO.tokenInfo({config, accessToken: storage.access_token});
+          } else {
+            return null;
+          }
+        }
+      })
+      .then(token => {
+        // we have the final token
+        saveToken(token);
         this.setState({token, loaded: true});
       });
   }

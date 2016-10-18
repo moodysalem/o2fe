@@ -6,7 +6,7 @@ export default class PageFooter extends PureComponent {
       <footer className="page-footer" style={{padding: 0}}>
         <div className="footer-copyright indigo darken-2">
           <div className="container">
-            © 2016 Moody Salem
+            © 2016 <a href="https://moodysalem.com">Moody Salem</a>
           </div>
         </div>
       </footer>

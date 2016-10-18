@@ -1,5 +1,9 @@
 import qs from "qs";
 
+export function clearHash() {
+  history.replaceState('', document.title, window.location.pathname);
+}
+
 export function readHash() {
   let {hash} = window.location;
   if (hash.length > 0 && hash[0] === '#') {
@@ -15,6 +19,7 @@ export function readHash() {
   } else {
     hash = null;
   }
-  history.replaceState('', document.title, window.location.pathname);
+
+  clearHash();
   return hash;
 }

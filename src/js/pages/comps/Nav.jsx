@@ -2,7 +2,7 @@ import React, {Component, PureComponent, PropTypes} from "react";
 import {Link} from "react-router";
 import cx from "classnames";
 import join from "url-join";
-import {CONFIG_SHAPE} from "../../util/constants";
+import {CONFIG_SHAPE, TOKEN_SHAPE} from "../../util/constants";
 
 class NavLink extends PureComponent {
   static propTypes = {
@@ -31,12 +31,13 @@ export default class Navbar extends PureComponent {
   };
 
   static contextTypes = {
-    user: PropTypes.object,
-    config: CONFIG_SHAPE
+    token: TOKEN_SHAPE,
+    config: CONFIG_SHAPE.isRequired,
+    onLogOut: PropTypes.func.isRequired
   };
 
   static defaultContext = {
-    user: null
+    token: null
   };
 
   state = {
@@ -62,17 +63,25 @@ export default class Navbar extends PureComponent {
       `&redirect_uri=${join(ORIGIN, 'login')}`;
   }
 
+  logout = (e) => {
+    e.preventDefault();
+    this.context.onLogOut();
+  };
+
   render() {
-    const {user} = this.context,
+    const {token} = this.context,
       {location} = this.props,
       {open} = this.state;
 
     const links = [
       <NavLink location={location} key="home" to="">Home</NavLink>,
       <NavLink location={location} key="docs" to="docs">Docs</NavLink>,
-      user != null ?
+      token != null ?
         <li key="admin"><Link to="admin">Admin</Link></li> :
-        <li key="login"><a href={this.getLoginUrl()}>Log In</a></li>
+        <li key="login"><a href={this.getLoginUrl()}>Log In</a></li>,
+      token != null ?
+        <li key="log-out"><a href="#" onClick={this.logout}>Log Out</a></li> :
+        null
     ];
 
     return (

@@ -6,5 +6,14 @@ export const CONFIG_SHAPE = PropTypes.shape({
 });
 
 export const TOKEN_SHAPE = PropTypes.shape({
-  token: PropTypes.string.isRequired
+  access_token: PropTypes.string.isRequired,
+  expires_in: PropTypes.number.isRequired,
+  scope: PropTypes.string.isRequired,
+  client_id: PropTypes.string.isRequired,
+  user: PropTypes.shape({
+    user_id: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired
+  }).isRequired,
+  application_id: PropTypes.string.isRequired,
+  token_type: PropTypes.oneOf(['bearer']).isRequired
 });
