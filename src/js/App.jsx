@@ -1,7 +1,6 @@
 import React, {DOM, PropTypes, Component, PureComponent} from "react";
 import NotFound from "./pages/NotFound";
 import Home from "./pages/Home";
-import Docs from "./pages/Docs";
 import {browserHistory, Router, Route, IndexRoute} from "react-router";
 import {CONFIG_SHAPE, TOKEN_SHAPE} from "./util/constants";
 import ProgressBar from "./pages/comps/ProgressBar";
@@ -112,7 +111,6 @@ export default class App extends Component {
       <Router history={browserHistory}>
         <Route path="/" component={ContentWrapper}>
           <IndexRoute component={Home}/>
-          <Route path="/docs" component={Docs}/>
           <Route path="*" component={NotFound}/>
         </Route>
       </Router>
