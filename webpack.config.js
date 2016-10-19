@@ -10,7 +10,7 @@ const webpackConfig = {
   entry: ['whatwg-fetch', './src/js/main.jsx'],
 
   output: {
-    path: __dirname + '/docs',
+    path: __dirname + '/dist',
     filename: '[hash].js'
   },
 
