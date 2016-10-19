@@ -61,7 +61,7 @@ export default class Navbar extends PureComponent {
     return `${join(API_URL, 'authorize')}` +
       `?client_id=${encodeURIComponent(CLIENT_ID)}` +
       `&response_type=token` +
-      `&redirect_uri=${join(ORIGIN, 'login')}`;
+      `&redirect_uri=${ORIGIN}`;
   }
 
   logout = (e) => {
