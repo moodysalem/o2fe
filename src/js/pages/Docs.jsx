@@ -12,7 +12,7 @@ export default class Docs extends Component {
       <div className="container">
         <h1>Documentation</h1>
         <p className="flow-text">
-          Live API documentation is provided via <a href="https://swagger.io">Swagger</a>
+          Live API documentation is provided via <a href="http://swagger.io">Swagger</a>
         </p>
         <iframe onLoad={this.handleLoad}
                 ref="iframe"
