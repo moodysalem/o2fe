@@ -97,7 +97,6 @@ export default class Navbar extends PureComponent {
                 display: adminOpen ? 'block' : 'none'
               }}>
             <NavLink location={location} key="apps" to="applications">Applications</NavLink>
-            <NavLink location={location} key="clients" to="clients">Clients</NavLink>
             <li className="divider"/>
             <li><a href="#" onClick={this.logout}>Log Out</a></li>
           </ul>
