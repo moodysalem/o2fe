@@ -35,7 +35,9 @@ export default class DAO {
       return Promise.reject('Invalid client ID');
     }
 
-    return fetch(`${join(API_URL, 'logout')}?client_id=${encodeURIComponent(CLIENT_ID)}`);
+    return fetch(`${join(API_URL, 'logout')}?client_id=${encodeURIComponent(CLIENT_ID)}`, {
+      credentials: 'include'
+    });
   };
 
   constructor({url, token}) {
