@@ -42,7 +42,10 @@ export default class App extends Component {
   }
 
   logout = () => {
+    const { config } = this.state;
+
     removeToken();
+    DAO.logout(config);
 
     this.setState({token: null});
   };

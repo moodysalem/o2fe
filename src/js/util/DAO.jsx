@@ -30,6 +30,14 @@ export default class DAO {
     );
   };
 
+  static logout = ({API_URL, CLIENT_ID}) => {
+    if (typeof CLIENT_ID !== 'string' || CLIENT_ID.trim().length == 0) {
+      return Promise.reject('Invalid client ID');
+    }
+
+    return fetch(`${join(API_URL, 'logout')}?client_id=${encodeURIComponent(CLIENT_ID)}`);
+  };
+
   constructor({url, token}) {
     this._url = url;
     this._token = token;
