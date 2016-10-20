@@ -81,7 +81,8 @@ export default class Navbar extends PureComponent {
 
     const links = [
       <NavLink location={location} key="home" to="">Home</NavLink>,
-      <li key="docs"><a target="_blank" href="https://moodysalem.com/oauth2-service-swagger/#/oauth2">Docs</a></li>,
+      <li key="docs"><a target="_blank" href="https://docs.oauth2cloud.com">Docs</a>
+      </li>,
       token != null ?
         <li key="admin" style={{position: 'relative'}}>
           <a className="dropdown-button" href="#!" onClick={this.toggleAdmin}>
