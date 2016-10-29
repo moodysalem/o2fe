@@ -1,11 +1,17 @@
 import React from "react";
 import {render} from "react-dom";
 import App from "./App";
+import getConfig from "./util/getConfig";
+import {getTokenFromHash} from "./util/readHash";
 
 const appEl = document.getElementById('app');
 
-try {
-  render(<App/>, appEl);
-} catch (err) {
-  render(<div>{err.message}</div>, appEl);
-}
+const token = getTokenFromHash();
+
+getConfig()
+  .then(config =>
+    render(<App config={config} tryToken={token}/>, appEl)
+  )
+  .catch(err =>
+    render(<div>{err.message}</div>, appEl)
+  );

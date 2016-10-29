@@ -12,6 +12,6 @@ export function saveToken(token) {
   localStorage.setItem(TOKEN_KEY, JSON.stringify(token));
 }
 
-export function removeToken() {
+export function clearToken() {
   localStorage.clear();
 }

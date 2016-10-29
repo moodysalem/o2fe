@@ -57,8 +57,8 @@ module.exports = {
     server(app) {
       app.get('config.json', (req, res) => {
         res.json({
-          API_URL: env.API_URL || "https://api.oauth2cloud.com",
-          CLIENT_ID: env.CLIENT_ID || "l56ladN92ryWSpsamIkGQduwvdRk3K7J1RNS6x6tZ34dVs2HKHMyO7G4lqIHxUrV7N9KxGKuYJAFXWJSKw1rKu458agHnorM"
+          API_URL: env.API_URL,
+          CLIENT_ID: env.CLIENT_ID
         });
       })
     }

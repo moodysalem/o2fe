@@ -5,7 +5,18 @@ export default class dao {
   _config = null;
   _token = null;
 
-  tokenInfo({accessToken = null}) {
+  constructor({config, token = null}) {
+    this._config = config;
+    this._token = token;
+  }
+
+  withToken(token) {
+    return new dao({config: this._config, token});
+  }
+
+  tokenInfo(accessToken = null) {
+    const {API_URL, CLIENT_ID} = this._config;
+
     if (accessToken == null || typeof accessToken !== 'string' || accessToken.trim().length == 0) {
       return Promise.resolve(null);
     }
@@ -30,18 +41,11 @@ export default class dao {
     );
   }
 
-  static logout = ({API_URL, CLIENT_ID}) => {
-    if (typeof CLIENT_ID !== 'string' || CLIENT_ID.trim().length == 0) {
-      return Promise.reject('Invalid client ID');
-    }
+  forgetMe() {
+    const {CLIENT_ID, API_URL} = this._config;
 
     return fetch(`${join(API_URL, 'logout')}?client_id=${encodeURIComponent(CLIENT_ID)}`, {
       credentials: 'include'
     });
-  };
-
-  constructor({config, token}) {
-    this._config = config;
-    this._token = token;
   }
 }
