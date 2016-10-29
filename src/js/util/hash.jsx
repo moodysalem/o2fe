@@ -1,4 +1,4 @@
-import qs from "qs";
+import qs from 'qs';
 
 export function clearHash() {
   history.replaceState('', document.title, window.location.pathname);

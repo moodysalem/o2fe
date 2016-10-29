@@ -3,9 +3,6 @@ import PageFooter from "./PageFooter";
 import Nav from "./Nav";
 
 export default class ContentWrapper extends PureComponent {
-  static propTypes = {};
-  static defaultProps = {};
-
   render() {
     const {children, ...rest} = this.props;
 

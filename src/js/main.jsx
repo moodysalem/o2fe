@@ -9,4 +9,3 @@ try {
 } catch (err) {
   render(<div>{err.message}</div>, appEl);
 }
-

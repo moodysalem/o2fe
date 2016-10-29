@@ -4,7 +4,7 @@
 const webpack = require('webpack'),
   base = require('./webpack.config.js');
 
-const webpackConfig = Object.assign(base, {
+module.exports = Object.assign(base, {
   plugins: base.plugins.concat([
     new webpack.optimize.UglifyJsPlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),
@@ -16,5 +16,3 @@ const webpackConfig = Object.assign(base, {
   // so we can debug production errors in the mapped source code
   devtool: "source-map"
 });
-
-module.exports = webpackConfig;

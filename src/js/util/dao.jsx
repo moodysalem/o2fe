@@ -1,11 +1,11 @@
-import config from "file?name=config.json!../../config.json";
 import join from "url-join";
 import qs from "qs";
 
-export default class DAO {
-  static getConfig = () => fetch(config).then(response => response.json());
+export default class dao {
+  _config = null;
+  _token = null;
 
-  static tokenInfo = ({config: {API_URL, CLIENT_ID}, accessToken = null}) => {
+  tokenInfo({accessToken = null}) {
     if (accessToken == null || typeof accessToken !== 'string' || accessToken.trim().length == 0) {
       return Promise.resolve(null);
     }
@@ -28,7 +28,7 @@ export default class DAO {
       },
       err => Promise.resolve(null)
     );
-  };
+  }
 
   static logout = ({API_URL, CLIENT_ID}) => {
     if (typeof CLIENT_ID !== 'string' || CLIENT_ID.trim().length == 0) {
@@ -40,8 +40,8 @@ export default class DAO {
     });
   };
 
-  constructor({url, token}) {
-    this._url = url;
+  constructor({config, token}) {
+    this._config = config;
     this._token = token;
   }
 }

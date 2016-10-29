@@ -1,29 +1,15 @@
-import React, {DOM, PropTypes, Component, PureComponent} from "react";
-import NotFound from "./pages/NotFound";
-import Home from "./pages/Home";
-import {browserHistory, Router, Route, IndexRoute} from "react-router";
-import {CONFIG_SHAPE, TOKEN_SHAPE} from "./util/constants";
+import {hashHistory, Router, Route, IndexRoute} from "react-router";
+import React, {DOM, PropTypes, PureComponent} from "react";
+import {NotFound, Home} from "./pages/index";
+import getConfig from './util/getConfig';
+import {CONFIG_SHAPE, TOKEN_SHAPE} from "./util/shapes";
+import {getToken, saveToken, removeToken} from "./util/token";
 import ProgressBar from "./pages/comps/ProgressBar";
 import {readHash} from "./util/hash";
 import ContentWrapper from "./pages/comps/ContentWrapper";
-import DAO from "./util/DAO";
+import dao from "./util/dao";
 
-const TOKEN_KEY = 'o2fe_token';
-const getToken = () => {
-  try {
-    return JSON.parse(localStorage.getItem(TOKEN_KEY));
-  } catch (err) {
-    return null;
-  }
-};
-const saveToken = (token) => {
-  localStorage.setItem(TOKEN_KEY, JSON.stringify(token));
-};
-const removeToken = () => {
-  localStorage.clear();
-};
-
-export default class App extends Component {
+export default class App extends PureComponent {
   state = {
     token: null,
     config: null,
@@ -42,17 +28,17 @@ export default class App extends Component {
   }
 
   logout = () => {
-    const { config } = this.state;
+    const {config} = this.state;
 
     removeToken();
-    DAO.logout(config);
+    dao.logout(config);
 
     this.setState({token: null});
   };
 
   componentDidMount() {
     // get the config
-    DAO.getConfig()
+    getConfig()
     // put it in state
       .then(config => {
         return new Promise((resolve, reject) => {
@@ -66,7 +52,7 @@ export default class App extends Component {
 
         // if there is a hash, check it
         if (hash && hash.access_token) {
-          return DAO.tokenInfo({config, accessToken: hash.access_token});
+          return dao.tokenInfo({config, accessToken: hash.access_token});
         } else {
           return null;
         }
@@ -80,7 +66,7 @@ export default class App extends Component {
         } else {
           const storage = getToken();
           if (storage != null) {
-            return DAO.tokenInfo({config, accessToken: storage.access_token});
+            return dao.tokenInfo({config, accessToken: storage.access_token});
           } else {
             return null;
           }
@@ -111,7 +97,7 @@ export default class App extends Component {
     }
 
     return (
-      <Router history={browserHistory}>
+      <Router history={hashHistory}>
         <Route path="/" component={ContentWrapper}>
           <IndexRoute component={Home}/>
           <Route path="*" component={NotFound}/>

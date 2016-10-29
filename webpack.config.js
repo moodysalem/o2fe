@@ -6,7 +6,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin'),
   path = require('path'),
   webpack = require('webpack');
 
-const webpackConfig = {
+const env = process.env;
+
+module.exports = {
   entry: ['whatwg-fetch', './src/js/main.jsx'],
 
   output: {
@@ -51,11 +53,22 @@ const webpackConfig = {
     ]
   },
 
-  resolve: {extensions: ['', '.js', '.jsx']},
+  devServer: {
+    server(app) {
+      app.get('config.json', (req, res) => {
+        res.json({
+          API_URL: env.API_URL || "https://api.oauth2cloud.com",
+          CLIENT_ID: env.CLIENT_ID || "l56ladN92ryWSpsamIkGQduwvdRk3K7J1RNS6x6tZ34dVs2HKHMyO7G4lqIHxUrV7N9KxGKuYJAFXWJSKw1rKu458agHnorM"
+        });
+      })
+    }
+  },
+
+  resolve: {
+    extensions: ['', '.js', '.jsx']
+  },
 
   postcss: function () {
     return [autoprefixer];
   }
 };
-
-module.exports = webpackConfig;
