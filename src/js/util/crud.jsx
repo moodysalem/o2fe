@@ -31,8 +31,8 @@ export default class crud {
       .then(res => {
         if (res.ok) {
           return Promise.all([
-            res.headers.get(START),
-            res.headers.get(TOTAL_COUNT),
+            +res.headers.get(START),
+            +res.headers.get(TOTAL_COUNT),
             res.json()
           ]);
         }

@@ -2,6 +2,8 @@ import React, {DOM, PropTypes, Component, PureComponent} from "react";
 import {Link} from "react-router";
 import ProgressBar from "./comps/ProgressBar";
 import join from "url-join";
+import Pagination from "./comps/Pagination";
+import {pageParams} from "../util/params";
 
 export default class Admin extends Component {
   static contextTypes = {
@@ -16,23 +18,31 @@ export default class Admin extends Component {
   state = {
     applications: null,
     editing: null,
-    deleting: null
+    deleting: null,
+    totalCount: 0,
+    pageInfo: {pageNo: 0, pageSize: 20}
   };
 
-  loadApps() {
+  loadApps = () => {
     const {dao, onError}= this.context;
-    dao.applications.get()
+    const {pageInfo} = this.state;
+
+    dao.applications.get({
+      ...pageParams(pageInfo)
+    })
       .then(
-        ({results: applications}) => this.setState({applications}),
+        ({results: applications, totalCount}) => this.setState({applications, totalCount}),
         onError
       );
-  }
+  };
+
+  handlePageChange = (pageInfo) => this.setState({pageInfo}, this.loadApps);
 
   editApplication = (editing) => this.setState({editing});
   deleteApplication = (deleting) => this.setState({deleting});
 
   render() {
-    const {applications} = this.state;
+    const {applications, totalCount, pageInfo} = this.state;
 
     return (
       <div className="container">
@@ -83,6 +93,8 @@ export default class Admin extends Component {
             ) : <ProgressBar/>
           }
         </article>
+
+        <Pagination totalCount={totalCount} value={pageInfo} onChange={this.handlePageChange}/>
       </div>
     );
   }
