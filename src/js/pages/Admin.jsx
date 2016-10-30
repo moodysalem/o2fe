@@ -55,8 +55,6 @@ export default class Admin extends Component {
           </div>
         </header>
 
-        <hr />
-
         <article>
           {
             applications != null ? applications.map(
@@ -65,7 +63,7 @@ export default class Admin extends Component {
                 return (
                   <div className="card horizontal" key={id}>
                     <div className="card-image">
-                      <img src={logoUrl}/>
+                      <img src={logoUrl || 'http://placehold.it/150x200'} style={{height: '100%'}}/>
                     </div>
                     <div className="card-stacked">
                       <div className="card-content">

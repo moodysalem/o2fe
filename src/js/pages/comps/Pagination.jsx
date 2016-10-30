@@ -1,5 +1,6 @@
 import React, {PropTypes, PureComponent} from "react";
 import PageSelect from "./PageSelect";
+import cx from "classnames";
 
 class SizeSelect extends PureComponent {
   static propTypes = {
@@ -9,10 +10,11 @@ class SizeSelect extends PureComponent {
   };
 
   render() {
-    const {sizes, value, onChange, ...rest} = this.props;
+    const {sizes, className, value, onChange, ...rest} = this.props;
 
     return (
-      <select value={'' + value} onChange={(e) => onChange(+e.target.value)} {...rest}>
+      <select className={cx(className, 'browser-default')} value={'' + value}
+              onChange={(e) => onChange(+e.target.value)} {...rest}>
         {
           sizes.map(size => {
             return (
@@ -70,8 +72,7 @@ export default class Pagination extends PureComponent {
           <PageSelect numPages={numPages} onChange={this.handleSelectPage} value={pageNo}/>
         </div>
         <div className="flex-shrink-0" style={{minWidth: 50}}>
-          <SizeSelect sizes={sizes} value={pageSize} onChange={this.handleSelectSize}
-                      style={{display: 'block'}}/>
+          <SizeSelect sizes={sizes} value={pageSize} onChange={this.handleSelectSize}/>
         </div>
       </div>
     );
