@@ -11,11 +11,16 @@ export class Page extends PureComponent {
 
   doNothing = e => e.preventDefault();
 
+  handleClick = (e) => {
+    window.scrollTo(0, 0);
+    this.props.onClick(e);
+  };
+
   render() {
     const {active, disabled, onClick, children, ...rest} = this.props;
 
     return (
-      <li onClick={disabled ? null : onClick} className={cx({active, disabled})} {...rest}>
+      <li onClick={disabled ? null : this.handleClick} className={cx({active, disabled})} {...rest}>
         <a href="#" onClick={this.doNothing}>
           {children}
         </a>
