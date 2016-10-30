@@ -1,6 +1,6 @@
 import {browserHistory, Router, Route, IndexRoute} from "react-router";
 import React, {PropTypes, PureComponent} from "react";
-import {NotFound, Home, Docs, Admin,Application} from "./pages/index";
+import {NotFound, Home, Docs, Admin, Application} from "./pages/index";
 import {CONFIG_SHAPE, TOKEN_SHAPE} from "./util/shapes";
 import {getToken, saveToken, clearToken} from "./util/token";
 import ProgressBar from "./pages/comps/ProgressBar";
@@ -8,6 +8,14 @@ import ContentWrapper from "./pages/comps/ContentWrapper";
 import dao from "./util/dao";
 import NotificationSystem from "react-notification-system";
 
+const windowTitle = document.title || 'OAuth2Cloud';
+function setTitle(title = null) {
+  if (!title) {
+    document.title = windowTitle;
+  } else {
+    document.title = `${title} | ${windowTitle}`;
+  }
+}
 export default class App extends PureComponent {
   static propTypes = {
     config: CONFIG_SHAPE,
@@ -112,11 +120,11 @@ export default class App extends PureComponent {
       <div>
         <Router history={browserHistory}>
           <Route path="/" component={ContentWrapper}>
-            <IndexRoute component={Home}/>
-            <Route path="docs" component={Docs}/>
-            <Route path="admin" component={Admin}/>
-            <Route path="applications/:id/:section" component={Application}/>
-            <Route path="*" component={NotFound}/>
+            <IndexRoute component={Home} onEnter={e => setTitle('Home')}/>
+            <Route path="docs" component={Docs} onEnter={e => setTitle('Docs')}/>
+            <Route path="admin" component={Admin} onEnter={e => setTitle('Admin')}/>
+            <Route path="applications/:id/:section" component={Application} onEnter={e => setTitle('Application')}/>
+            <Route path="*" component={NotFound} onEnter={e => setTitle('Not Found')}/>
           </Route>
         </Router>
         <NotificationSystem ref="ns"/>
