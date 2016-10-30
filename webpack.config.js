@@ -54,13 +54,17 @@ module.exports = {
   },
 
   devServer: {
-    server(app) {
-      app.get('config.json', (req, res) => {
+    historyApiFallback: true,
+
+    port: 3000,
+
+    setup(app) {
+      app.get('/config.json', (req, res) => {
         res.json({
           API_URL: env.API_URL,
           CLIENT_ID: env.CLIENT_ID
         });
-      })
+      });
     }
   },
 

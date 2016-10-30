@@ -1,5 +1,10 @@
 import _ from "underscore";
 import JSOG from "jsog";
+import qs from "qs";
+
+const BEARER = 'Bearer';
+const START = 'X-Start';
+const TOTAL_COUNT = 'X-Total-Count';
 
 export default class crud {
   _baseUrl = null;
@@ -8,6 +13,34 @@ export default class crud {
   constructor({baseUrl, token}) {
     this._baseUrl = baseUrl;
     this._token = token;
+  }
+
+  getAuthHeader() {
+    if (!this._token) {
+      return null;
+    }
+    return {
+      Authorization: [BEARER, this._token.access_token].join(' ')
+    };
+  }
+
+  get(params) {
+    return fetch(`${this._baseUrl}?${qs.stringify(params)}`, {
+      headers: this.getAuthHeader()
+    })
+      .then(res => {
+        if (res.ok) {
+          return Promise.all([
+            res.headers.get(START),
+            res.headers.get(TOTAL_COUNT),
+            res.json()
+          ]);
+        }
+        return Promise.reject(res.json());
+      })
+      .then(
+        ([start, totalCount, results]) => ({start, totalCount, results})
+      );
   }
 
   save(data) {
@@ -29,7 +62,8 @@ export default class crud {
 
     return fetch(this._baseUrl, {
       method: 'POST',
-      body: JSOG.stringify(data)
+      body: JSOG.stringify(data),
+      headers: this.getAuthHeader()
     }).then(
       res => {
         if (res.ok) {

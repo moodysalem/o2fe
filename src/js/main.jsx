@@ -9,9 +9,9 @@ const appEl = document.getElementById('app');
 const token = getTokenFromHash();
 
 getConfig()
-  .then(config =>
-    render(<App config={config} tryToken={token}/>, appEl)
+  .then(
+    config => render(<App config={config} tryToken={token}/>, appEl)
   )
-  .catch(err =>
-    render(<div>{err.message}</div>, appEl)
+  .catch(
+    err => render(<div>{err.message}</div>, appEl)
   );

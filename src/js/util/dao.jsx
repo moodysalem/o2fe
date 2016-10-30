@@ -1,13 +1,18 @@
 import join from "url-join";
 import qs from "qs";
+import crud from "./crud";
 
 export default class dao {
   _config = null;
   _token = null;
 
+  applications = null;
+
   constructor({config, token = null}) {
     this._config = config;
     this._token = token;
+
+    this.applications = new crud({baseUrl: join(this._config.API_URL, 'applications'), token});
   }
 
   withToken(token) {
