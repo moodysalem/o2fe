@@ -7,15 +7,8 @@ import ProgressBar from "./pages/comps/ProgressBar";
 import ContentWrapper from "./pages/comps/ContentWrapper";
 import dao from "./util/dao";
 import NotificationSystem from "react-notification-system";
+import setTitle from './util/setTitle';
 
-const windowTitle = document.title || 'OAuth2Cloud';
-function setTitle(title = null) {
-  if (!title) {
-    document.title = windowTitle;
-  } else {
-    document.title = `${title} | ${windowTitle}`;
-  }
-}
 export default class App extends PureComponent {
   static propTypes = {
     config: CONFIG_SHAPE,
