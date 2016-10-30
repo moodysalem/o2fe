@@ -1,6 +1,6 @@
 import {browserHistory, Router, Route, IndexRoute} from "react-router";
-import React, {DOM, PropTypes, PureComponent} from "react";
-import {NotFound, Home} from "./pages/index";
+import React, {PropTypes, PureComponent} from "react";
+import {NotFound, Home,Docs} from "./pages/index";
 import {CONFIG_SHAPE, TOKEN_SHAPE} from "./util/shapes";
 import {getToken, saveToken, clearToken} from "./util/token";
 import ProgressBar from "./pages/comps/ProgressBar";
@@ -65,10 +65,13 @@ export default class App extends PureComponent {
             return null;
           }
         }
-      }).then(token => {
-      saveToken(token);
-      this.setState({token, dao: this.state.dao.withToken(token), loaded: true});
-    });
+      })
+      .then(
+        token => {
+          saveToken(token);
+          this.setState({token, dao: this.state.dao.withToken(token), loaded: true});
+        }
+      );
   }
 
   render() {
@@ -86,6 +89,7 @@ export default class App extends PureComponent {
       <Router history={browserHistory}>
         <Route path="/" component={ContentWrapper}>
           <IndexRoute component={Home}/>
+          <Route path="docs" component={Docs}/>
           <Route path="*" component={NotFound}/>
         </Route>
       </Router>

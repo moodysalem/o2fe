@@ -3,6 +3,7 @@ import {Link} from "react-router";
 import cx from "classnames";
 import join from "url-join";
 import {CONFIG_SHAPE, TOKEN_SHAPE} from "../../util/shapes";
+import qs from "qs";
 
 class NavLink extends PureComponent {
   static propTypes = {
@@ -24,6 +25,22 @@ class NavLink extends PureComponent {
 }
 
 const ORIGIN = window.location.origin;
+const BACKDROP_STYLE = {
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  right: 0,
+  bottom: 0,
+  backgroundColor: 'rgba(0,0,0,0.2)'
+};
+
+const DROPDOWN_STYLE = {
+  width: 143,
+  left: '50%',
+  transform: 'translateX(-50%)',
+  position: 'absolute',
+  opacity: 1
+};
 
 export default class Navbar extends PureComponent {
   static propTypes = {
@@ -52,16 +69,14 @@ export default class Navbar extends PureComponent {
   }
 
   open = () => this.setState({open: true});
-  close = () => this.setState({open: false});
+  close = () => this.setState({open: false, adminOpen: false});
 
   getLoginUrl() {
     const {config} = this.context;
     const {API_URL, CLIENT_ID} = config;
 
     return `${join(API_URL, 'authorize')}` +
-      `?client_id=${encodeURIComponent(CLIENT_ID)}` +
-      `&response_type=token` +
-      `&redirect_uri=${ORIGIN}`;
+      `?${qs.stringify({client_id: CLIENT_ID, redirect_uri: ORIGIN, response_type: 'token'})}`;
   }
 
   logout = (e) => {
@@ -80,9 +95,8 @@ export default class Navbar extends PureComponent {
       {open, adminOpen} = this.state;
 
     const links = [
-      <NavLink location={location} key="home" to="">Home</NavLink>,
-      <li key="docs"><a target="_blank" href="https://docs.oauth2cloud.com">Docs</a>
-      </li>,
+      <NavLink onClick={this.close} location={location} key="home" to="">Home</NavLink>,
+      <NavLink onClick={this.close} location={location} key="docs" to="docs">Docs</NavLink>,
       token != null ?
         <li key="admin" style={{position: 'relative'}}>
           <a className="dropdown-button" href="#!" onClick={this.toggleAdmin}>
@@ -90,16 +104,12 @@ export default class Navbar extends PureComponent {
           </a>
           <ul className="dropdown-content"
               style={{
-                width: 143,
-                left: '50%',
-                transform: 'translateX(-50%)',
-                position: 'absolute',
-                opacity: 1,
+                ...DROPDOWN_STYLE,
                 display: adminOpen ? 'block' : 'none'
               }}>
-            <NavLink location={location} key="apps" to="applications">Applications</NavLink>
+            <NavLink onClick={this.close} location={location} key="apps" to="admin">Admin</NavLink>
             <li className="divider"/>
-            <li><a href="#" onClick={this.logout}>Log Out</a></li>
+            <li onClick={this.close}><a href="#" onClick={this.logout}>Log Out</a></li>
           </ul>
         </li> :
         <li key="login"><a href={this.getLoginUrl()}>Log In</a></li>
@@ -120,14 +130,7 @@ export default class Navbar extends PureComponent {
           </ul>
           <div className="hide-on-large-only">
             {
-              open ? <div style={{
-                position: 'fixed',
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                backgroundColor: 'rgba(0,0,0,0.2)'
-              }} onClick={this.close}></div> : null
+              open ? <div style={BACKDROP_STYLE} onClick={this.close}></div> : null
             }
             <ul className="side-nav" style={{transform: `translateX(${open ? 0 : '-100%'})`}}>
               {links}
