@@ -7,16 +7,26 @@ const BEARER = 'Bearer',
   START = 'X-Start',
   TOTAL_COUNT = 'X-Total-Count';
 
+const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/,
+  isId = id => typeof id === 'string' && UUID_REGEX.test(id),
+  INVALID_ID_PROMISE = Promise.reject(new Error('Invalid ID!'));
+
 const toError = obj => {
   if (obj instanceof Error) {
     return obj;
   }
 
-  if (obj && _.isObject(obj) && true) {
-
+  if (obj && _.isObject(obj) && _.isArray(obj.requestErrors) && obj.requestErrors.length > 0) {
+    return Promise.reject(
+      new Error(
+        obj.requestErrors
+          .map(({message}) => message)
+          .join('\n')
+      )
+    );
   }
 
-  return new Error('Unknown error occurred!');
+  return Promise.reject(new Error('Unknown error occurred!'));
 };
 
 
@@ -33,6 +43,7 @@ export default class crud {
     if (!this._token) {
       return null;
     }
+
     return {
       Authorization: [BEARER, this._token.access_token].join(' ')
     };
@@ -52,23 +63,28 @@ export default class crud {
 
       return Promise.reject(res.json());
     }).then(
-      ([start, totalCount, results]) => ({start, totalCount, results})
-    ).catch(toError);
+      ([start, totalCount, results]) => ({start, totalCount, results}),
+      toError
+    );
   }
 
   get(id) {
-    if (typeof id !== 'string' || id.trim().length == 0) {
-      return Promise.reject(new Error('Invalid ID'));
+    if (!isId(id)) {
+      return INVALID_ID_PROMISE;
     }
 
     return fetch(join(this._baseUrl, id), {
       headers: this.getAuthHeader()
-    }).then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(res.json());
-    }).catch(toError)
+    }).then(
+      res => {
+        if (res.ok) {
+          return res.json();
+        }
+
+        return res.json().then(res => Promise.reject(res));
+      },
+      toError
+    );
   }
 
   save(data) {
@@ -102,18 +118,38 @@ export default class crud {
       res => {
         if (res.ok) {
           return res.json();
-        } else {
-          return Promise.reject(res.json());
         }
+
+        return res.json().then(res => Promise.reject(res));
       }
     ).then(
-      json => JSOG.decode(json)
-    ).then(
-      result => {
+      json => {
+        const decoded = JSOG.decode(json);
         if (single) {
-          return result[0];
+          return decoded[0];
         }
+        return decoded;
+      },
+      toError
+    );
+  }
+
+  destroyId(id) {
+    if (!isId(id)) {
+      return INVALID_ID_PROMISE;
+    }
+
+    return fetch(join(this._baseUrl, id), {
+      method: 'DELETE',
+      headers: this.getAuthHeader()
+    }).then(
+      res => {
+        if (res.ok) {
+          return Promise.resolve();
+        }
+
+        return res.json().then(toError);
       }
-    ).catch(toError);
+    )
   }
 }

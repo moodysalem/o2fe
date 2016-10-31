@@ -9,6 +9,10 @@ import dao from "./util/dao";
 import NotificationSystem from "react-notification-system";
 import setTitle from './util/setTitle';
 
+const NOTIFICATION_DEFAULTS = {
+  autoDismiss: 20
+};
+
 export default class App extends PureComponent {
   static propTypes = {
     config: CONFIG_SHAPE,
@@ -56,7 +60,7 @@ export default class App extends PureComponent {
     if (message instanceof Error) {
       message = message.message;
     }
-    this.refs.ns.addNotification({message, ...options});
+    this.refs.ns.addNotification({...NOTIFICATION_DEFAULTS, message, ...options});
   };
 
   logout = () => {

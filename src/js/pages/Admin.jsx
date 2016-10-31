@@ -6,6 +6,7 @@ import Pagination from "./comps/Pagination";
 import {pageParams} from "../util/params";
 import Modal from "./comps/Modal";
 import {replace} from "../util/replace";
+import _ from "underscore";
 
 const ApplicationCard = ({application:{id, name, description, supportEmail}, onEdit, onDelete}) => (
   <div className="card" key={id}>
@@ -151,7 +152,8 @@ const EditApplicationModal = ({application, open, onSave, onChange, onClose, ...
 export default class Admin extends Component {
   static contextTypes = {
     dao: PropTypes.object.isRequired,
-    onError: PropTypes.func.isRequired
+    onError: PropTypes.func.isRequired,
+    onSuccess: PropTypes.func.isRequired
   };
 
   componentDidMount() {
@@ -193,17 +195,38 @@ export default class Admin extends Component {
     dao.applications.save(editing)
       .then(
         saved => {
-          this.setState({applications: replace(this.state.applications, saved)})
+          onSuccess(`Saved ${saved.name}!`);
+          if (editing.id) {
+            this.setState({applications: replace(this.state.applications, saved)})
+          } else {
+            this.loadApps();
+          }
         },
         err => {
           onError(err);
           this.setState({editing});
         }
-      )
+      );
   };
 
   deleteApplication = (deleting) => this.setState({deleting});
   cancelDelete = () => this.deleteApplication(null);
+  confirmDelete = () => {
+    const {deleting} = this.state;
+    const {dao, onError, onSuccess} = this.context;
+    this.setState({deleting: null});
+
+    dao.applications.destroyId(deleting.id)
+      .then(
+        () => {
+          onSuccess(`Deleted ${deleting.name}!`);
+          this.setState({applications: _.without(this.state.applications, deleting)});
+        },
+        err => {
+          onError(err);
+        }
+      );
+  };
 
   render() {
     const {applications, totalCount, pageInfo, deleting, editing} = this.state;
@@ -213,6 +236,7 @@ export default class Admin extends Component {
         <ConfirmActionModal
           open={deleting != null}
           action={deleting ? `Delete ${deleting.name}?` : null}
+          onConfirm={this.confirmDelete}
           onClose={this.cancelDelete}/>
         <EditApplicationModal
           open={editing != null}
