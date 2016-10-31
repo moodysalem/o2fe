@@ -133,7 +133,7 @@ const ConfirmActionModal = ({action, onConfirm, onClose, ...rest}) => (
 );
 
 const EditApplicationModal = ({application, open, onSave, onChange, onClose, ...rest}) => (
-  <Modal onClose={onClose} open={open} {...rest}>
+  <Modal fixedFooter={true} onClose={onClose} open={open} {...rest}>
     <Modal.Content>
       <h4>{application != null && application.id ? 'Edit Application' : 'Create Application'}</h4>
       {

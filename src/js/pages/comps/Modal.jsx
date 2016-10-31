@@ -37,7 +37,8 @@ export default class Modal extends PureComponent {
 
   static propTypes = {
     open: PropTypes.bool.isRequired,
-    onClose: PropTypes.func.isRequired
+    onClose: PropTypes.func.isRequired,
+    fixedFooter: PropTypes.bool
   };
   static defaultProps = {};
 
@@ -54,7 +55,7 @@ export default class Modal extends PureComponent {
   };
 
   render() {
-    const {className, children, open, style, onClose, ...rest} = this.props;
+    const {className, children, open, style, fixedFooter, onClose, ...rest} = this.props;
 
     return (
       <div onKeyDown={this.closeOnEscape} ref="_modal" tabIndex="-1">
@@ -73,7 +74,8 @@ export default class Modal extends PureComponent {
           transitionLeaveTimeout={300}>
           {
             open ? (
-              <div className={cx('modal', className)} style={{...style, zIndex: 1001, display: 'block'}} {...rest}>
+              <div className={cx('modal', {'modal-fixed-footer': fixedFooter}, className)}
+                   style={{...style, zIndex: 1001, display: 'block'}} {...rest}>
                 {children}
               </div>
             ) : null
