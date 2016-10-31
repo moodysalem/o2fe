@@ -12,7 +12,7 @@ export default class Docs extends PureComponent {
 
     return (
       <div className="container">
-        <h1>Documentation</h1>
+        <h1>Docs</h1>
         <h2>Introduction</h2>
         <p className="flow-text">
           This specification describes the functionality and the expected behavior of this OAuth2 server.

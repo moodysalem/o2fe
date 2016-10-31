@@ -3,6 +3,7 @@ import {render} from "react-dom";
 import App from "./App";
 import getConfig from "./util/getConfig";
 import {getTokenFromHash} from "./util/readHash";
+import '../css/style.scss';
 
 const appEl = document.getElementById('app');
 

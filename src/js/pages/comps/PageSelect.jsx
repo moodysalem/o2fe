@@ -62,7 +62,7 @@ export default class PageSelect extends PureComponent {
             .map(page => {
               return (
                 <Page key={page} onClick={() => this.handleSelectPage(page)} active={page == value}>
-                  {page}
+                  {page + 1}
                 </Page>
               );
             })

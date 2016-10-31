@@ -116,7 +116,10 @@ export default class App extends PureComponent {
             <IndexRoute component={Home} onEnter={e => setTitle('Home')}/>
             <Route path="docs" component={Docs} onEnter={e => setTitle('Docs')}/>
             <Route path="admin" component={Admin} onEnter={e => setTitle('Admin')}/>
-            <Route path="applications/:id/:section" component={Application} onEnter={e => setTitle('Application')}/>
+            <Route path="applications/:id" component={Application} onEnter={e => setTitle('Application')}>
+              <Route path="scopes" component={Application.Scopes} onEnter={e => setTitle('Scopes')}/>
+              <Route path="clients" component={Application.Clients} onEnter={e => setTitle('Clients')}/>
+            </Route>
             <Route path="*" component={NotFound} onEnter={e => setTitle('Not Found')}/>
           </Route>
         </Router>
