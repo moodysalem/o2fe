@@ -10,7 +10,8 @@ import NotificationSystem from "react-notification-system";
 import setTitle from './util/setTitle';
 
 const NOTIFICATION_DEFAULTS = {
-  autoDismiss: 20
+  autoDismiss: 20,
+  position: 'bc'
 };
 
 export default class App extends PureComponent {
