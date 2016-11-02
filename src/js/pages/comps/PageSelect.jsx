@@ -20,7 +20,7 @@ export class Page extends PureComponent {
     const {active, disabled, onClick, children, ...rest} = this.props;
 
     return (
-      <li onClick={disabled ? null : this.handleClick} className={cx({active, disabled})} {...rest}>
+      <li onClick={disabled ? null : this.handleClick} className={cx({'active indigo': active, disabled})} {...rest}>
         <a href="#" onClick={this.doNothing}>
           {children}
         </a>

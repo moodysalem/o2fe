@@ -1,6 +1,6 @@
 import React, {DOM, PropTypes, Component, PureComponent} from "react";
 import {Link} from "react-router";
-import ProgressBar from "./comps/ProgressBar";
+import Preloader from "./comps/Preloader";
 import join from "url-join";
 import Pagination from "./comps/Pagination";
 import {pageParams} from "../util/params";
@@ -8,6 +8,7 @@ import Modal from "./comps/Modal";
 import {replace} from "../util/replace";
 import _ from "underscore";
 import EmptyState from "./comps/EmptyState";
+import ConfirmActionModal from "./comps/ConfirmActionModal";
 
 const ApplicationCard = ({application:{id, name, description, supportEmail}, onEdit, onDelete}) => (
   <div className="card" key={id}>
@@ -36,7 +37,8 @@ const ApplicationCard = ({application:{id, name, description, supportEmail}, onE
 class ApplicationForm extends PureComponent {
   static propTypes = {
     value: PropTypes.object.isRequired,
-    onChange: PropTypes.func.isRequired
+    onChange: PropTypes.func.isRequired,
+    onSubmit: PropTypes.func.isRequired
   };
 
   handleChange = (more) => this.props.onChange({...this.props.value, ...more});
@@ -52,12 +54,15 @@ class ApplicationForm extends PureComponent {
   };
 
   render() {
-    const {value} = this.props;
+    const {value, onSubmit} = this.props;
 
     const {name, description, faviconUrl, googleCredentials, logoUrl, stylesheetUrl, supportEmail} = value;
 
     return (
-      <form onSubmit={e => e.preventDefault()}>
+      <form onSubmit={e => {
+        e.preventDefault();
+        onSubmit(e);
+      }}>
         <fieldset>
           <div>
             <label>Name</label>
@@ -121,25 +126,13 @@ class ApplicationForm extends PureComponent {
   }
 }
 
-const ConfirmActionModal = ({action, onConfirm, onClose, ...rest}) => (
-  <Modal onClose={onClose} {...rest}>
-    <Modal.Content>
-      <h4>{action}</h4>
-    </Modal.Content>
-    <Modal.Footer>
-      <Modal.Action onClick={onConfirm}>Continue</Modal.Action>
-      <Modal.Action onClick={onClose}>Cancel</Modal.Action>
-    </Modal.Footer>
-  </Modal>
-);
-
 const EditApplicationModal = ({application, open, onSave, onChange, onClose, ...rest}) => (
   <Modal fixedFooter={true} onClose={onClose} open={open} {...rest}>
     <Modal.Content>
       <h4>{application != null && application.id ? 'Edit Application' : 'Create Application'}</h4>
       {
         open ? (
-          <ApplicationForm value={application} onChange={onChange}/>
+          <ApplicationForm onSubmit={onSave} value={application} onChange={onChange}/>
         ) : null
       }
     </Modal.Content>
@@ -233,7 +226,7 @@ export default class Admin extends Component {
     const {applications} = this.state;
 
     if (applications == null) {
-      return <ProgressBar/>;
+      return <Preloader centered={true}/>;
     }
 
     if (applications.length == 0) {
@@ -264,6 +257,7 @@ export default class Admin extends Component {
         <ConfirmActionModal
           open={deleting != null}
           action={deleting ? `Delete ${deleting.name}?` : null}
+          typeConfirm={deleting ? deleting.name : null}
           onConfirm={this.confirmDelete}
           onClose={this.cancelDelete}/>
         <EditApplicationModal
@@ -278,7 +272,9 @@ export default class Admin extends Component {
             Your Apps
           </h1>
           <div className="flex-shrink-0">
-            <button onClick={this.createApplication} className="btn"><i className="fa fa-plus"/> Create</button>
+            <button onClick={this.createApplication} className="btn indigo btn-floating">
+              <i className="fa fa-plus"/>
+            </button>
           </div>
         </header>
 

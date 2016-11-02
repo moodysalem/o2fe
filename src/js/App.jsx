@@ -1,4 +1,4 @@
-import {browserHistory, Router, Route, IndexRoute} from "react-router";
+import {browserHistory, Router, Route, IndexRoute, Redirect} from "react-router";
 import React, {PropTypes, PureComponent} from "react";
 import {NotFound, Home, Docs, Admin, Application} from "./pages/index";
 import {CONFIG_SHAPE, TOKEN_SHAPE} from "./util/shapes";
@@ -129,6 +129,7 @@ export default class App extends PureComponent {
                      onEnter={e => setTitle('Application')}>
                 <Route path="scopes" component={Application.Scopes} onEnter={e => setTitle('Scopes')}/>
                 <Route path="clients" component={Application.Clients} onEnter={e => setTitle('Clients')}/>
+                <Redirect from="*" to="scopes"/>
               </Route>
             </Route>
             <Route path="*" component={NotFound} onEnter={e => setTitle('Not Found')}/>

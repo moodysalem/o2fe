@@ -10,8 +10,12 @@ const Content = ({children, className, ...rest}) => (
   <div className={cx('modal-content', className)} {...rest}>{children}</div>
 );
 
-const Action = ({children, ...rest}) => (
-  <a className="modal-action waves-effect waves-green btn-flat" {...rest}>{children}</a>
+const Action = ({children, disabled, onClick, ...rest}) => (
+  <a className={cx('modal-action waves-effect waves-green btn-flat', {disabled})} onClick={e => {
+    if (!disabled) {
+      onClick(e);
+    }
+  }} {...rest}>{children}</a>
 );
 
 const BACKDROP_STYLE = {
