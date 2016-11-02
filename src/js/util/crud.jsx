@@ -9,7 +9,7 @@ const BEARER = 'Bearer',
 
 const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/,
   isId = id => typeof id === 'string' && UUID_REGEX.test(id),
-  INVALID_ID_PROMISE = Promise.reject(new Error('Invalid ID!'));
+  invalidIdPromise = () => Promise.reject(new Error('Invalid ID!'));
 
 const toError = obj => {
   if (obj instanceof Error) {
@@ -70,7 +70,7 @@ export default class crud {
 
   get(id) {
     if (!isId(id)) {
-      return INVALID_ID_PROMISE;
+      return invalidIdPromise();
     }
 
     return fetch(join(this._baseUrl, id), {
@@ -136,7 +136,7 @@ export default class crud {
 
   destroyId(id) {
     if (!isId(id)) {
-      return INVALID_ID_PROMISE;
+      return invalidIdPromise();
     }
 
     return fetch(join(this._baseUrl, id), {

@@ -3,7 +3,7 @@ import {Link} from "react-router";
 import cx from "classnames";
 import join from "url-join";
 import {CONFIG_SHAPE, TOKEN_SHAPE} from "../../util/shapes";
-import qs from "qs";
+import getLoginUrl from "../../util/getLoginUrl";
 
 class NavLink extends PureComponent {
   static propTypes = {
@@ -24,7 +24,6 @@ class NavLink extends PureComponent {
   }
 }
 
-const ORIGIN = window.location.origin;
 const BACKDROP_STYLE = {
   position: 'fixed',
   top: 0,
@@ -71,14 +70,6 @@ export default class Navbar extends PureComponent {
   open = () => this.setState({open: true});
   close = () => this.setState({open: false, adminOpen: false});
 
-  getLoginUrl() {
-    const {config} = this.context;
-    const {API_URL, CLIENT_ID} = config;
-
-    return `${join(API_URL, 'authorize')}` +
-      `?${qs.stringify({client_id: CLIENT_ID, redirect_uri: ORIGIN, response_type: 'token'})}`;
-  }
-
   logout = (e) => {
     e.preventDefault();
     this.context.onLogOut();
@@ -90,7 +81,7 @@ export default class Navbar extends PureComponent {
   };
 
   render() {
-    const {token} = this.context,
+    const {token, config} = this.context,
       {location} = this.props,
       {open, adminOpen} = this.state;
 
@@ -112,7 +103,7 @@ export default class Navbar extends PureComponent {
             <li onClick={this.close}><a href="#" onClick={this.logout}>Log Out</a></li>
           </ul>
         </li> :
-        <li key="login"><a href={this.getLoginUrl()}>Log In</a></li>
+        <li key="login"><a href={getLoginUrl(config)}>Log In</a></li>
     ];
 
     return (

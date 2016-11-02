@@ -7,6 +7,7 @@ import {pageParams} from "../util/params";
 import Modal from "./comps/Modal";
 import {replace} from "../util/replace";
 import _ from "underscore";
+import EmptyState from "./comps/EmptyState";
 
 const ApplicationCard = ({application:{id, name, description, supportEmail}, onEdit, onDelete}) => (
   <div className="card" key={id}>
@@ -228,8 +229,35 @@ export default class Admin extends Component {
       );
   };
 
+  renderApps() {
+    const {applications} = this.state;
+
+    if (applications == null) {
+      return <ProgressBar/>;
+    }
+
+    if (applications.length == 0) {
+      return (
+        <EmptyState style={{textAlign: 'center'}}>
+          <div>There's nothing here</div>
+        </EmptyState>
+      );
+    }
+
+    return applications.map(
+      app => {
+        return (
+          <ApplicationCard application={app} key={app.id}
+                           onEdit={() => this.editApplication(app)}
+                           onDelete={() => this.deleteApplication(app)}
+          />
+        );
+      }
+    );
+  }
+
   render() {
-    const {applications, totalCount, pageInfo, deleting, editing} = this.state;
+    const {totalCount, pageInfo, deleting, editing} = this.state;
 
     return (
       <div className="container">
@@ -256,16 +284,7 @@ export default class Admin extends Component {
 
         <article style={{marginTop: 30, marginBottom: 30}}>
           {
-            applications != null ? applications.map(
-              app => {
-                return (
-                  <ApplicationCard application={app} key={app.id}
-                                   onEdit={() => this.editApplication(app)}
-                                   onDelete={() => this.deleteApplication(app)}
-                  />
-                );
-              }
-            ) : <ProgressBar/>
+            this.renderApps()
           }
         </article>
 
