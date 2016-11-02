@@ -27,7 +27,7 @@ export default class ConfirmActionModal extends PureComponent {
     if (typeConfirm == null || typeConfirm == this.state.confirm) {
       onConfirm();
     }
-  }
+  };
 
   handleEnter = e => {
     if (e.keyCode == 13) {

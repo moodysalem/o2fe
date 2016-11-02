@@ -12,7 +12,10 @@ export default class dao {
     this._config = config;
     this._token = token;
 
-    this.applications = new crud({baseUrl: join(this._config.API_URL, 'applications'), token});
+    const makeCrud = url => new crud({baseUrl: join(this._config.API_URL, url), token});
+    this.applications = makeCrud('applications');
+    this.scopes = makeCrud('scopes');
+    this.clients = makeCrud('clients');
   }
 
   withToken(token) {
