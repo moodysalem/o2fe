@@ -6,8 +6,8 @@ import _ from "underscore";
 const FLOWS = [
   {value: 'IMPLICIT', label: 'Implicit Flow'},
   {value: 'CODE', label: 'Code Flow'},
-  {value: 'RESOURCE_OWNER_CREDENTIALS', label: 'Resource Owner Credentials'},
-  {value: 'CLIENT_CREDENTIALS', label: 'Client Credentials'}
+  {value: 'CLIENT_CREDENTIALS', label: 'Client Credentials'},
+  {value: 'RESOURCE_OWNER_CREDENTIALS', label: 'Resource Owner Credentials'}
 ];
 
 export default class ClientForm extends PureComponent {
@@ -33,7 +33,7 @@ export default class ClientForm extends PureComponent {
 
   render() {
     const {value, onSubmit} = this.props;
-    const {name, tokenTtl, loginCodeTtl, refreshTokenTtl, confidential, flows, uris} = value;
+    const {name, tokenTtl, loginCodeTtl, refreshTokenTtl, confidential, flows, uris, showPromptNoScopes} = value;
 
     const flowIndex = _.countBy(flows, f => f);
 
@@ -111,6 +111,15 @@ export default class ClientForm extends PureComponent {
             <MultiTextInput type="url" value={uris} placeholder="https://google.com"
                             onChange={uris => this.handleChange({uris})}
                             emptyState={<strong>No configured URIs</strong>}/>
+          </div>
+        </fieldset>
+
+        <fieldset style={{marginTop: 20}}>
+          <legend>Other</legend>
+          <div>
+            <label>Always Show Scopes Prompt</label>
+            <Switch switched={showPromptNoScopes}
+                    onSwitch={showPromptNoScopes => this.handleChange({showPromptNoScopes})}/>
           </div>
         </fieldset>
       </form>
