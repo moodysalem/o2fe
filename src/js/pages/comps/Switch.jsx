@@ -4,21 +4,28 @@ import cx from "classnames";
 export default class Switch extends PureComponent {
   static propTypes = {
     switched: PropTypes.bool,
-    onSwitch: PropTypes.func.isRequired
+    onSwitch: PropTypes.func.isRequired,
+    onText: PropTypes.node,
+    offText: PropTypes.node,
+    id: PropTypes.string
   };
-  static defaultProps = {};
+  static defaultProps = {
+    onText: 'Yes',
+    offText: 'No',
+    id: null
+  };
 
   render() {
-    const {switched, onSwitch, disabled, className} = this.props;
+    const {id, switched, onSwitch, disabled, className, offText, onText, ...rest} = this.props;
 
     return (
-      <div className={cx('switch', className)}>
+      <div className={cx('switch', className)} {...rest}>
         <label>
-          Off
-          <input type="checkbox" disabled={disabled}
+          {offText}
+          <input id={id} type="checkbox" disabled={disabled}
                  checked={switched} onChange={e => onSwitch(e.target.checked)}/>
           <span className="lever"/>
-          On
+          {onText}
         </label>
       </div>
     );

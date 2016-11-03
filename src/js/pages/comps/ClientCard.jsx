@@ -54,8 +54,6 @@ export default class ClientCard extends PureComponent {
               </div>
             </div>
 
-            <hr />
-
             <div>
               <label>Flows</label>
               <div>{flows.join(', ')}</div>

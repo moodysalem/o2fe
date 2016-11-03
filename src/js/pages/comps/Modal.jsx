@@ -79,7 +79,7 @@ export default class Modal extends PureComponent {
           {
             open ? (
               <div className={cx('modal', {'modal-fixed-footer': fixedFooter}, className)}
-                   style={{...style, zIndex: 1001, display: 'block'}} {...rest}>
+                   style={{...style, top: '10%', zIndex: 1001, display: 'block'}} {...rest}>
                 {children}
               </div>
             ) : null

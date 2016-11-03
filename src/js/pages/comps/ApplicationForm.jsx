@@ -30,6 +30,7 @@ export default class ApplicationForm extends PureComponent {
         onSubmit(e);
       }}>
         <fieldset>
+          <legend>Important Details</legend>
           <div>
             <label>Name</label>
             <input type="text" value={name || ''} onChange={e => this.handleChange({name: e.target.value})}
@@ -52,6 +53,7 @@ export default class ApplicationForm extends PureComponent {
         </fieldset>
 
         <fieldset style={{marginTop: 24}}>
+          <legend>Customization</legend>
           <div>
             <label>Favicon URL</label>
             <input type="text" value={faviconUrl || ''} onChange={e => this.handleChange({faviconUrl: e.target.value})}
@@ -73,6 +75,7 @@ export default class ApplicationForm extends PureComponent {
         </fieldset>
 
         <fieldset style={{marginTop: 24}}>
+          <legend>Google Log In</legend>
           <div>
             <label>Google Client ID</label>
             <input type="text" value={googleCredentials ? (googleCredentials.id || '') : ''}
