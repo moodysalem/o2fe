@@ -1,153 +1,20 @@
 import React, {DOM, PropTypes, Component, PureComponent} from "react";
 import {Link} from "react-router";
 import Preloader from "./comps/Preloader";
-import join from "url-join";
 import Pagination from "./comps/Pagination";
 import {pageParams} from "../util/params";
-import Modal from "./comps/Modal";
 import {replace} from "../util/replace";
 import _ from "underscore";
 import EmptyState from "./comps/EmptyState";
 import ConfirmActionModal from "./comps/ConfirmActionModal";
-
-const ApplicationCard = ({application:{id, name, description, supportEmail}, onEdit, onDelete}) => (
-  <div className="card" key={id}>
-    <div className="card-content">
-      <span className="card-title">
-        {name}
-        <small style={{marginLeft: 4}}>{supportEmail}</small>
-      </span>
-      <p>{description}</p>
-    </div>
-    <div className="card-action">
-      <Link to={join('applications', id, 'clients')}>Clients</Link>
-      <Link to={join('applications', id, 'scopes')}>Scopes</Link>
-      <a href="#" onClick={(e) => {
-        e.preventDefault();
-        onEdit();
-      }}>Edit</a>
-      <a href="#" className="red-text" onClick={(e) => {
-        e.preventDefault();
-        onDelete();
-      }}>Delete</a>
-    </div>
-  </div>
-);
-
-class ApplicationForm extends PureComponent {
-  static propTypes = {
-    value: PropTypes.object.isRequired,
-    onChange: PropTypes.func.isRequired,
-    onSubmit: PropTypes.func.isRequired
-  };
-
-  handleChange = (more) => this.props.onChange({...this.props.value, ...more});
-  handleCredentialsChange = more => {
-    const {googleCredentials} = this.props.value;
-    const after = {...googleCredentials, ...more};
-
-    if ((!after.id || after.id.length == 0) && (!after.secret || after.secret.length == 0)) {
-      this.handleChange({googleCredentials: null});
-    } else {
-      this.handleChange({googleCredentials: after});
-    }
-  };
-
-  render() {
-    const {value, onSubmit} = this.props;
-
-    const {name, description, faviconUrl, googleCredentials, logoUrl, stylesheetUrl, supportEmail} = value;
-
-    return (
-      <form onSubmit={e => {
-        e.preventDefault();
-        onSubmit(e);
-      }}>
-        <fieldset>
-          <div>
-            <label>Name</label>
-            <input type="text" value={name || ''} onChange={e => this.handleChange({name: e.target.value})}
-                   className="validate"
-                   required placeholder="Name"/>
-          </div>
-
-          <div>
-            <label>Support E-mail</label>
-            <input type="text" value={supportEmail || ''}
-                   onChange={e => this.handleChange({supportEmail: e.target.value})}
-                   required placeholder="Support E-mail"/>
-          </div>
-
-          <div>
-            <label>Description</label>
-            <textarea className="materialize-textarea" value={description || ''} placeholder="Description"
-                      onChange={e => this.handleChange({description: e.target.value})}/>
-          </div>
-        </fieldset>
-
-        <fieldset style={{marginTop: 24}}>
-          <div>
-            <label>Favicon URL</label>
-            <input type="text" value={faviconUrl || ''} onChange={e => this.handleChange({faviconUrl: e.target.value})}
-                   placeholder="Favicon URL"/>
-          </div>
-
-          <div>
-            <label>Logo URL</label>
-            <input type="text" value={logoUrl || ''} onChange={e => this.handleChange({logoUrl: e.target.value})}
-                   placeholder="Logo URL"/>
-          </div>
-
-          <div>
-            <label>Stylesheet URL</label>
-            <input type="text" value={stylesheetUrl || ''}
-                   onChange={e => this.handleChange({stylesheetUrl: e.target.value})}
-                   placeholder="Stylesheet URL"/>
-          </div>
-        </fieldset>
-
-        <fieldset style={{marginTop: 24}}>
-          <div>
-            <label>Google Client ID</label>
-            <input type="text" value={googleCredentials ? (googleCredentials.id || '') : ''}
-                   onChange={e => this.handleCredentialsChange({id: e.target.value})}
-                   placeholder="Google Client ID"/>
-          </div>
-
-          <div>
-            <label>Google Client Secret</label>
-            <input type="text" value={googleCredentials ? (googleCredentials.secret || '') : ''}
-                   onChange={e => this.handleCredentialsChange({secret: e.target.value})}
-                   placeholder="Google Client Secret"/>
-          </div>
-        </fieldset>
-      </form>
-    );
-  }
-}
-
-const EditApplicationModal = ({application, open, onSave, onChange, onClose, ...rest}) => (
-  <Modal fixedFooter={true} onClose={onClose} open={open} {...rest}>
-    <Modal.Content>
-      <h4>{application != null && application.id ? 'Edit Application' : 'Create Application'}</h4>
-      {
-        open ? (
-          <ApplicationForm onSubmit={onSave} value={application} onChange={onChange}/>
-        ) : null
-      }
-    </Modal.Content>
-    <Modal.Footer>
-      <Modal.Action onClick={onSave}>Save</Modal.Action>
-      <Modal.Action onClick={onClose}>Cancel</Modal.Action>
-    </Modal.Footer>
-  </Modal>
-);
+import ApplicationCard from "./comps/ApplicationCard";
+import ApplicationModal from "./comps/ApplicationModal";
+import {NOTIFICATION_HANDLERS} from "../util/shapes";
 
 export default class Admin extends Component {
   static contextTypes = {
     dao: PropTypes.object.isRequired,
-    onError: PropTypes.func.isRequired,
-    onSuccess: PropTypes.func.isRequired
+    ...NOTIFICATION_HANDLERS
   };
 
   componentDidMount() {
@@ -260,7 +127,7 @@ export default class Admin extends Component {
           typeConfirm={deleting ? deleting.name : null}
           onConfirm={this.confirmDelete}
           onClose={this.cancelDelete}/>
-        <EditApplicationModal
+        <ApplicationModal
           open={editing != null}
           onClose={this.cancelEdit}
           onChange={this.editApplication}

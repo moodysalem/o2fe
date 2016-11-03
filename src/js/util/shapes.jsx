@@ -17,3 +17,10 @@ export const TOKEN_SHAPE = PropTypes.shape({
   application_id: PropTypes.string.isRequired,
   token_type: PropTypes.oneOf(['bearer']).isRequired
 });
+
+export const NOTIFICATION_HANDLERS = {
+  onError: PropTypes.func.isRequired,
+  onInfo: PropTypes.func.isRequired,
+  onSuccess: PropTypes.func.isRequired,
+  onWarning: PropTypes.func.isRequired
+};

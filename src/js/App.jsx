@@ -1,7 +1,7 @@
 import {browserHistory, Router, Route, IndexRoute, Redirect} from "react-router";
 import React, {PropTypes, PureComponent} from "react";
 import {NotFound, Home, Docs, Admin, Application} from "./pages/index";
-import {CONFIG_SHAPE, TOKEN_SHAPE} from "./util/shapes";
+import {CONFIG_SHAPE, TOKEN_SHAPE, NOTIFICATION_HANDLERS} from "./util/shapes";
 import {getToken, saveToken, clearToken} from "./util/token";
 import ProgressBar from "./pages/comps/ProgressBar";
 import ContentWrapper from "./pages/comps/ContentWrapper";
@@ -35,10 +35,7 @@ export default class App extends PureComponent {
     config: CONFIG_SHAPE,
     dao: PropTypes.object.isRequired,
     onLogOut: PropTypes.func.isRequired,
-    onError: PropTypes.func.isRequired,
-    onInfo: PropTypes.func.isRequired,
-    onSuccess: PropTypes.func.isRequired,
-    onWarning: PropTypes.func.isRequired
+    ...NOTIFICATION_HANDLERS
   };
 
   getChildContext() {
@@ -60,6 +57,7 @@ export default class App extends PureComponent {
   info = (message, options) => this.msg(message, {...options, level: 'info'});
   msg = (message, options) => {
     if (message instanceof Error) {
+      console.error(message);
       message = message.message;
     }
     this.refs.ns.addNotification({...NOTIFICATION_DEFAULTS, message, ...options});
