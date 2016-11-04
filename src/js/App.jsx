@@ -3,7 +3,7 @@ import React, {PropTypes, PureComponent} from "react";
 import {NotFound, Home, Docs, Admin, Application} from "./pages/index";
 import {CONFIG_SHAPE, TOKEN_SHAPE, NOTIFICATION_HANDLERS} from "./util/shapes";
 import {getToken, saveToken, clearToken} from "./util/token";
-import ProgressBar from "./pages/comps/ProgressBar";
+import Preloader from "./pages/comps/Preloader";
 import ContentWrapper from "./pages/comps/ContentWrapper";
 import dao from "./util/dao";
 import NotificationSystem from "react-notification-system";
@@ -108,7 +108,7 @@ export default class App extends PureComponent {
     if (!loaded) {
       return (
         <div className="container">
-          <ProgressBar/>
+          <Preloader/>
         </div>
       );
     }
