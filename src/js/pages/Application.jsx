@@ -60,7 +60,7 @@ export default class Application extends PureComponent {
         <div className="display-flex align-items-center flex-wrap-wrap justify-content-flex-end">
           <h1 className="flex-grow-1">{name}</h1>
           <div className="flex-shrink-0">
-            <Link className="btn indigo" to="admin">
+            <Link className="btn blue-grey darken-3" to="admin">
               <i className="fa fa-arrow-left"/> Back
             </Link>
           </div>

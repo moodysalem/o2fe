@@ -40,7 +40,7 @@ module.exports = {
         test: /\.(jpe?g|png|gif|svg)$/i,
         loaders: [
           // limit of 1mb
-          'url?limit=1000000&hash=sha512&digest=hex&name=[hash].[ext]',
+          'url?limit=2000000&hash=sha512&digest=hex&name=[hash].[ext]',
           // optimize images
           'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false'
         ]

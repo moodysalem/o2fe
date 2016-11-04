@@ -110,7 +110,7 @@ export default class Clients extends PureComponent {
         <div className="display-flex align-items-center">
           <h2 className="flex-grow-1">Clients</h2>
           <div>
-            <button className="btn indigo btn-floating" onClick={this.handleAdd}><i className="fa fa-plus"/></button>
+            <button className="btn blue-grey darken-3 btn-floating" onClick={this.handleAdd}><i className="fa fa-plus"/></button>
           </div>
         </div>
         {
