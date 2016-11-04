@@ -139,7 +139,7 @@ export default class Admin extends Component {
             Your Apps
           </h1>
           <div className="flex-shrink-0">
-            <button onClick={this.createApplication} className="btn indigo btn-floating">
+            <button onClick={this.createApplication} className="btn blue-grey darken-3 btn-floating">
               <i className="fa fa-plus"/>
             </button>
           </div>
