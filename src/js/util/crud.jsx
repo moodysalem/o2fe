@@ -61,7 +61,7 @@ export default class crud {
         ]);
       }
 
-      return Promise.reject(res.json());
+      return res.json().then(json => Promise.reject(json));
     }).then(
       ([start, totalCount, results]) => ({start, totalCount, results}),
       toError
@@ -148,8 +148,8 @@ export default class crud {
           return Promise.resolve();
         }
 
-        return res.json().then(toError);
+        return res.json().then(json => Promise.reject(json));
       }
-    )
+    );
   }
 }
