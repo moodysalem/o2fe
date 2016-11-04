@@ -109,7 +109,7 @@ export default class Navbar extends PureComponent {
     return (
       <nav className="indigo darken-2">
         <div className="nav-wrapper container">
-          <a href="" className="brand-logo">
+          <a href="" className="brand-logo" title={__VERSION__}>
             <i className="fa fa-cloud hide-on-med-and-down" style={{float: 'none'}}/>
             OAuth2Cloud
           </a>

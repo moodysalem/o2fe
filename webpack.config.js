@@ -6,7 +6,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin'),
   path = require('path'),
   webpack = require('webpack');
 
-const env = process.env;
+const env = process.env,
+  version = env.GIT_VERSION || env.npm_package_version;
 
 module.exports = {
   entry: ['whatwg-fetch', './src/js/main.jsx'],
@@ -23,6 +24,9 @@ module.exports = {
     }),
     new webpack.ProvidePlugin({
       Promise: 'bluebird'
+    }),
+    new webpack.DefinePlugin({
+      __VERSION__: `"${version}"`
     })
   ],
 

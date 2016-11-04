@@ -6,16 +6,16 @@
   "scripts": {
     "clean": "rimraf dist/",
     "test": "echo \"Warning: no tests\" && exit 0",
-    "start": "webpack-dev-server --config webpack.config.js",
+    "start": "cross-env GIT_VERSION=$(git describe --always) webpack-dev-server --config webpack.config.js",
     "prebuild": "npm run clean",
-    "build": "webpack --config webpack-prd.config.js",
+    "build": "GIT_VERSION=$(git describe --always) webpack --config webpack-prd.config.js",
     "patch": "npm-release patch",
     "minor": "npm-release minor",
     "major": "npm-release major"
   },
   "author": "Moody Salem <moody.salem@gmail.com>",
   "license": "UNLICENSED",
-  "devDependencies": {
+  "dependencies": {
     "babel-core": "6.17.0",
     "babel-loader": "6.2.5",
     "babel-plugin-transform-class-properties": "6.16.0",
@@ -26,6 +26,7 @@
     "babel-preset-react": "6.16.0",
     "bluebird": "3.4.6",
     "classnames": "2.2.5",
+    "cross-env": "^3.1.3",
     "css-loader": "0.23.0",
     "file-loader": "0.8.5",
     "html-webpack-plugin": "2.22.0",
