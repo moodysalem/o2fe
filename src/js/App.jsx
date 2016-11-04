@@ -11,8 +11,8 @@ import RequireLogin from "./pages/comps/RequireLogIn";
 import setTitle from "./util/setTitle";
 
 const NOTIFICATION_DEFAULTS = {
-  autoDismiss: 20,
-  position: 'bc'
+  autoDismiss: 7,
+  position: 'tc'
 };
 
 export default class App extends PureComponent {

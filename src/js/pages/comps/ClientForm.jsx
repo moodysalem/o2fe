@@ -25,7 +25,11 @@ export default class ClientForm extends PureComponent {
     const {value} = this.props;
     const {flows} = value;
     if (switched) {
-      this.handleChange({flows: _.uniq([flow].concat(flows))});
+      if (flows) {
+        this.handleChange({flows: _.uniq([flow].concat(flows))});
+      } else {
+        this.handleChange({flows: [flow]});
+      }
     } else {
       this.handleChange({flows: _.without(flows, flow)});
     }
@@ -93,9 +97,7 @@ export default class ClientForm extends PureComponent {
             {
               FLOWS.map(({value, label}) => (
                 <div className="flex-grow-1" key={value}>
-                  <label htmlFor={value}>
-                    {label}
-                  </label>
+                  <label htmlFor={value}>{label}</label>
                   <Switch id={value} onSwitch={(switched) => this.handleFlowSwitch(value, switched)}
                           switched={Boolean(flowIndex[value])}/>
                 </div>
