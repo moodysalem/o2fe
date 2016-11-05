@@ -85,17 +85,18 @@ export default class Application extends PureComponent {
           </div>
         </div>
 
-        <Tabs style={{marginTop: 20}} tabs={[
+        <Tabs style={{marginTop: 20, marginBottom: 20}} tabs={[
           {path: `applications/${id}/scopes`, label: 'Scopes'},
           {path: `applications/${id}/users`, label: 'Users'},
           {path: `applications/${id}/clients`, label: 'Clients'}
         ]}/>
 
-        <div className="container">
+        <div className="container" style={{marginBottom: 40}}>
           {
             children ? cloneElement(Children.only(children), {application}) : null
           }
         </div>
+
       </div>
     );
   }
