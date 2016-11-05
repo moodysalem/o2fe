@@ -55,7 +55,7 @@ export default class MultiTextInput extends PureComponent {
                              onChange={e => this.handleChange(e.target.value, ix)}/>
                       <button type="button" className="btn flex-shrink-0 btn-flat" style={{marginLeft: 8}}
                               onClick={() => this.removeIx(ix)}>
-                        <i className="fa fa-trash red-text"/>
+                        <i className="fa fa-trash blue-grey-text text-darken-3"/>
                       </button>
                     </div>
                   )
@@ -66,7 +66,7 @@ export default class MultiTextInput extends PureComponent {
         </div>
         <div style={{textAlign: 'center'}}>
           <button type="button" className="btn btn-flat" onClick={this.add}>
-            <i className="fa fa-plus green-text"/>
+            <i className="fa fa-plus blue-grey-text text-darken-3"/>
           </button>
         </div>
       </div>

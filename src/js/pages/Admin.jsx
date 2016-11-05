@@ -1,15 +1,12 @@
 import React, {DOM, PropTypes, Component, PureComponent} from "react";
 import {Link} from "react-router";
-import Preloader from "./comps/Preloader";
-import Pagination from "./comps/Pagination";
-import {pageParams} from "../util/params";
-import {replace} from "../util/replace";
-import _ from "underscore";
-import EmptyState from "./comps/EmptyState";
 import ConfirmActionModal from "./comps/ConfirmActionModal";
 import ApplicationCard from "./comps/ApplicationCard";
 import ApplicationModal from "./comps/ApplicationModal";
 import {NOTIFICATION_HANDLERS} from "../util/shapes";
+import {SlideRight} from "./comps/Animations";
+import PaginatedList from "./comps/PaginatedList";
+import EmptyState from "./comps/EmptyState";
 
 export default class Admin extends Component {
   static contextTypes = {
@@ -17,31 +14,11 @@ export default class Admin extends Component {
     ...NOTIFICATION_HANDLERS
   };
 
-  componentDidMount() {
-    this.loadApps();
-  }
-
   state = {
-    applications: null,
     editing: null,
     deleting: null,
-    totalCount: 0,
-    pageInfo: {pageNo: 0, pageSize: 20}
+    totalCount: 0
   };
-
-  loadApps = () => {
-    const {dao, onError}= this.context;
-    const {pageInfo} = this.state;
-
-    dao.applications.list({
-      ...pageParams(pageInfo)
-    }).then(
-      ({results: applications, totalCount}) => this.setState({applications, totalCount}),
-      onError
-    );
-  };
-
-  handlePageChange = (pageInfo) => this.setState({pageInfo}, this.loadApps);
 
   createApplication = () => this.editApplication({});
   editApplication = (editing) => this.setState({editing});
@@ -56,12 +33,7 @@ export default class Admin extends Component {
     dao.applications.save(editing)
       .then(
         saved => {
-          onSuccess(`Saved ${saved.name}!`);
-          if (editing.id) {
-            this.setState({applications: replace(this.state.applications, saved)})
-          } else {
-            this.loadApps();
-          }
+          this.refs.apps.refresh();
         },
         err => {
           onError(err);
@@ -81,7 +53,7 @@ export default class Admin extends Component {
       .then(
         () => {
           onSuccess(`Deleted ${deleting.name}!`);
-          this.setState({applications: _.without(this.state.applications, deleting)});
+          this.refs.apps.refresh();
         },
         err => {
           onError(err);
@@ -89,13 +61,7 @@ export default class Admin extends Component {
       );
   };
 
-  renderApps() {
-    const {applications} = this.state;
-
-    if (applications == null) {
-      return <Preloader centered={true}/>;
-    }
-
+  renderApps = applications => {
     if (applications.length == 0) {
       return (
         <EmptyState style={{textAlign: 'center'}}>
@@ -104,20 +70,26 @@ export default class Admin extends Component {
       );
     }
 
-    return applications.map(
-      app => {
-        return (
-          <ApplicationCard application={app} key={app.id}
-                           onEdit={() => this.editApplication(app)}
-                           onDelete={() => this.deleteApplication(app)}
-          />
-        );
-      }
+    return (
+      <SlideRight>
+        {
+          applications.map(
+            app => {
+              return (
+                <ApplicationCard application={app} key={app.id}
+                                 onEdit={() => this.editApplication(app)}
+                                 onDelete={() => this.deleteApplication(app)}/>
+              );
+            }
+          )
+        }
+      </SlideRight>
     );
-  }
+  };
 
   render() {
-    const {totalCount, pageInfo, deleting, editing} = this.state;
+    const {deleting, editing} = this.state;
+    const {dao} = this.context;
 
     return (
       <div className="container">
@@ -146,12 +118,8 @@ export default class Admin extends Component {
         </header>
 
         <article style={{marginTop: 30, marginBottom: 30}}>
-          {
-            this.renderApps()
-          }
+          <PaginatedList ref="apps" crud={dao.applications} renderList={this.renderApps}/>
         </article>
-
-        <Pagination totalCount={totalCount} value={pageInfo} onChange={this.handlePageChange}/>
       </div>
     );
   }

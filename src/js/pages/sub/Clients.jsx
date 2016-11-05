@@ -1,13 +1,12 @@
 import React, {PropTypes, PureComponent} from "react";
-import Preloader from "../comps/Preloader";
-import Pagination from "../comps/Pagination";
-import {pageParams} from "../../util/params";
 import ClientCard from "../comps/ClientCard";
 import ConfirmActionModal from "../comps/ConfirmActionModal";
-import {replace} from "../../util/replace";
 import ClientModal from "../comps/ClientModal";
 import {NOTIFICATION_HANDLERS} from "../../util/shapes";
-import _ from 'underscore';
+import _ from "underscore";
+import EmptyState from "../comps/EmptyState";
+import PaginatedList from "../comps/PaginatedList";
+import {SlideRight} from "../comps/Animations";
 
 export default class Clients extends PureComponent {
   static contextTypes = {
@@ -23,29 +22,9 @@ export default class Clients extends PureComponent {
   };
 
   state = {
-    clients: null,
-    count: 0,
-    pageInfo: {pageSize: 20, pageNo: 0},
     deleting: null,
     editing: null
   };
-
-  componentDidMount() {
-    this.refreshClients();
-  }
-
-  refreshClients = () => this.loadClients(this.props.params.id);
-
-  loadClients(id) {
-    const {dao} = this.context;
-    const {pageInfo} = this.state;
-    dao.clients.list({applicationId: id, ...pageParams(pageInfo)})
-      .then(
-        ({results:clients, totalCount: count}) => this.setState({clients, count})
-      );
-  }
-
-  handlePageChange = (pageInfo) => this.setState({pageInfo}, () => this.loadClients(this.props.params.id));
 
   handleEdit = editing => this.setState({editing});
   cancelEdit = () => this.handleEdit(null);
@@ -60,11 +39,7 @@ export default class Clients extends PureComponent {
       .then(
         saved => {
           onSuccess(`Saved client ${saved.name}`);
-          if (editing.id) {
-            this.setState({clients: replace(this.state.clients, saved)});
-          } else {
-            this.refreshClients();
-          }
+          this.refs.clients.refresh();
         },
         err => {
           onError(err);
@@ -82,14 +57,37 @@ export default class Clients extends PureComponent {
       .then(
         () => {
           onSuccess(`Successfully deleted client ${deleting.name}`);
-          this.setState({deleting: null, clients: _.without(this.state.clients, deleting)});
+          this.setState({deleting: null});
+          this.refs.clients.refresh();
         },
         onError
       );
   };
 
+  renderClients = clients => {
+    if (clients.length == 0) {
+      return <EmptyState icon="server">No clients for this application</EmptyState>;
+    }
+
+    return (
+      <SlideRight>
+        {
+          clients.map(
+            client => (
+              <ClientCard key={client.id}
+                          client={client}
+                          onDelete={() => this.handleDelete(client)}
+                          onEdit={() => this.handleEdit(client)}/>
+            )
+          )
+        }
+      </SlideRight>
+    );
+  };
+
   render() {
-    const {clients, pageInfo, count, deleting, editing} = this.state;
+    const {deleting, editing} = this.state;
+    const {dao} = this.context;
 
     return (
       <div>
@@ -110,23 +108,13 @@ export default class Clients extends PureComponent {
         <div className="display-flex align-items-center">
           <h2 className="flex-grow-1">Clients</h2>
           <div>
-            <button className="btn blue-grey darken-3 btn-floating" onClick={this.handleAdd}><i className="fa fa-plus"/></button>
+            <button className="btn blue-grey darken-3 btn-floating" onClick={this.handleAdd}><i className="fa fa-plus"/>
+            </button>
           </div>
         </div>
         {
-          clients == null ? <Preloader centered={true}/> :
-            clients.length > 0 ?
-              clients.map(
-                client => (
-                  <ClientCard key={client.id}
-                              client={client}
-                              onDelete={() => this.handleDelete(client)}
-                              onEdit={() => this.handleEdit(client)}/>
-                )
-              ) :
-              <EmptyState icon="server">No clients for this application</EmptyState>
+          <PaginatedList ref="clients" crud={dao.clients} renderList={this.renderClients}/>
         }
-        <Pagination value={pageInfo} onChange={this.handlePageChange} totalCount={count}/>
       </div>
     );
   }
