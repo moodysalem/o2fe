@@ -125,14 +125,14 @@ export default class Docs extends PureComponent {
         </p>
 
         <hr />
-        <h2 ref="customization" className="overflow-ellipsis">Customizing OAuth2Cloud</h2>
+        <h2 ref="customization" className="overflow-ellipsis">Customizing your Log In Page</h2>
         <h3 ref="style" className="overflow-ellipsis">Style</h3>
         <p className="flow-text">
           OAuth2Cloud supports injecting your own stylesheets, favicons, and logo URLs into your authentication and
           authorization pages
         </p>
 
-        <h3 ref="domain"  className="overflow-ellipsis">Using your own domain</h3>
+        <h3 ref="domain" className="overflow-ellipsis">Using your own domain</h3>
         <p className="flow-text">
           You can send users to a log in page on your own domain, e.g. login.my-site.com
         </p>

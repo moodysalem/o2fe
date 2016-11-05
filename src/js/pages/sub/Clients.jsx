@@ -64,7 +64,11 @@ export default class Clients extends PureComponent {
 
   renderClients = clients => {
     if (clients.length == 0) {
-      return <EmptyState icon="server">No clients for this application</EmptyState>;
+      return (
+        <EmptyState icon="server">
+          <button className="btn btn-flat" onClick={this.handleAdd}><i className="fa fa-plus"/></button>
+        </EmptyState>
+      );
     }
 
     return (
@@ -105,16 +109,15 @@ export default class Clients extends PureComponent {
           open={editing != null}/>
 
         <div className="display-flex align-items-center">
+          <p className="flow-text flex-grow-1">
+            Define the clients that can utilize this application
+          </p>
           <div>
             <button className="btn blue-grey darken-3 btn-floating" onClick={this.handleAdd}>
               <i className="fa fa-plus"/>
             </button>
           </div>
         </div>
-
-        <p className="flow-text">
-          Define the clients that can utilize this application
-        </p>
         <PaginatedList ref="clients" crud={dao.clients} renderList={this.renderClients}
                        params={{applicationId}}/>
       </div>

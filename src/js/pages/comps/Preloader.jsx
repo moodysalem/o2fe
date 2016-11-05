@@ -38,3 +38,5 @@ export default class Preloader extends PureComponent {
     return loader;
   }
 }
+
+export const PAGE_LOADING = <div style={{padding: 40}}><Preloader centered={true}/></div>;

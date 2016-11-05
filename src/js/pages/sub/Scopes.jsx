@@ -18,12 +18,17 @@ export default class Scopes extends PureComponent {
     editing: null, deleting: null
   };
 
+  handleAdd = () => this.setState({editing: {application: {id: this.props.params.id}}});
   handleEdit = editing => this.setState({editing});
   handleDelete = deleting => this.setState({deleting});
 
   renderScopes = scopes => {
     if (scopes.length == 0) {
-      return <EmptyState icon="crosshairs">No scopes defined for this application</EmptyState>;
+      return (
+        <EmptyState icon="crosshairs">
+          <button className="btn btn-flat" onClick={this.handleAdd}><i className="fa fa-plus"/></button>
+        </EmptyState>
+      );
     }
 
     return (
@@ -37,9 +42,14 @@ export default class Scopes extends PureComponent {
 
     return (
       <div>
-        <p className="flow-text">
-          Define scopes to assign to clients for users to authorize
-        </p>
+        <div className="display-flex align-items-center">
+          <p className="flow-text flex-grow-1">
+            Define scopes to assign to clients for users to authorize
+          </p>
+          <div>
+            <button className="btn btn-floating blue-grey darken-3" onClick={this.handleAdd}><i className="fa fa-plus"/></button>
+          </div>
+        </div>
         <PaginatedList renderList={this.renderScopes} crud={dao.scopes} params={{applicationId}}/>
       </div>
     );

@@ -1,16 +1,9 @@
 import React, {PropTypes, Children, PureComponent, cloneElement} from "react";
-import Preloader from "./comps/Preloader";
+import {PAGE_LOADING} from "./comps/Preloader";
 import {Link} from "react-router";
 import Clients from "./sub/Clients";
 import Scopes from "./sub/Scopes";
 import Users from "./sub/Users";
-
-const INVALID_URL = (
-  <div>
-    <h4>Invalid URL</h4>
-    <p className="flow-text">The entered URL is not valid for this application</p>
-  </div>
-);
 
 export default class Application extends PureComponent {
   static Clients = Clients;
@@ -59,7 +52,7 @@ export default class Application extends PureComponent {
 
     const {application} = this.state;
     if (!application) {
-      return <Preloader centered={true}/>;
+      return PAGE_LOADING;
     }
 
     const {name} = application;
@@ -67,7 +60,7 @@ export default class Application extends PureComponent {
     return (
       <div className="container">
         <div className="display-flex align-items-center flex-wrap-wrap justify-content-flex-end">
-          <h1 className="flex-grow-1">{name}</h1>
+          <h1 className="flex-grow-1 truncate">{name}</h1>
           <div className="flex-shrink-0">
             <Link className="btn blue-grey darken-3" to="admin">
               <i className="fa fa-arrow-left"/> Back
@@ -75,7 +68,7 @@ export default class Application extends PureComponent {
           </div>
         </div>
         {
-          children ? cloneElement(Children.only(children), {application}) : INVALID_URL
+          children ? cloneElement(Children.only(children), {application}) : null
         }
       </div>
     );
