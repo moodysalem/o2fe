@@ -1,6 +1,6 @@
 import React, {Children, PropTypes, PureComponent} from "react";
-import {TOKEN_SHAPE, CONFIG_SHAPE} from "../../util/shapes";
-import getLoginUrl from "../../util/getLoginUrl";
+import {TOKEN_SHAPE, CONFIG_SHAPE} from "./shapes";
+import getLoginUrl from "./getLoginUrl";
 
 /**
  * Returns a new component that renders the passed in component only when logged in

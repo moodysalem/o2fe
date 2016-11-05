@@ -8,7 +8,7 @@ import ContentWrapper from "./pages/comps/ContentWrapper";
 import dao from "./util/dao";
 import NotificationSystem from "react-notification-system";
 import setTitle from "./util/setTitle";
-import requireLogin from "./pages/comps/requireLogin";
+import requireLogin from "./util/requireLogin";
 
 const NOTIFICATION_DEFAULTS = {
   autoDismiss: 7,
