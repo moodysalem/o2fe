@@ -5,6 +5,21 @@ import Clients from "./sub/Clients";
 import Scopes from "./sub/Scopes";
 import Users from "./sub/Users";
 
+const Tabs = ({tabs, ...rest}) => (
+  <ul className="tabs" {...rest}>
+    {
+      tabs.map(
+        ({path, label}) => (
+          <li key={path} className="tab">
+            <Link className="blue-grey lighten-1 white-text" activeClassName="darken-3"
+                  to={path}>{label}</Link>
+          </li>
+        )
+      )
+    }
+  </ul>
+);
+
 export default class Application extends PureComponent {
   static Clients = Clients;
   static Scopes = Scopes;
@@ -15,6 +30,7 @@ export default class Application extends PureComponent {
   };
 
   static propTypes = {
+    location: PropTypes.object.isRequired,
     params: PropTypes.shape({
       id: PropTypes.string.isRequired
     }).isRequired
@@ -48,18 +64,19 @@ export default class Application extends PureComponent {
   }
 
   render() {
-    const {children} = this.props;
+    const {children, location, params} = this.props;
 
     const {application} = this.state;
     if (!application) {
       return PAGE_LOADING;
     }
 
+    const {id} = params;
     const {name} = application;
 
     return (
-      <div className="container">
-        <div className="display-flex align-items-center flex-wrap-wrap justify-content-flex-end">
+      <div>
+        <div className="display-flex align-items-center flex-wrap-wrap justify-content-flex-end container">
           <h1 className="flex-grow-1 truncate">{name}</h1>
           <div className="flex-shrink-0">
             <Link className="btn blue-grey darken-3" to="admin">
@@ -67,9 +84,18 @@ export default class Application extends PureComponent {
             </Link>
           </div>
         </div>
-        {
-          children ? cloneElement(Children.only(children), {application}) : null
-        }
+
+        <Tabs style={{marginTop: 20}} tabs={[
+          {path: `applications/${id}/scopes`, label: 'Scopes'},
+          {path: `applications/${id}/users`, label: 'Users'},
+          {path: `applications/${id}/clients`, label: 'Clients'}
+        ]}/>
+
+        <div className="container">
+          {
+            children ? cloneElement(Children.only(children), {application}) : null
+          }
+        </div>
       </div>
     );
   }

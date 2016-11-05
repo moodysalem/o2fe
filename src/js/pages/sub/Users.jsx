@@ -41,11 +41,6 @@ export default class Scopes extends PureComponent {
           <p className="flow-text flex-grow-1">
             Find users that have used this application
           </p>
-          <div>
-            <button className="btn blue-grey darken-3 btn-floating" onClick={this.handleAdd}>
-              <i className="fa fa-plus"/>
-            </button>
-          </div>
         </div>
 
         <PaginatedList renderList={this.renderUsers} crud={dao.users} params={{applicationId}}/>
