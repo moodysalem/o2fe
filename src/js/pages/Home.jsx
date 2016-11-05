@@ -1,16 +1,18 @@
 import React, {PureComponent} from "react";
 import space from "../../res/space.jpg";
 import {Parallax, Background} from "react-parallax";
-import laptop from "../../res/laptop.jpeg";
+import laptop from "../../res/blurred-laptop.jpeg";
 import {Link} from "react-router";
 
 const PARALLAX_BUFFER = 140;
 const PADDING = {paddingTop: PARALLAX_BUFFER, paddingBottom: PARALLAX_BUFFER};
 
-const Plx = ({src, children, blur = null, ...rest}) => (
-  <Parallax strength={400}>
+const Plx = ({src, children, ...rest}) => (
+  <Parallax strength={100}>
     <Background>
-      <img className="black" src={src} style={{filter: blur ? `blur(${blur})` : null, width: '100vw', minWidth: 1200}}/>
+      <div style={{width: '100vw', minWidth: 1200}}>
+        <img className="black" src={src} style={{width: '100%'}}/>
+      </div>
     </Background>
     {children}
   </Parallax>
