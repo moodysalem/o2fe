@@ -103,12 +103,13 @@ export default class App extends PureComponent {
   }
 
   render() {
-    const {loaded, token} = this.state;
+    const {loaded} = this.state;
 
     if (!loaded) {
       return (
-        <div className="container">
-          <Preloader/>
+        <div className="display-flex align-items-center justify-content-center"
+             style={{width: '100vw', height: '100vh', padding: 30}}>
+          <Preloader size="big"/>
         </div>
       );
     }
@@ -119,6 +120,7 @@ export default class App extends PureComponent {
           <Route path="/" component={ContentWrapper}>
             <IndexRoute component={Home} onEnter={e => setTitle('Home')}/>
             <Route path="docs" component={Docs} onEnter={e => setTitle('Docs')}/>
+            <Route path="docs/:section" component={Docs} onEnter={e => setTitle('Docs')}/>
             <Route path="admin" component={RequireLogin}>
               <IndexRoute component={Admin} onEnter={e => setTitle('Admin')}/>
             </Route>

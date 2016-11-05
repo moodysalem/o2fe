@@ -79,7 +79,7 @@ export default class Home extends PureComponent {
               OAuth2 servers have been done a hundred times in a hundred different ways. Let us do it right for you
             </p>
             <p>
-              <Link to="docs"><i className="fa fa-chevron-right"/> Learn More</Link>
+              <Link to="docs"><i className="fa fa-book"/> Learn More</Link>
             </p>
           </div>
         </Plx>

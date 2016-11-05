@@ -9,7 +9,7 @@ export default class Preloader extends PureComponent {
   };
   static defaultProps = {
     size: null,
-    color: null,
+    color: 'blue',
     centered: false
   };
 
