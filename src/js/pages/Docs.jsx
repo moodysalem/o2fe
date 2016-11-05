@@ -114,7 +114,7 @@ export default class Docs extends PureComponent {
           </li>
         </ul>
 
-        <h3 ref="linking" className="overflow-ellipsis">Linking Users</h3>
+        <h3 ref="user-linking" className="overflow-ellipsis">Linking Users</h3>
         <p>
           Because we cannot merge your user-associated data, we allow you to link users via this administrative website.
         </p>

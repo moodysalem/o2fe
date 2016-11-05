@@ -3,6 +3,7 @@ import crud from "../../util/crud";
 import _ from "underscore";
 import Preloader from "./Preloader";
 import Pagination from "./Pagination";
+import {pageParams} from "../../util/params";
 
 const INITIAL_STATE = {
   objects: [],
@@ -54,7 +55,7 @@ export default class PaginatedList extends PureComponent {
       pending.cancel();
     }
 
-    const promise = crud.list({...params, ...pageInfo})
+    const promise = crud.list({...params, ...pageParams(pageInfo)})
       .then(
         ({start, totalCount, results}) => this.setState({objects: results, totalCount, promise: null}),
         err => this.setState({...INITIAL_STATE, err})

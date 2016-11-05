@@ -4,7 +4,7 @@ import App from "./App";
 import getConfig from "./util/getConfig";
 import {getTokenFromHash} from "./util/readHash";
 import "../css/style.scss";
-import Promise from 'bluebird';
+import Promise from "bluebird";
 
 Promise.config({
   cancellation: true

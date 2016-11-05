@@ -9,13 +9,12 @@ const CENTER_STYLE = {
 
 export default class EmptyState extends PureComponent {
   static propTypes = {
-    icon: PropTypes.string,
+    icon: PropTypes.string.isRequired,
     iconSize: PropTypes.any,
     minHeight: PropTypes.any
   };
 
   static defaultProps = {
-    icon: 'book',
     iconSize: 120,
     minHeight: 300
   };
@@ -28,10 +27,10 @@ export default class EmptyState extends PureComponent {
         <i className={`fa fa-${icon}`}
            style={{
              ...CENTER_STYLE,
-             opacity: 0.1,
+             opacity: 0.04,
              fontSize: iconSize
            }}/>
-        <div style={{...CENTER_STYLE, fontSize: 20, ...style}}>
+        <div style={{...CENTER_STYLE, fontWeight: 'bolder', ...style}}>
           {children}
         </div>
       </div>

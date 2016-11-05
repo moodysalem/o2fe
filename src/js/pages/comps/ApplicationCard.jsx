@@ -10,10 +10,16 @@ export default ({application:{id, name, description, supportEmail}, onEdit, onDe
         <small style={{marginLeft: 4}}>{supportEmail}</small>
       </span>
       <p>{description}</p>
+      <hr />
+      <div>
+        <label>Application ID</label>
+        <div>{id}</div>
+      </div>
     </div>
     <div className="card-action">
-      <Link to={join('applications', id, 'clients')}>Clients</Link>
       <Link to={join('applications', id, 'scopes')}>Scopes</Link>
+      <Link to={join('applications', id, 'users')}>Users</Link>
+      <Link to={join('applications', id, 'clients')}>Clients</Link>
       <a href="#" onClick={(e) => {
         e.preventDefault();
         onEdit();

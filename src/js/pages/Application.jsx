@@ -3,10 +3,19 @@ import Preloader from "./comps/Preloader";
 import {Link} from "react-router";
 import Clients from "./sub/Clients";
 import Scopes from "./sub/Scopes";
+import Users from "./sub/Users";
+
+const INVALID_URL = (
+  <div>
+    <h4>Invalid URL</h4>
+    <p className="flow-text">The entered URL is not valid for this application</p>
+  </div>
+);
 
 export default class Application extends PureComponent {
   static Clients = Clients;
   static Scopes = Scopes;
+  static Users = Users;
 
   static contextTypes = {
     dao: PropTypes.object.isRequired
@@ -66,7 +75,7 @@ export default class Application extends PureComponent {
           </div>
         </div>
         {
-          cloneElement(Children.only(children), {application})
+          children ? cloneElement(Children.only(children), {application}) : INVALID_URL
         }
       </div>
     );

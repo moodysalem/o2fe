@@ -21,13 +21,13 @@ export default class Scopes extends PureComponent {
   handleEdit = editing => this.setState({editing});
   handleDelete = deleting => this.setState({deleting});
 
-  renderScopes = scopes => {
-    if (scopes.length == 0) {
-      return <EmptyState icon="crosshairs">No scopes defined for this application</EmptyState>;
+  renderUsers = users => {
+    if (users.length == 0) {
+      return <EmptyState icon="users">No users for this application</EmptyState>;
     }
 
     return (
-      <ScopesTable scopes={scopes} onDelete={this.handleDelete} onEdit={this.handleEdit}/>
+      <ScopesTable scopes={users} onDelete={this.handleDelete} onEdit={this.handleEdit}/>
     );
   };
 
@@ -37,10 +37,8 @@ export default class Scopes extends PureComponent {
 
     return (
       <div>
-        <p className="flow-text">
-          Define scopes to assign to clients for users to authorize
-        </p>
-        <PaginatedList renderList={this.renderScopes} crud={dao.scopes} params={{applicationId}}/>
+        <p>These are the users that have signed into the application</p>
+        <PaginatedList renderList={this.renderUsers} crud={dao.users} params={{applicationId}}/>
       </div>
     );
   }

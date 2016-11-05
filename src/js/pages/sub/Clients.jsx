@@ -3,7 +3,6 @@ import ClientCard from "../comps/ClientCard";
 import ConfirmActionModal from "../comps/ConfirmActionModal";
 import ClientModal from "../comps/ClientModal";
 import {NOTIFICATION_HANDLERS} from "../../util/shapes";
-import _ from "underscore";
 import EmptyState from "../comps/EmptyState";
 import PaginatedList from "../comps/PaginatedList";
 import {SlideRight} from "../comps/Animations";
@@ -17,8 +16,7 @@ export default class Clients extends PureComponent {
   static propTypes = {
     params: PropTypes.shape({
       id: PropTypes.string.isRequired
-    }).isRequired,
-    application: PropTypes.object.isRequired
+    }).isRequired
   };
 
   state = {
@@ -28,7 +26,7 @@ export default class Clients extends PureComponent {
 
   handleEdit = editing => this.setState({editing});
   cancelEdit = () => this.handleEdit(null);
-  handleAdd = () => this.handleEdit({application: this.props.application});
+  handleAdd = () => this.handleEdit({application: {id: this.props.params.id}});
   handleSave = () => {
     const {editing} = this.state;
     const {dao, onError, onSuccess} = this.context;
@@ -88,6 +86,7 @@ export default class Clients extends PureComponent {
   render() {
     const {deleting, editing} = this.state;
     const {dao} = this.context;
+    const {id: applicationId} = this.props.params.id;
 
     return (
       <div>
@@ -106,15 +105,18 @@ export default class Clients extends PureComponent {
           open={editing != null}/>
 
         <div className="display-flex align-items-center">
-          <h2 className="flex-grow-1">Clients</h2>
           <div>
-            <button className="btn blue-grey darken-3 btn-floating" onClick={this.handleAdd}><i className="fa fa-plus"/>
+            <button className="btn blue-grey darken-3 btn-floating" onClick={this.handleAdd}>
+              <i className="fa fa-plus"/>
             </button>
           </div>
         </div>
-        {
-          <PaginatedList ref="clients" crud={dao.clients} renderList={this.renderClients}/>
-        }
+
+        <p className="flow-text">
+          Define the clients that can utilize this application
+        </p>
+        <PaginatedList ref="clients" crud={dao.clients} renderList={this.renderClients}
+                       params={{applicationId}}/>
       </div>
     );
   }

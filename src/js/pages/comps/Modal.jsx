@@ -1,6 +1,6 @@
 import React, {PropTypes, PureComponent} from "react";
-import CSSTransitionGroup from "react-addons-css-transition-group";
 import cx from "classnames";
+import {Fade, SlideDown} from "../comps/Animations";
 
 const Footer = ({children, className, ...rest}) => (
   <div className={cx('modal-footer', className)} {...rest}>{children}</div>
@@ -63,19 +63,13 @@ export default class Modal extends PureComponent {
 
     return (
       <div onKeyDown={this.closeOnEscape} ref="_modal" tabIndex="-1">
-        <CSSTransitionGroup
-          transitionName="fade"
-          transitionEnterTimeout={300}
-          transitionLeaveTimeout={300}>
+        <Fade>
           {
             open ? <div style={{zIndex: 1000, position: 'fixed'}}>{BACKDROP}</div> : null
           }
-        </CSSTransitionGroup>
+        </Fade>
 
-        <CSSTransitionGroup
-          transitionName="slide-down"
-          transitionEnterTimeout={300}
-          transitionLeaveTimeout={300}>
+        <SlideDown>
           {
             open ? (
               <div className={cx('modal', {'modal-fixed-footer': fixedFooter}, className)}
@@ -84,7 +78,7 @@ export default class Modal extends PureComponent {
               </div>
             ) : null
           }
-        </CSSTransitionGroup>
+        </SlideDown>
       </div>
     );
   }

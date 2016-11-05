@@ -1,4 +1,4 @@
-import {browserHistory, Router, Route, IndexRoute, Redirect} from "react-router";
+import {browserHistory, Router, Route, IndexRoute, IndexRedirect, Redirect} from "react-router";
 import React, {PropTypes, PureComponent} from "react";
 import {NotFound, Home, Docs, Admin, Application} from "./pages/index";
 import {CONFIG_SHAPE, TOKEN_SHAPE, NOTIFICATION_HANDLERS} from "./util/shapes";
@@ -7,8 +7,8 @@ import Preloader from "./pages/comps/Preloader";
 import ContentWrapper from "./pages/comps/ContentWrapper";
 import dao from "./util/dao";
 import NotificationSystem from "react-notification-system";
-import RequireLogin from "./pages/comps/RequireLogIn";
 import setTitle from "./util/setTitle";
+import requireLogin from "./pages/comps/requireLogin";
 
 const NOTIFICATION_DEFAULTS = {
   autoDismiss: 7,
@@ -42,7 +42,9 @@ export default class App extends PureComponent {
     const {config} = this.props;
     const {token, dao} = this.state;
     return {
-      token, dao, config,
+      token,
+      dao,
+      config,
       onLogOut: this.logout,
       onError: this.error,
       onWarning: this.warning,
@@ -121,16 +123,13 @@ export default class App extends PureComponent {
             <IndexRoute component={Home} onEnter={e => setTitle('Home')}/>
             <Route path="docs" component={Docs} onEnter={e => setTitle('Docs')}/>
             <Route path="docs/:section" component={Docs} onEnter={e => setTitle('Docs')}/>
-            <Route path="admin" component={RequireLogin}>
-              <IndexRoute component={Admin} onEnter={e => setTitle('Admin')}/>
-            </Route>
-            <Route path="applications" component={RequireLogin}>
-              <Route path=":id" component={Application}
-                     onEnter={e => setTitle('Application')}>
-                <Route path="scopes" component={Application.Scopes} onEnter={e => setTitle('Scopes')}/>
-                <Route path="clients" component={Application.Clients} onEnter={e => setTitle('Clients')}/>
-                <Redirect from="*" to="scopes"/>
-              </Route>
+            <Route path="admin" component={requireLogin(Admin)} onEnter={e => setTitle('Admin')}/>
+            <Route path="applications/:id" component={requireLogin(Application)} onEnter={e => setTitle('Application')}>
+              <Route path="scopes" component={Application.Scopes} onEnter={e => setTitle('Scopes')}/>
+              <Route path="clients" component={Application.Clients} onEnter={e => setTitle('Clients')}/>
+              <Route path="users" component={Application.Users} onEnter={e => setTitle('Users')}/>
+              <IndexRedirect to="scopes"/>
+              <Redirect from="*" to="scopes"/>
             </Route>
             <Route path="*" component={NotFound} onEnter={e => setTitle('Not Found')}/>
           </Route>

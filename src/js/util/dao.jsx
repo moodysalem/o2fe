@@ -16,6 +16,7 @@ export default class dao {
     this.applications = makeCrud('applications');
     this.scopes = makeCrud('scopes');
     this.clients = makeCrud('clients');
+    this.users = makeCrud('users');
     this.clientScopes = makeCrud('client-scopes');
   }
 

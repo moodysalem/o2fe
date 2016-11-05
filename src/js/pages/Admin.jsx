@@ -7,6 +7,7 @@ import {NOTIFICATION_HANDLERS} from "../util/shapes";
 import {SlideRight} from "./comps/Animations";
 import PaginatedList from "./comps/PaginatedList";
 import EmptyState from "./comps/EmptyState";
+import requireLogin from './comps/requireLogin';
 
 export default class Admin extends Component {
   static contextTypes = {
@@ -64,8 +65,10 @@ export default class Admin extends Component {
   renderApps = applications => {
     if (applications.length == 0) {
       return (
-        <EmptyState style={{textAlign: 'center'}}>
-          <div>There's nothing here</div>
+        <EmptyState icon="folder" style={{textAlign: 'center'}}>
+          <button type="button" className="btn btn-flat" onClick={this.createApplication}>
+            <i className="fa fa-plus"/>
+          </button>
         </EmptyState>
       );
     }
