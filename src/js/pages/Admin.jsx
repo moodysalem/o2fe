@@ -56,9 +56,7 @@ export default class Admin extends Component {
           onSuccess(`Deleted ${deleting.name}!`);
           this.refs.apps.refresh();
         },
-        err => {
-          onError(err);
-        }
+        onError
       );
   };
 
