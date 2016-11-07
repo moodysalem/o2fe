@@ -1,7 +1,7 @@
 import React, {PropTypes, PureComponent} from "react";
 import PaginatedList from "../comps/PaginatedList";
 import EmptyState from "../comps/EmptyState";
-import ScopesTable from "../comps/ScopesTable";
+import UsersTable from "../comps/UsersTable";
 
 export default class Scopes extends PureComponent {
   static contextTypes = {
@@ -27,7 +27,7 @@ export default class Scopes extends PureComponent {
     }
 
     return (
-      null
+      <UsersTable users={users}/>
     );
   };
 

@@ -3,10 +3,12 @@ import PaginatedList from "../comps/PaginatedList";
 import EmptyState from "../comps/EmptyState";
 import ScopesTable from "../comps/ScopesTable";
 import ConfirmActionModal from "../comps/ConfirmActionModal";
+import {NOTIFICATION_HANDLERS} from "../../util/shapes";
 
 export default class Scopes extends PureComponent {
   static contextTypes = {
-    dao: PropTypes.object.isRequired
+    dao: PropTypes.object.isRequired,
+    ...NOTIFICATION_HANDLERS
   };
 
   static propTypes = {
@@ -47,6 +49,12 @@ export default class Scopes extends PureComponent {
     );
   };
 
+  componentDidUpdate(nextProps, {editing}) {
+    if (editing != this.state.editing) {
+      this.context.onInfo('Editing and adding scopes is not yet supported on this client! Come back in a day or two');
+    }
+  }
+
   render() {
     const {dao} = this.context;
     const {id: applicationId} = this.props.params;
@@ -64,7 +72,8 @@ export default class Scopes extends PureComponent {
             Define scopes to assign to clients for users to authorize
           </p>
           <div>
-            <button className="btn btn-floating blue-grey darken-3" onClick={this.handleAdd}><i className="fa fa-plus"/>
+            <button className="btn btn-floating blue-grey darken-3" onClick={this.handleAdd}>
+              <i className="fa fa-plus"/>
             </button>
           </div>
         </div>
