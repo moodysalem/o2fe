@@ -31,18 +31,14 @@ export default class Clients extends PureComponent {
     const {editing} = this.state;
     const {dao, onError, onSuccess} = this.context;
 
-    this.setState({editing: null});
-
     dao.clients.save(editing)
       .then(
         saved => {
           onSuccess(`Saved client ${saved.name}`);
+          this.setState({editing: null});
           this.refs.clients.refresh();
         },
-        err => {
-          onError(err);
-          this.setState({editing});
-        }
+        onError
       );
   };
 
@@ -102,11 +98,10 @@ export default class Clients extends PureComponent {
           onClose={this.cancelDelete}/>
 
         <ClientModal
-          client={editing}
+          value={editing}
           onChange={this.handleEdit}
           onSave={this.handleSave}
-          onClose={this.cancelEdit}
-          open={editing != null}/>
+          onClose={this.cancelEdit}/>
 
         <div className="display-flex align-items-center">
           <p className="flow-text flex-grow-1">

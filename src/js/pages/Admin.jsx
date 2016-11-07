@@ -28,18 +28,14 @@ export default class Admin extends Component {
     const {dao, onError, onSuccess} = this.context;
     const {editing} = this.state;
 
-    this.setState({editing: null});
-
     dao.applications.save(editing)
       .then(
         saved => {
           this.refs.apps.refresh();
           onSuccess(`Saved application ${saved.name}`);
+          this.setState({editing: null});
         },
-        err => {
-          onError(err);
-          this.setState({editing});
-        }
+        onError
       );
   };
 
@@ -101,11 +97,10 @@ export default class Admin extends Component {
           onConfirm={this.confirmDelete}
           onClose={this.cancelDelete}/>
         <ApplicationModal
-          open={editing != null}
           onClose={this.cancelEdit}
           onChange={this.editApplication}
           onSave={this.saveEdit}
-          application={editing}/>
+          value={editing}/>
 
         <header className="display-flex align-items-center justify-content-center flex-wrap-wrap">
           <h1 className="flex-grow-1">

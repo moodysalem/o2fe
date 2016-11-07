@@ -22,7 +22,7 @@ export default class UsersTable extends PureComponent {
         {
           users.map(
             ({id, email}) => (
-              <tr>
+              <tr key={id}>
                 <td>{id}</td>
                 <td>{email}</td>
               </tr>

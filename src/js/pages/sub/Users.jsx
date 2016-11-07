@@ -23,7 +23,9 @@ export default class Scopes extends PureComponent {
 
   renderUsers = users => {
     if (users.length == 0) {
-      return <EmptyState icon="users">No users for this application</EmptyState>;
+      return (
+        <EmptyState icon="users"/>
+      );
     }
 
     return (
