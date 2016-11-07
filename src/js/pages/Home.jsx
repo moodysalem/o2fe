@@ -3,7 +3,7 @@ import space from "../../res/space.jpg";
 import {Parallax, Background} from "react-parallax";
 import laptop from "../../res/blurred-laptop.jpeg";
 import {Link} from "react-router";
-import {SlideRight} from './comps/Animations';
+import {SlideRight} from "./comps/Animations";
 
 const PARALLAX_BUFFER = 140;
 const PADDING = {paddingTop: PARALLAX_BUFFER, paddingBottom: PARALLAX_BUFFER};
@@ -59,8 +59,8 @@ export default class Home extends PureComponent {
             </div>
 
             <div className="col s12 m6">
-              <Card icon="google" title="Google Log In"
-                    text="Increase your reach by enabling users to authenticate via Google with minimal effort"/>
+              <Card icon="sign-in" title="Provider Log In"
+                    text="Increase your reach by optionally enabling users to authenticate via Google or Facebook with minimal effort"/>
             </div>
 
             <div className="col s12 m6">
@@ -77,7 +77,8 @@ export default class Home extends PureComponent {
               <strong>Stop</strong> rewriting code
             </h2>
             <p className="flow-text">
-              OAuth2 servers have been done a hundred times in a hundred different ways. Let us do it right for you
+              OAuth2 servers have been done a hundred times in a hundred different ways. Let us do it right for you so
+              you can solve the real problems
             </p>
             <p>
               <Link to="docs"><i className="fa fa-book"/> Learn More</Link>

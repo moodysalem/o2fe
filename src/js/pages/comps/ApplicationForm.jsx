@@ -8,21 +8,28 @@ export default class ApplicationForm extends PureComponent {
   };
 
   handleChange = (more) => this.props.onChange({...this.props.value, ...more});
-  handleCredentialsChange = more => {
-    const {googleCredentials} = this.props.value;
-    const after = {...googleCredentials, ...more};
+  handleGoogleCredentialsChange = (more) => this.handleCredentialsChange('google', more);
+  handleFacebookCredentialsChange = (more) => this.handleCredentialsChange('facebook', more);
+  handleCredentialsChange = (provider, more) => {
+    const key = `${provider}Credentials`;
+
+    const {[key]: credentials} = this.props.value;
+    const after = {...credentials, ...more};
 
     if ((!after.id || after.id.length == 0) && (!after.secret || after.secret.length == 0)) {
-      this.handleChange({googleCredentials: null});
+      this.handleChange({[key]: null});
     } else {
-      this.handleChange({googleCredentials: after});
+      this.handleChange({[key]: after});
     }
   };
 
   render() {
     const {value, onSubmit} = this.props;
 
-    const {name, description, faviconUrl, googleCredentials, logoUrl, stylesheetUrl, supportEmail} = value;
+    const {
+      name, description, faviconUrl, googleCredentials,
+      facebookCredentials, logoUrl, stylesheetUrl, supportEmail
+    } = value;
 
     return (
       <form onSubmit={e => {
@@ -79,15 +86,32 @@ export default class ApplicationForm extends PureComponent {
           <div>
             <label>Google Client ID</label>
             <input type="text" value={googleCredentials ? (googleCredentials.id || '') : ''}
-                   onChange={e => this.handleCredentialsChange({id: e.target.value})}
+                   onChange={e => this.handleGoogleCredentialsChange({id: e.target.value})}
                    placeholder="Google Client ID"/>
           </div>
 
           <div>
             <label>Google Client Secret</label>
             <input type="text" value={googleCredentials ? (googleCredentials.secret || '') : ''}
-                   onChange={e => this.handleCredentialsChange({secret: e.target.value})}
+                   onChange={e => this.handleGoogleCredentialsChange({secret: e.target.value})}
                    placeholder="Google Client Secret"/>
+          </div>
+        </fieldset>
+
+        <fieldset style={{marginTop: 24}}>
+          <legend>Facebook Log In</legend>
+          <div>
+            <label>Facebook Client ID</label>
+            <input type="text" value={facebookCredentials ? (facebookCredentials.id || '') : ''}
+                   onChange={e => this.handleFacebookCredentialsChange({id: e.target.value})}
+                   placeholder="Facebook App ID"/>
+          </div>
+
+          <div>
+            <label>Facebook Client Secret</label>
+            <input type="text" value={facebookCredentials ? (facebookCredentials.secret || '') : ''}
+                   onChange={e => this.handleFacebookCredentialsChange({secret: e.target.value})}
+                   placeholder="Facebook App Secret"/>
           </div>
         </fieldset>
       </form>

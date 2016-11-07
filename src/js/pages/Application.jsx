@@ -64,7 +64,7 @@ export default class Application extends PureComponent {
   }
 
   render() {
-    const {children, location, params} = this.props;
+    const {children, params} = this.props;
 
     const {application} = this.state;
     if (!application) {

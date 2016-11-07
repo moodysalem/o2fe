@@ -90,10 +90,23 @@ export default class Docs extends PureComponent {
           link will work is configurable. Once clicked, the user is directed to a page where they may authorize any
           client requested scopes.
         </p>
+
+        <h3 ref="provider-log-in">Providers</h3>
+        <p className="flow-text">
+          In order for users to be able to log in via Facebook and Google, you must create corresponding clients in the
+          Facebook and Google developer consoles respectively.
+        </p>
         <h4 ref="google" className="overflow-ellipsis">Via Google</h4>
         <p>
           The user clicks a link where they are directed to sign in via Google. Once logged in to Google, they will be
           redirected back to OAuth2Cloud to authorize any client-requested scopes.
+        </p>
+
+        <h4 ref="facebook" className="overflow-ellipsis">Via Facebook</h4>
+        <p>
+          The user clicks a link where they are directed to sign in via Facebook. Once logged in to Facebook, they will
+          be redirected back to OAuth2Cloud to authorize any client-requested scopes. The 'email' scope must be used
+          in order to log in via OAuth2Cloud.
         </p>
 
         <h3 ref="authorization" className="overflow-ellipsis">Authorization</h3>

@@ -7,7 +7,6 @@ import {NOTIFICATION_HANDLERS} from "../util/shapes";
 import {SlideRight} from "./comps/Animations";
 import PaginatedList from "./comps/PaginatedList";
 import EmptyState from "./comps/EmptyState";
-import requireLogin from '../util/requireLogin';
 
 export default class Admin extends Component {
   static contextTypes = {
@@ -35,6 +34,7 @@ export default class Admin extends Component {
       .then(
         saved => {
           this.refs.apps.refresh();
+          onSuccess(`Saved application ${saved.name}`);
         },
         err => {
           onError(err);
