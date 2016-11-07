@@ -90,7 +90,7 @@ export default class Clients extends PureComponent {
   render() {
     const {deleting, editing} = this.state;
     const {dao} = this.context;
-    const {id: applicationId} = this.props.params.id;
+    const {id: applicationId} = this.props.params;
 
     return (
       <div>
