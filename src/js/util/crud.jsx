@@ -20,7 +20,8 @@ const toError = obj => {
     return Promise.reject(
       new Error(
         obj.requestErrors
-          .map(({message}) => message)
+          .map(({attribute, message}) =>
+            _.filter([attribute, message], s => typeof s == 'string' && s.trim().length > 0).join(' - '))
           .join('\n')
       )
     );
