@@ -1,26 +1,26 @@
 language: node_js
 node_js:
-- '6.1'
+- "6.1"
 before_install:
-- npm install -g yarn
+- "npm install -g yarn"
 cache:
   directories:
   - "$HOME/.yarn-cache"
 install:
-- yarn
-- npm run build
+- "yarn"
+- "npm run build"
 before_deploy:
-- mkdir deploy
-- mkdir deploy/no-cache
-- mkdir deploy/cache
-- mv dist/index.html deploy/no-cache/
-- mv dist/* deploy/cache/
+- "mkdir dep"
+- "mkdir dep/no-cache"
+- "mkdir dep/cache"
+- "mv dist/index.html dep/no-cache/"
+- "mv dist/* dep/cache/"
 deploy:
   - provider: s3
     access_key_id: $AWS_ACCESS_KEY_ID
     secret_access_key: $AWS_SECRET_ACCESS_KEY
     bucket: com-oauth2cloud-prod
-    local-dir: deploy/no-cache
+    local-dir: dep/no-cache
     acl: public_read
     detect_encoding: true
     cache_control: max-age=0
@@ -31,7 +31,7 @@ deploy:
     access_key_id: $AWS_ACCESS_KEY_ID
     secret_access_key: $AWS_SECRET_ACCESS_KEY
     bucket: com-oauth2cloud-prod
-    local-dir: deploy/cache
+    local-dir: dep/cache
     acl: public_read
     detect_encoding: true
     cache_control: max-age=86400
