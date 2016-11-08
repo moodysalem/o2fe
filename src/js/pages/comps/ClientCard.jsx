@@ -4,6 +4,7 @@ export default class ClientCard extends PureComponent {
   static propTypes = {
     onEdit: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
+    onViewScopes: PropTypes.func.isRequired,
     client: PropTypes.object.isRequired
   };
 
@@ -11,7 +12,7 @@ export default class ClientCard extends PureComponent {
 
   render() {
     const {
-      onEdit, onDelete,
+      onEdit, onDelete, onViewScopes,
       client: {
         id, name, confidential, credentials: {id: cid, secret: secret}, flows,
         loginCodeTtl, refreshTokenTtl, showPromptNoScopes, tokenTtl, uris
@@ -21,10 +22,13 @@ export default class ClientCard extends PureComponent {
     return (
       <div className="card" key={id}>
         <div className="card-content">
-                    <span className="card-title">
-                      <span style={{marginRight: 8}}>{name}</span>
-                      <i className={`fa fa-eye${confidential ? '-slash' : ''}`}/>
-                    </span>
+          <span className="card-title">
+            <span style={{marginRight: 8}}>{name}</span>
+            <i className={`fa fa-eye${confidential ? '-slash' : ''}`}/>
+          </span>
+
+          <hr />
+
           <div>
             <div>
               <label>Client ID</label>
@@ -77,6 +81,10 @@ export default class ClientCard extends PureComponent {
           </div>
         </div>
         <div className="card-action">
+          <a href="#" onClick={e => {
+            e.preventDefault();
+            onViewScopes();
+          }}>View Scopes</a>
           <a href="#" onClick={e => {
             e.preventDefault();
             onEdit();

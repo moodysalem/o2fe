@@ -7,7 +7,7 @@ import {NOTIFICATION_HANDLERS} from "../../util/shapes";
 import FormModal from "../comps/FormModal";
 import ScopeForm from "../comps/ScopeForm";
 
-const ScopeModal = props => <FormModal {...props} objectName="Scope" objectForm={ScopeForm}/>;
+const ScopeModal = props => <FormModal fixedFooter={false} {...props} objectName="Scope" objectForm={ScopeForm}/>;
 
 export default class Scopes extends PureComponent {
   static contextTypes = {

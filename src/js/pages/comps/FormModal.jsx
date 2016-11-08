@@ -13,14 +13,15 @@ export default class FormModal extends PureComponent {
   };
 
   static defaultProps = {
-    value: null
+    value: null,
+    fixedFooter: true
   };
 
   render() {
     const {value, objectForm, objectName, onSave, onChange, onClose, ...rest} = this.props;
 
     return (
-      <Modal {...rest} fixedFooter={true} onClose={onClose} open={value != null}>
+      <Modal {...rest} onClose={onClose} open={value != null}>
         <Modal.Content>
           <h4>{value != null && value.id ? 'Edit' : 'Create'} {objectName}</h4>
           {

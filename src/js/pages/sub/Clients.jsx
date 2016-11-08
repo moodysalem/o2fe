@@ -6,6 +6,23 @@ import {NOTIFICATION_HANDLERS} from "../../util/shapes";
 import EmptyState from "../comps/EmptyState";
 import PaginatedList from "../comps/PaginatedList";
 import {SlideRight} from "../comps/Animations";
+import ClientScopes from "../comps/ClientScopes";
+import Modal from "../comps/Modal";
+
+const ClientScopesModal = ({client, onClose, ...rest}) => (
+  <Modal open={client != null} onClose={onClose}>
+    <Modal.Content>
+      {
+        client != null ? <ClientScopes client={client}/> : null
+      }
+      <hr/>
+
+    </Modal.Content>
+    <Modal.Footer>
+      <Modal.Action onClick={onClose}>Done</Modal.Action>
+    </Modal.Footer>
+  </Modal>
+);
 
 export default class Clients extends PureComponent {
   static contextTypes = {
@@ -21,7 +38,8 @@ export default class Clients extends PureComponent {
 
   state = {
     deleting: null,
-    editing: null
+    editing: null,
+    viewingScopes: null
   };
 
   handleEdit = editing => this.setState({editing});
@@ -58,6 +76,9 @@ export default class Clients extends PureComponent {
       );
   };
 
+  viewScopes = viewingScopes => this.setState({viewingScopes});
+  closeViewScopes = () => this.viewScopes(null);
+
   renderClients = clients => {
     if (clients.length == 0) {
       return (
@@ -75,6 +96,7 @@ export default class Clients extends PureComponent {
               <ClientCard key={client.id}
                           client={client}
                           onDelete={() => this.handleDelete(client)}
+                          onViewScopes={() => this.viewScopes(client)}
                           onEdit={() => this.handleEdit(client)}/>
             )
           )
@@ -84,7 +106,7 @@ export default class Clients extends PureComponent {
   };
 
   render() {
-    const {deleting, editing} = this.state;
+    const {deleting, editing, viewingScopes} = this.state;
     const {dao} = this.context;
     const {id: applicationId} = this.props.params;
 
@@ -102,6 +124,8 @@ export default class Clients extends PureComponent {
           onChange={this.handleEdit}
           onSave={this.handleSave}
           onClose={this.cancelEdit}/>
+
+        <ClientScopesModal client={viewingScopes} onClose={this.closeViewScopes}/>
 
         <div className="display-flex align-items-center">
           <p className="flow-text flex-grow-1">

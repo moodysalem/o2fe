@@ -68,19 +68,23 @@ export default class Admin extends Component {
     }
 
     return (
-      <SlideRight>
-        {
-          applications.map(
-            app => {
-              return (
-                <ApplicationCard application={app} key={app.id}
-                                 onEdit={() => this.editApplication(app)}
-                                 onDelete={() => this.deleteApplication(app)}/>
-              );
-            }
-          )
-        }
-      </SlideRight>
+      <div className="row">
+        <SlideRight>
+          {
+            applications.map(
+              app => {
+                return (
+                  <div className="col m12 l6">
+                    <ApplicationCard application={app} key={app.id}
+                                     onEdit={() => this.editApplication(app)}
+                                     onDelete={() => this.deleteApplication(app)}/>
+                  </div>
+                );
+              }
+            )
+          }
+        </SlideRight>
+      </div>
     );
   };
 
