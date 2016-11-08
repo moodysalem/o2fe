@@ -12,16 +12,31 @@ cache:
 install:
 - yarn
 - npm run build
+before_deploy:
+- mkdir dist/no-cache
+- mkdir dist/cache
+- mv dist/index.html dist/no-cache/
+- mv dist/* dist/no-cache/
 deploy:
-  provider: s3
-  access_key_id: AKIAJVZHQJJNUPHD4NCQ
-  secret_access_key:
-    secure: mnio0VijJRHf6mXp6HYFsmpx+fD+Ue7HDeTG8Wf5PeDTpw3Vvo//dykyD3lEnbvwtswLhNHJIgnqYRWyWaZA/70qUT1XpT6TfizIcaVLBA8Qcf7DROou/MFSf+o9ea36Eug6kbUG/V937+HhZnuIeo3AWkaFQboa6mE6IOQvdp+ewR18TY8kgq+IvzhTgaUouA3LWXlbPZAix5RyTNu/PxFdndeqgvzjjXFrG1YvOGxygU6X7ZvUofMWYZEgCTajNc+FOllEhOwFb4xv9+lXSpVUMjoZ2On1NC3sDKsc63nrUzMMRihhqlDKk5bp2nLTutqVmagFGv0wFlfwlwl4Gg+or8nfQBmxb7z6iwV44TevsIC/pSUEMd6BLC/FCdeb+Dua9QdTvGxz1kG2e2Mmn7rFOGqXTu7kwkbG49HV5AE0O2Yls7EIf5uiR/YqQ4SCcIZfMaatnPJP0wIGIIWXMH+SvSs011wcg+W34noV9xaaJNrXxfaWeicbPQchsuBCh+1f/Eac3ILV/TFxH7e/IfcwyU6tziTx4BRynJgG2Yv3EiP3FMJQIzU+9geTHYHrph3hVUvgfmOUmEFqYNhwgE0JtZk8Gbjoj6EA5xgHDNi5+LpuEjWKNXYMOdufR+UlX6/yLh4N+KWWlumvRN2QArA7AgGrT5uoWuzwF7KBMWY=
-  bucket: com-oauth2cloud-prod
-  local-dir: dist
-  acl: public_read
-  detect_encoding: true
-  cache_control: max-age=0
-  skip_cleanup: true
-  on:
-    tags: true
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY_ID
+    secret_access_key: $AWS_SECRET_ACCESS_KEY
+    bucket: com-oauth2cloud-prod
+    local-dir: dist/no-cache
+    acl: public_read
+    detect_encoding: true
+    cache_control: max-age=0
+    skip_cleanup: true
+    on:
+      tags: true
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY_ID
+    secret_access_key: $AWS_SECRET_ACCESS_KEY
+    bucket: com-oauth2cloud-prod
+    local-dir: dist/cache
+    acl: public_read
+    detect_encoding: true
+    cache_control: max-age=86400
+    skip_cleanup: true
+    on:
+      tags: true
