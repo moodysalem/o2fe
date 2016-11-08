@@ -10,11 +10,12 @@ install:
 - "yarn"
 - "npm run build"
 before_deploy:
+- "rm -rf dep"
 - "mkdir dep"
 - "mkdir dep/no-cache"
 - "mkdir dep/cache"
-- "mv dist/index.html dep/no-cache/"
-- "mv dist/* dep/cache/"
+- "cp dist/index.html dep/no-cache/"
+- "cp dist/* dep/cache/"
 deploy:
   - provider: s3
     access_key_id: $AWS_ACCESS_KEY_ID
