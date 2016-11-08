@@ -20,7 +20,7 @@ const Plx = ({src, children, ...rest}) => (
 );
 
 const Card = ({icon, title, text}) => (
-  <div className="card blue-grey darken-4 z-depth-2">
+  <div className="card blue-grey darken-4 z-depth-2 hover-scale">
     <div className="card-content white-text">
       <div style={{textAlign: 'center', fontSize: 80}}>
         <i className={`fa fa-${icon}`}/>

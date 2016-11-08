@@ -3,3 +3,10 @@
   -ms-text-overflow: ellipsis;
   text-overflow: ellipsis;
 }
+
+.hover-scale {
+  transition: transform 0.3s;
+  &:hover {
+    transform: scale(1.04);
+  }
+}
