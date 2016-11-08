@@ -1,32 +1,26 @@
 language: node_js
 node_js:
-  - "6.1"
-
+- '6.1'
 before_install:
-  # Repo for newer Node.js versions
-#  - curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
-  # Repo for Yarn
-  - sudo apt-key adv --keyserver pgp.mit.edu --recv D101F7899D41F3C3
-  - echo "deb http://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-  - sudo apt-get update -qq
-  - sudo apt-get install -y -qq yarn
+- sudo apt-key adv --keyserver pgp.mit.edu --recv D101F7899D41F3C3
+- echo "deb http://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+- sudo apt-get update -qq
+- sudo apt-get install -y -qq yarn
 cache:
   directories:
-  - $HOME/.yarn-cache
-
+  - "$HOME/.yarn-cache"
 install:
-  - yarn
-  - npm run build
-
+- yarn
+- npm run build
 deploy:
   provider: s3
-  access_key_id: AKIAIBT4BO2VCSN4S3CQ
+  access_key_id: AKIAJVZHQJJNUPHD4NCQ
   secret_access_key:
-    secure: OKtp7+jMYfNsSn5Ep5wDFPvvZlyXbvy5ppnZfijRXYtNSt0sbnAG1ZYUSJx0bvwFkUNLXSORl0tglFSZ5LtRIWm2XofeQVKqDq7DRbqcSj02l/vUSBIJVHBO7B6RPImcRatlfT6gjBSZVwbz3/q9qYLkT9C8zRXp/vQ/3rnfKd47/1N0z3pDjpSJ0OotYZd3NGoF6sr51fbsbnNzeNK4MKYUVKbOzSZ6wYt1VuR6f9IY29FhwlqWBlnlfBZigp3IK6wrAX2lvRq7PY/ik6oW6304RPPJrRTCs5yOGNe6SclzrPal+KucF7mCEWNIzQqYfkY+QCxXMpGXGdiK5GbSdyOZOyqOPP2+EfSRUf/jIXvCmeGOH/XXv8Ol1R5N62J7pxh90qtuhWdg5fkLE+sU8RjlgwV9WLiSR4NFDGuCETlUp7MB3JsSyTNxsabXmDgiGXYg+WclL5U+qkTlauRs7taVyoBiOSdGRxHOo7D8+V+RZxuLNc0gumrJFiUdatJOcZijHNvL7+JYwdIvKDJsiE00ZvbCit2tUjs7NgRc+nH+5h3W2uc6DpzUExHC/fbH1d4/sQedyhNIydtgCKcWOprBy4tcPyfwC77KJ+vD/TYv+6lium9TkaXELmC1Kd9nqFuM/1e4rAiIyv/wt1IknVQqZBBFYCMqkywX9fdhxNU=
+    secure: mnio0VijJRHf6mXp6HYFsmpx+fD+Ue7HDeTG8Wf5PeDTpw3Vvo//dykyD3lEnbvwtswLhNHJIgnqYRWyWaZA/70qUT1XpT6TfizIcaVLBA8Qcf7DROou/MFSf+o9ea36Eug6kbUG/V937+HhZnuIeo3AWkaFQboa6mE6IOQvdp+ewR18TY8kgq+IvzhTgaUouA3LWXlbPZAix5RyTNu/PxFdndeqgvzjjXFrG1YvOGxygU6X7ZvUofMWYZEgCTajNc+FOllEhOwFb4xv9+lXSpVUMjoZ2On1NC3sDKsc63nrUzMMRihhqlDKk5bp2nLTutqVmagFGv0wFlfwlwl4Gg+or8nfQBmxb7z6iwV44TevsIC/pSUEMd6BLC/FCdeb+Dua9QdTvGxz1kG2e2Mmn7rFOGqXTu7kwkbG49HV5AE0O2Yls7EIf5uiR/YqQ4SCcIZfMaatnPJP0wIGIIWXMH+SvSs011wcg+W34noV9xaaJNrXxfaWeicbPQchsuBCh+1f/Eac3ILV/TFxH7e/IfcwyU6tziTx4BRynJgG2Yv3EiP3FMJQIzU+9geTHYHrph3hVUvgfmOUmEFqYNhwgE0JtZk8Gbjoj6EA5xgHDNi5+LpuEjWKNXYMOdufR+UlX6/yLh4N+KWWlumvRN2QArA7AgGrT5uoWuzwF7KBMWY=
   bucket: com-oauth2cloud-prod
   local-dir: dist
   acl: public_read
-  detect_encoding: true # <== default is false
-  cache_control: "max-age=0"
+  detect_encoding: true
+  cache_control: max-age=0
   on:
     tags: true
