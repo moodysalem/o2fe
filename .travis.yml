@@ -22,10 +22,10 @@ deploy:
     access_key_id: $AWS_ACCESS_KEY_ID
     secret_access_key: $AWS_SECRET_ACCESS_KEY
     bucket: com-oauth2cloud-prod
-    local-dir: deploy/no-cache
+    local-dir: deploy/cache
     acl: public_read
     detect_encoding: true
-    cache_control: max-age=0
+    cache_control: max-age=86400
     skip_cleanup: true
     on:
       tags: true
@@ -33,10 +33,10 @@ deploy:
     access_key_id: $AWS_ACCESS_KEY_ID
     secret_access_key: $AWS_SECRET_ACCESS_KEY
     bucket: com-oauth2cloud-prod
-    local-dir: deploy/cache
+    local-dir: deploy/no-cache
     acl: public_read
     detect_encoding: true
-    cache_control: max-age=86400
+    cache_control: max-age=0
     skip_cleanup: true
     on:
       tags: true
