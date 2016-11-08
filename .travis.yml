@@ -24,7 +24,6 @@ deploy:
     bucket: com-oauth2cloud-prod
     local-dir: deploy/cache
     acl: public_read
-    detect_encoding: true
     cache_control: max-age=86400
     skip_cleanup: true
     on:
@@ -35,7 +34,6 @@ deploy:
     bucket: com-oauth2cloud-prod
     local-dir: deploy/no-cache
     acl: public_read
-    detect_encoding: true
     cache_control: max-age=0
     skip_cleanup: true
     on:
