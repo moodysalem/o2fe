@@ -21,6 +21,17 @@ export const SlideDown = (props) => (
   />
 );
 
+
+export const SlideUp = (props) => (
+  <CSSTransitionGroup
+    transitionName="slide-up"
+    transitionAppearTimeout={300}
+    transitionEnterTimeout={300}
+    transitionLeaveTimeout={300}
+    {...props}
+  />
+);
+
 export const Fade = (props) => (
   <CSSTransitionGroup
     transitionName="fade"

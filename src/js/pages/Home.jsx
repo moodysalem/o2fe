@@ -3,15 +3,15 @@ import space from "../../res/space.jpg";
 import {Parallax, Background} from "react-parallax";
 import laptop from "../../res/blurred-laptop.jpeg";
 import {Link} from "react-router";
-import {SlideRight} from "./comps/Animations";
+import {SlideUp} from "./comps/Animations";
 
-const PARALLAX_BUFFER = 140;
+const PARALLAX_BUFFER = 40;
 const PADDING = {paddingTop: PARALLAX_BUFFER, paddingBottom: PARALLAX_BUFFER};
 
 const Plx = ({src, children, ...rest}) => (
   <Parallax strength={100}>
     <Background>
-      <div style={{width: '100vw', minWidth: 1200}}>
+      <div style={{width: '100vw', minWidth: 1200, marginTop: -200}}>
         <img className="black" src={src} style={{width: '100%'}}/>
       </div>
     </Background>
@@ -48,7 +48,7 @@ export default class Home extends PureComponent {
         </Plx>
 
         <div className="row container" style={{marginTop: 20}}>
-          <SlideRight transitionAppear={true}>
+          <SlideUp transitionAppear={true}>
             <div className="col s12 m6">
               <Card icon="shield" title="No Passwords" text="Stop storing user passwords and worrying about breaches"/>
             </div>
@@ -67,24 +67,26 @@ export default class Home extends PureComponent {
               <Card icon="book" title="Documentation"
                     text="Code with confidence against an API that has comprehensive documentation and tests"/>
             </div>
-          </SlideRight>
+          </SlideUp>
         </div>
 
-
-        <Plx src={laptop} blur="10px">
-          <div style={{...PADDING, textAlign: 'right'}} className="container white-text">
-            <h2>
-              <strong>Stop</strong> rewriting code
-            </h2>
-            <p className="flow-text">
-              OAuth2 servers have been done a hundred times in a hundred different ways. Let us do it right for you so
-              you can solve the real problems
-            </p>
-            <p>
-              <Link to="docs"><i className="fa fa-book"/> Learn More</Link>
-            </p>
-          </div>
-        </Plx>
+        {/* moved 4px down for iOS weirdness with flushing image to bottom */}
+        <div style={{marginBottom: -4}}>
+          <Plx src={laptop}>
+            <div style={{...PADDING, textAlign: 'right'}} className="container white-text">
+              <h2>
+                <strong>Stop</strong> rewriting code
+              </h2>
+              <p className="flow-text">
+                OAuth2 servers have been done a hundred times in a hundred different ways. Let us do it right for you so
+                you can work on the real problems
+              </p>
+              <p>
+                <Link to="docs"><i className="fa fa-book"/> Learn More</Link>
+              </p>
+            </div>
+          </Plx>
+        </div>
       </div>
     );
   }
