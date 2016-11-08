@@ -58,7 +58,7 @@ export default class crud {
         return Promise.all([
           +res.headers.get(START),
           +res.headers.get(TOTAL_COUNT),
-          res.json()
+          res.json().then(json => JSOG.decode(json))
         ]);
       }
 
@@ -79,7 +79,7 @@ export default class crud {
     }).then(
       res => {
         if (res.ok) {
-          return res.json();
+          return res.json().then(json => JSOG.decode(json));
         }
 
         return res.json().then(res => Promise.reject(res));
