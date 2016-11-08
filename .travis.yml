@@ -10,18 +10,19 @@ install:
 - "yarn"
 - "npm run build"
 before_deploy:
-- "rm -rf dep"
-- "mkdir dep"
-- "mkdir dep/no-cache"
-- "mkdir dep/cache"
-- "cp dist/index.html dep/no-cache/"
-- "cp dist/* dep/cache/"
+- "rm -rf deploy"
+- "mkdir deploy"
+- "mkdir deploy/no-cache"
+- "mkdir deploy/cache"
+- "cp dist/index.html deploy/no-cache/"
+- "cp dist/* deploy/cache/"
+- "rm deploy/cache/index.html"
 deploy:
   - provider: s3
     access_key_id: $AWS_ACCESS_KEY_ID
     secret_access_key: $AWS_SECRET_ACCESS_KEY
     bucket: com-oauth2cloud-prod
-    local-dir: dep/no-cache
+    local-dir: deploy/no-cache
     acl: public_read
     detect_encoding: true
     cache_control: max-age=0
@@ -32,7 +33,7 @@ deploy:
     access_key_id: $AWS_ACCESS_KEY_ID
     secret_access_key: $AWS_SECRET_ACCESS_KEY
     bucket: com-oauth2cloud-prod
-    local-dir: dep/cache
+    local-dir: deploy/cache
     acl: public_read
     detect_encoding: true
     cache_control: max-age=86400
