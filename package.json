@@ -1,7 +1,7 @@
 {
   "name": "o2fe",
   "private": true,
-  "version": "1.0.19",
+  "version": "1.0.20",
   "description": "OAuth2Cloud front-end",
   "scripts": {
     "clean": "rimraf dist/",
