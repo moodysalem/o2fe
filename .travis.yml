@@ -26,5 +26,7 @@ deploy:
   bucket: com-oauth2cloud-prod
   local-dir: dist
   acl: public_read
+  detect_encoding: true # <== default is false
+  cache_control: "max-age=0"
   on:
     repo: moodysalem/o2fe
