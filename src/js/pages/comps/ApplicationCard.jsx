@@ -43,14 +43,21 @@ export default ({
           <label>Application ID</label>
           <div className="truncate">{id}</div>
         </div>
+
         <div>
           <label>Support E-mail</label>
-          <div>{supportEmail}</div>
+          <div className="overflow-ellipsis">{supportEmail}</div>
         </div>
 
         <div>
           <label>Description</label>
-          <p>{description && description.length ? description : <em className="grey-text text-lighten-1">N/A</em>}</p>
+          <p className="overflow-ellipsis">
+            {
+              description && description.length ?
+                description :
+                <em className="grey-text text-lighten-1">N/A</em>
+            }
+          </p>
         </div>
 
       </div>

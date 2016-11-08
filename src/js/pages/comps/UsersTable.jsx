@@ -11,7 +11,7 @@ export default class UsersTable extends PureComponent {
     const {users} = this.props;
 
     return (
-      <table className="responsive-table">
+      <table className="responsive-table striped">
         <thead>
         <tr>
           <th>ID</th>

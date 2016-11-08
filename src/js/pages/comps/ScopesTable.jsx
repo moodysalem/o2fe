@@ -11,7 +11,7 @@ export default class ScopesTable extends PureComponent {
     const {scopes, onDelete, onEdit} = this.props;
 
     return (
-      <table className="responsive-table centered">
+      <table className="responsive-table striped">
         <thead>
         <tr>
           <th>Name</th>

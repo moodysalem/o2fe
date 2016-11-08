@@ -10,13 +10,11 @@ import ClientScopes from "../comps/ClientScopes";
 import Modal from "../comps/Modal";
 
 const ClientScopesModal = ({client, onClose, ...rest}) => (
-  <Modal open={client != null} onClose={onClose}>
+  <Modal open={client != null} onClose={onClose} fixedFooter={true}>
     <Modal.Content>
       {
         client != null ? <ClientScopes client={client}/> : null
       }
-      <hr/>
-
     </Modal.Content>
     <Modal.Footer>
       <Modal.Action onClick={onClose}>Done</Modal.Action>
