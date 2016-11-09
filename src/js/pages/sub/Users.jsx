@@ -15,11 +15,8 @@ export default class Scopes extends PureComponent {
   };
 
   state = {
-    editing: null, deleting: null
+    merging: null
   };
-
-  handleEdit = editing => this.setState({editing});
-  handleDelete = deleting => this.setState({deleting});
 
   renderUsers = users => {
     if (users.length == 0) {

@@ -8,6 +8,7 @@ import PaginatedList from "../comps/PaginatedList";
 import {SlideRight} from "../comps/Animations";
 import ClientScopes from "../comps/ClientScopes";
 import Modal from "../comps/Modal";
+import LoginUrls from "../comps/LoginUrls";
 
 const ClientScopesModal = ({client, onClose, ...rest}) => (
   <Modal open={client != null} onClose={onClose} fixedFooter={true}>
@@ -15,6 +16,17 @@ const ClientScopesModal = ({client, onClose, ...rest}) => (
       {
         client != null ? <ClientScopes client={client}/> : null
       }
+    </Modal.Content>
+    <Modal.Footer>
+      <Modal.Action onClick={onClose}>Done</Modal.Action>
+    </Modal.Footer>
+  </Modal>
+);
+
+const LoginUrlsModal = ({client, onClose}) => (
+  <Modal open={client != null} onClose={onClose} fixedFooter={true}>
+    <Modal.Content>
+      {client != null ? <LoginUrls client={client}/> : null }
     </Modal.Content>
     <Modal.Footer>
       <Modal.Action onClick={onClose}>Done</Modal.Action>
@@ -37,7 +49,8 @@ export default class Clients extends PureComponent {
   state = {
     deleting: null,
     editing: null,
-    viewingScopes: null
+    viewingScopes: null,
+    viewUrls: null
   };
 
   handleEdit = editing => this.setState({editing});
@@ -74,8 +87,10 @@ export default class Clients extends PureComponent {
       );
   };
 
+  viewUrls = viewUrls => this.setState({viewUrls});
   viewScopes = viewingScopes => this.setState({viewingScopes});
   closeViewScopes = () => this.viewScopes(null);
+  closeViewUrls = () => this.viewUrls(null);
 
   renderClients = clients => {
     if (clients.length == 0) {
@@ -95,7 +110,8 @@ export default class Clients extends PureComponent {
                           client={client}
                           onDelete={() => this.handleDelete(client)}
                           onViewScopes={() => this.viewScopes(client)}
-                          onEdit={() => this.handleEdit(client)}/>
+                          onEdit={() => this.handleEdit(client)}
+                          onViewUrls={() => this.viewUrls(client)}/>
             )
           )
         }
@@ -104,7 +120,7 @@ export default class Clients extends PureComponent {
   };
 
   render() {
-    const {deleting, editing, viewingScopes} = this.state;
+    const {deleting, editing, viewingScopes, viewUrls} = this.state;
     const {dao} = this.context;
     const {id: applicationId} = this.props.params;
 
@@ -124,6 +140,8 @@ export default class Clients extends PureComponent {
           onClose={this.cancelEdit}/>
 
         <ClientScopesModal client={viewingScopes} onClose={this.closeViewScopes}/>
+
+        <LoginUrlsModal client={viewUrls} onClose={this.closeViewUrls}/>
 
         <div className="display-flex align-items-center">
           <p className="flow-text flex-grow-1">

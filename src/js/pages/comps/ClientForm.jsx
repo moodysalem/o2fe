@@ -106,9 +106,8 @@ export default class ClientForm extends PureComponent {
           </div>
         </fieldset>
 
-
         <fieldset style={{marginTop: 20}}>
-          <legend>Allowed URIs</legend>
+          <legend>Allowed Redirect URIs</legend>
           <div>
             <MultiTextInput type="url" value={uris} placeholder="https://google.com"
                             onChange={uris => this.handleChange({uris})}
