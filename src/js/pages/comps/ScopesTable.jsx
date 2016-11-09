@@ -17,7 +17,7 @@ export default class ScopesTable extends PureComponent {
           <th>Name</th>
           <th>Display Name</th>
           <th>Description</th>
-          <th/>
+          <th>Actions</th>
         </tr>
         </thead>
         <tbody>

@@ -172,7 +172,7 @@ export default class ClientScopes extends PureComponent {
         <Loading loading={promise != null}>
           {this.renderScopes()}
 
-          <div style={{textAlign: 'center'}}>
+          <div style={{textAlign: 'center', marginTop: 10}}>
             <button className="btn" onClick={this.saveChanges}><i className="fa fa-save"/> Commit</button>
           </div>
         </Loading>
