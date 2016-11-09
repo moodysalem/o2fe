@@ -38,6 +38,7 @@
     "qs": "^6.3.0",
     "react": "15.3.2",
     "react-addons-css-transition-group": "^15.3.2",
+    "react-copy-to-clipboard": "^4.2.3",
     "react-dom": "15.3.2",
     "react-notification-system": "^0.2.10",
     "react-parallax": "^1.0.5",

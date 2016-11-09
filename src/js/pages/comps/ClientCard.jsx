@@ -1,4 +1,6 @@
 import React, {PropTypes, PureComponent} from "react";
+import {NOTIFICATION_HANDLERS} from "../../util/shapes";
+import CopyRow from "./CopyRow";
 
 const N_A = <em className="grey-text lighten-2">N/A</em>;
 
@@ -11,7 +13,13 @@ export default class ClientCard extends PureComponent {
     client: PropTypes.object.isRequired
   };
 
+  static contextTypes = {
+    ...NOTIFICATION_HANDLERS
+  };
+
   static defaultProps = {};
+
+  handleCopy = name => this.context.onInfo(`Copied ${name} to clipboard!`);
 
   render() {
     const {
@@ -33,15 +41,8 @@ export default class ClientCard extends PureComponent {
           <hr />
 
           <div>
-            <div>
-              <label>Client ID</label>
-              <div style={{overflow: 'hidden', textOverflow: 'ellipsis'}}>{cid}</div>
-            </div>
-
-            <div>
-              <label>Client Secret</label>
-              <div style={{overflow: 'hidden', textOverflow: 'ellipsis'}}>{secret}</div>
-            </div>
+            <CopyRow label="Client ID" value={cid} onCopy={() => this.handleCopy('Client ID')}/>
+            <CopyRow label="Client Secret" value={secret} onCopy={() => this.handleCopy('Client Secret')}/>
 
             <div>
               <label>TTLs</label>
