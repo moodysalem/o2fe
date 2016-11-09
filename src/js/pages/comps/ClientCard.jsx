@@ -84,7 +84,7 @@ export default class ClientCard extends PureComponent {
           <a href="#" onClick={e => {
             e.preventDefault();
             onViewScopes();
-          }}>View Scopes</a>
+          }}>Assign Scopes</a>
           <a href="#" onClick={e => {
             e.preventDefault();
             onEdit();

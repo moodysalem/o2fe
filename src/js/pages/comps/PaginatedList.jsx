@@ -1,9 +1,9 @@
 import React, {PropTypes, PureComponent} from "react";
 import crud from "../../util/crud";
 import _ from "underscore";
-import Preloader from "./Preloader";
 import Pagination from "./Pagination";
 import {pageParams} from "../../util/params";
+import Loading from "./Loading";
 
 const INITIAL_STATE = {
   objects: [],
@@ -12,13 +12,6 @@ const INITIAL_STATE = {
   pageInfo: {pageNo: 0, pageSize: 20},
   err: null
 };
-
-const LOADER = (
-  <div key="loader" style={{position: 'absolute', top: 0, left: 0, bottom: 0, right: 0}}
-       className="display-flex align-items-center justify-content-center">
-    <Preloader/>
-  </div>
-);
 
 /**
  * Deals with fetching a list
@@ -76,7 +69,7 @@ export default class PaginatedList extends PureComponent {
       {renderList} = this.props;
 
     return (
-      <div style={{position: 'relative'}}>
+      <Loading loading={promise != null}>
         <span key="list">
           {renderList(objects)}
         </span>
@@ -84,11 +77,7 @@ export default class PaginatedList extends PureComponent {
         <span key="pagination">
           <Pagination totalCount={totalCount} value={pageInfo} onChange={this.handlePageChange}/>
         </span>
-
-        {
-          promise != null ? LOADER : null
-        }
-      </div>
+      </Loading>
     );
   }
 }
