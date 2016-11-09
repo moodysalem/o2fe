@@ -1,5 +1,7 @@
 import React, {PropTypes, PureComponent} from "react";
 
+const N_A = <em className="grey-text lighten-2">N/A</em>;
+
 export default class ClientCard extends PureComponent {
   static propTypes = {
     onEdit: PropTypes.func.isRequired,
@@ -54,20 +56,20 @@ export default class ClientCard extends PureComponent {
                 </div>
                 <div>
                   <label>Refresh Token</label>
-                  <div>{refreshTokenTtl ? `${refreshTokenTtl}s` : <em>N/A</em>}</div>
+                  <div>{refreshTokenTtl ? `${refreshTokenTtl}s` : N_A}</div>
                 </div>
               </div>
             </div>
 
             <div>
               <label>Flows</label>
-              <div>{flows.join(', ')}</div>
+              <div>{flows && flows.length > 0 ? flows.join(', ') : N_A}</div>
             </div>
 
             <div>
               <label>Allowed URIs</label>
               <div>
-                {uris.map((uri, ix) => <div key={ix}>{uri}</div>)}
+                {uris && uris.length > 0 ? uris.map((uri, ix) => <div key={ix}>{uri}</div>) : N_A}
               </div>
             </div>
 
