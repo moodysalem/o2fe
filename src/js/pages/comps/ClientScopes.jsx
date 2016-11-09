@@ -31,7 +31,7 @@ const ClientScopesTable = ({scopes, clientScopes, onChange}) => {
   };
 
   return (
-    <table className="responsive-table centered">
+    <table className="responsive-table striped centered">
       <thead>
       <tr>
         <th>Name</th>
