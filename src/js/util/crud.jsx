@@ -149,7 +149,7 @@ export default class crud {
           return Promise.resolve();
         }
 
-        return res.json().then(json => Promise.reject(json));
+        return res.json().then(toError);
       }
     );
   }

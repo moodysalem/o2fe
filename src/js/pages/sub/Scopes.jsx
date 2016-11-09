@@ -50,11 +50,12 @@ export default class Scopes extends PureComponent {
     const {deleting} = this.state;
     const {dao, onError, onSuccess} = this.context;
 
+    this.setState({deleting: null});
+
     dao.scopes.destroyId(deleting.id)
       .then(
         scope => {
           this.refs.scopes.refresh();
-          this.setState({deleting: null});
           onSuccess(`Saved scope ${scope.name}`);
         },
         onError

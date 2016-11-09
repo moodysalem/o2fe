@@ -36,10 +36,6 @@ export default class LoginUrls extends PureComponent {
     }).isRequired
   };
 
-  visitUrl = url => {
-    window.open(url,)
-  };
-
   render() {
     const {config: {API_URL}} = this.context;
     const {client: {credentials: {id: client_id}, name, flows, uris}} = this.props;
