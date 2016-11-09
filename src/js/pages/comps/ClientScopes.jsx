@@ -54,7 +54,7 @@ const ClientScopesTable = ({scopes, clientScopes, onChange}) => {
                               onChange={e => handleChange({clientScope, changed: {scope, priority: e.target.value}})}/>
                 </td>
                 <td>
-                  <textarea className="materialize-textarea" value={clientScope ? clientScope.reason : ''}
+                  <textarea className="materialize-textarea" value={(clientScope ? clientScope.reason : null) || ''}
                             onChange={e => handleChange({clientScope, changed: {scope, reason: e.target.value}})}
                             placeholder="N/A"
                             disabled={!clientScope || clientScope.priority === DELETE_CLIENT_SCOPE}/>
