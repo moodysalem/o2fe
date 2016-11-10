@@ -47,11 +47,11 @@ export default class Scopes extends PureComponent {
             Find users that have used this application
           </p>
 
-          <div>
-            <button className="btn btn-round" disabled={checkedUsers.length < 2}>
-              <i className="fa fa-compress"/> Merge
-            </button>
-          </div>
+          {/*<div>*/}
+            {/*<button className="btn btn-round" disabled={checkedUsers.length < 2}>*/}
+              {/*<i className="fa fa-compress"/> Merge*/}
+            {/*</button>*/}
+          {/*</div>*/}
         </div>
 
         <PaginatedList renderList={this.renderUsers} crud={dao.users} params={{applicationId}}/>

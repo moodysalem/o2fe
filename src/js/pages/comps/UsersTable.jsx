@@ -43,9 +43,9 @@ export default class UsersTable extends PureComponent {
       <table className="responsive-table striped centered">
         <thead>
         <tr>
-          <th>
-            <Checkbox checked={allChecked} onChange={e => this.handleCheckAll(e.target.checked)}/>
-          </th>
+          {/*<th>*/}
+            {/*<Checkbox checked={allChecked} onChange={e => this.handleCheckAll(e.target.checked)}/>*/}
+          {/*</th>*/}
           <th>ID</th>
           <th>E-mail</th>
           <th>Aliases</th>
@@ -59,9 +59,9 @@ export default class UsersTable extends PureComponent {
 
               return (
                 <tr key={id}>
-                  <td>
-                    <Checkbox checked={isChecked(user)} onChange={e => this.handleCheck(user, e.target.checked)}/>
-                  </td>
+                  {/*<td>*/}
+                    {/*<Checkbox checked={isChecked(user)} onChange={e => this.handleCheck(user, e.target.checked)}/>*/}
+                  {/*</td>*/}
                   <td>{id}</td>
                   <td>{email}</td>
                   <td>
