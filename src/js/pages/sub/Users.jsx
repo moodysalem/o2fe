@@ -15,7 +15,8 @@ export default class Scopes extends PureComponent {
   };
 
   state = {
-    merging: null
+    merging: null,
+    checkedUsers: []
   };
 
   renderUsers = users => {
@@ -25,14 +26,19 @@ export default class Scopes extends PureComponent {
       );
     }
 
+    const {checkedUsers} = this.state;
+
     return (
-      <UsersTable users={users}/>
+      <UsersTable users={users} checkedUsers={checkedUsers} onChangeChecked={this.handleChangeChecked}/>
     );
   };
 
+  handleChangeChecked = checkedUsers => this.setState({checkedUsers});
+
   render() {
     const {dao} = this.context;
-    const {id: applicationId} = this.props.params;
+    const {id: applicationId} = this.props.params,
+      {checkedUsers} = this.state;
 
     return (
       <div>
@@ -40,6 +46,12 @@ export default class Scopes extends PureComponent {
           <p className="flow-text flex-grow-1">
             Find users that have used this application
           </p>
+
+          <div>
+            <button className="btn btn-round" disabled={checkedUsers.length < 2}>
+              <i className="fa fa-compress"/> Merge
+            </button>
+          </div>
         </div>
 
         <PaginatedList renderList={this.renderUsers} crud={dao.users} params={{applicationId}}/>
