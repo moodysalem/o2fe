@@ -54,8 +54,8 @@ export default class Home extends PureComponent {
             </div>
 
             <div className="col s12 m6">
-              <Card icon="fort-awesome" title="Customization"
-                    text="Everything from the browser icon to the button colors to the client behaviors is configurable"/>
+              <Card icon="wrench" title="Customization"
+                    text="Use your own CSS file and customize your log in page to your heart's content"/>
             </div>
 
             <div className="col s12 m6">
