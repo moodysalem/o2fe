@@ -13,7 +13,7 @@ export default class ScopeForm extends PureComponent {
 
   render() {
     const {onSubmit, value} = this.props;
-    const {name, displayName, description} = value;
+    const {name, displayName, description, thumbnail} = value;
 
     return (
       <form onSubmit={e => {
@@ -25,6 +25,12 @@ export default class ScopeForm extends PureComponent {
           <input type="text" value={name || ''} onChange={e => this.handleChange({name: e.target.value})}
                  className="validate"
                  required placeholder="Name"/>
+        </div>
+
+        <div>
+          <label>Thumbnail URL</label>
+          <input type="url" value={thumbnail || ''} onChange={e => this.handleChange({thumbnail: e.target.value})}
+                 className="validate" placeholder="Thumbnail URL"/>
         </div>
 
         <div>
