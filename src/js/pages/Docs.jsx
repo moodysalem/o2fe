@@ -59,11 +59,14 @@ export default class Docs extends PureComponent {
         <h2 ref="intro" className="overflow-ellipsis">Introduction</h2>
         <p className="flow-text">
           This specification describes the functionality and the expected behavior of this OAuth2 server.
+
+          For more general information about OAuth2, check out
+          the <a target="_blank" rel="noopener" href="https://tools.ietf.org/html/rfc6749">specification</a>.
         </p>
         <h2 ref="api" className="overflow-ellipsis">API</h2>
         <p className="flow-text">
-          Live documentation for the API can be found <a target="_blank" rel="noopener"
-                                                         href="https://docs.oauth2cloud.com/#/oauth2">here</a>.
+          Live documentation for the API can be found
+          at <a target="_blank" rel="noopener" href="https://docs.oauth2cloud.com/#/oauth2">docs.oauth2cloud.com</a>.
           The endpoints used for authentication and authorization are tagged <strong>oauth2</strong>.
         </p>
         <p>
@@ -77,12 +80,7 @@ export default class Docs extends PureComponent {
         <h3 ref="authentication" className="overflow-ellipsis">Authentication</h3>
         <p className="flow-text">
           This OAuth2 server does not allow log in via e-mail and password combinations. Rather the only methods
-          available for user authentication are via e-mail or Google.
-        </p>
-        <p>
-          This makes it easier to transition existing identity systems to OAuth2Cloud. No passwords have to be
-          transferred. When validating tokens, match users who log in via OAuth2Cloud based on their e-mail addresses to
-          users in your own system.
+          available for user authentication are via e-mail or third party provider (e.g. Google or Facebook.)
         </p>
         <h4 ref="email" className="overflow-ellipsis">Via E-mail</h4>
         <p>
@@ -116,14 +114,16 @@ export default class Docs extends PureComponent {
         </p>
         <ul>
           <li>
-            <strong>Required</strong>: The user may not log in to a particular client without accepting this scope
+            <strong>Required</strong>: The user may not log in to a particular client without accepting this scope.
+            Information about the scope is provided but the user does not have the option to decline the scope and
+            continue.
           </li>
           <li>
-            <strong>Required Hidden</strong>: The user will not be prompted to authorize this scope, but any tokens
-            created will have the scope.
+            <strong>Required &amp; Hidden</strong>: The user will not be prompted to authorize this scope, but any tokens
+            created will have the scope. The user will not be shown details about the scope.
           </li>
           <li>
-            <strong>Ask</strong>: The user will be asked for this scope and may decline
+            <strong>Ask</strong>: The user will be asked for this scope and may decline to provide it for the client.
           </li>
         </ul>
 
