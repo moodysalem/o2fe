@@ -36,7 +36,7 @@ export default class Scopes extends PureComponent {
       .then(
         scope => {
           this.refs.scopes.refresh();
-          onSuccess(`Saved scope ${scope.name}`);
+          onSuccess(`Saved scope '${scope.name}'`);
           this.setState({editing: null});
         },
         onError
@@ -54,9 +54,9 @@ export default class Scopes extends PureComponent {
 
     dao.scopes.destroyId(deleting.id)
       .then(
-        scope => {
+        () => {
           this.refs.scopes.refresh();
-          onSuccess(`Saved scope ${scope.name}`);
+          onSuccess(`Removed scope '${deleting.name}'`);
         },
         onError
       );
