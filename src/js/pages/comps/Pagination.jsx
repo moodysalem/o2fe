@@ -64,7 +64,7 @@ export default class Pagination extends PureComponent {
     const {totalCount, value, sizes} = this.props;
     const {pageSize, pageNo} = value;
 
-    const numPages = Math.max(1, Math.floor(totalCount / pageSize));
+    const numPages = Math.max(1, Math.ceil(totalCount / pageSize));
 
     return (
       <div className="display-flex align-items-center">
