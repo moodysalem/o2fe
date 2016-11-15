@@ -20,11 +20,13 @@ export default class PaginatedList extends PureComponent {
   static propTypes = {
     renderList: PropTypes.func.isRequired,
     crud: PropTypes.instanceOf(crud).isRequired,
-    params: PropTypes.object
+    params: PropTypes.object,
+    debounceDelay: PropTypes.number
   };
 
   static defaultProps = {
-    params: null
+    params: null,
+    debounceDelay: 150
   };
 
   state = INITIAL_STATE;
@@ -34,6 +36,10 @@ export default class PaginatedList extends PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
+    if (this.props.debounceDelay !== nextProps.debounceDelay) {
+      this.debouncedRefresh = _.debounce(this.refresh, this.props.debounceDelay);
+    }
+
     // params changed
     if (!_.isEqual(nextProps.params, this.props.params)) {
       const {pageInfo} = this.state;
@@ -42,7 +48,7 @@ export default class PaginatedList extends PureComponent {
   }
 
   refresh = () => this.refreshWith(this.props, this.state);
-  debouncedRefresh = _.debounce(this.refresh, 100);
+  debouncedRefresh = _.debounce(this.refresh, this.props.debounceDelay);
 
   refreshWith = (props, state) => {
     const {crud, params} = props,

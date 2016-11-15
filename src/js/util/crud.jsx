@@ -2,6 +2,7 @@ import _ from "underscore";
 import JSOG from "jsog";
 import join from "url-join";
 import qs from "qs";
+import Promise from "bluebird";
 
 const BEARER = 'Bearer',
   START = 'X-Start',
@@ -17,17 +18,15 @@ const toError = obj => {
   }
 
   if (obj && _.isObject(obj) && _.isArray(obj.requestErrors) && obj.requestErrors.length > 0) {
-    return Promise.reject(
-      new Error(
-        obj.requestErrors
-          .map(({attribute, message}) =>
-            _.filter([attribute, message], s => typeof s == 'string' && s.trim().length > 0).join(' - '))
-          .join('\n')
-      )
+    return new Error(
+      obj.requestErrors
+        .map(({attribute, message}) =>
+          _.filter([attribute, message], s => typeof s == 'string' && s.trim().length > 0).join(' - '))
+        .join('\n')
     );
   }
 
-  return Promise.reject(new Error('Unknown error occurred!'));
+  return new Error('Unknown error occurred!');
 };
 
 
@@ -51,22 +50,26 @@ export default class crud {
   }
 
   list(params) {
-    return fetch(`${this._baseUrl}?${qs.stringify(params)}`, {
-      headers: this.getAuthHeader()
-    }).then(res => {
-      if (res.ok) {
-        return Promise.all([
-          +res.headers.get(START),
-          +res.headers.get(TOTAL_COUNT),
-          res.json().then(json => JSOG.decode(json))
-        ]);
-      }
+    return new Promise((resolve, reject) => {
+      fetch(`${this._baseUrl}?${qs.stringify(params)}`, {
+        headers: this.getAuthHeader()
+      })
+        .then(res => {
+          if (res.ok) {
+            return Promise.all([
+              +res.headers.get(START),
+              +res.headers.get(TOTAL_COUNT),
+              res.json().then(json => JSOG.decode(json))
+            ]);
+          }
 
-      return res.json().then(json => Promise.reject(json));
-    }).then(
-      ([start, totalCount, results]) => ({start, totalCount, results}),
-      toError
-    );
+          return res.json().then(json => Promise.reject(json));
+        }, reject)
+        .then(
+          ([start, totalCount, results]) => resolve({start, totalCount, results}),
+          json => reject(toError(json))
+        );
+    });
   }
 
   get(id) {
@@ -74,18 +77,22 @@ export default class crud {
       return invalidIdPromise();
     }
 
-    return fetch(join(this._baseUrl, id), {
-      headers: this.getAuthHeader()
-    }).then(
-      res => {
-        if (res.ok) {
-          return res.json().then(json => JSOG.decode(json));
-        }
+    return new Promise((resolve, reject) => {
+      fetch(join(this._baseUrl, id), {
+        headers: this.getAuthHeader()
+      }).then(
+        res => {
+          if (res.ok) {
+            return res.json().then(json => JSOG.decode(json));
+          }
 
-        return res.json().then(res => Promise.reject(res));
-      },
-      toError
-    );
+          return res.json().then(res => Promise.reject(res));
+        }
+      ).then(
+        result => resolve(result),
+        err => reject(toError(err))
+      );
+    });
   }
 
   save(data) {
@@ -108,31 +115,32 @@ export default class crud {
       return Promise.resolve([]);
     }
 
-    return fetch(this._baseUrl, {
-      method: 'POST',
-      body: JSOG.stringify(data),
-      headers: {
-        ...this.getAuthHeader(),
-        'Content-Type': 'application/json'
-      }
-    }).then(
-      res => {
-        if (res.ok) {
-          return res.json();
+    return new Promise((resolve, reject) => {
+      fetch(this._baseUrl, {
+        method: 'POST',
+        body: JSOG.stringify(data),
+        headers: {
+          ...this.getAuthHeader(),
+          'Content-Type': 'application/json'
         }
+      }).then(
+        res => {
+          if (res.ok) {
+            return res.json().then(json => JSOG.decode(json));
+          }
 
-        return res.json().then(res => Promise.reject(res));
-      }
-    ).then(
-      json => {
-        const decoded = JSOG.decode(json);
-        if (single) {
-          return decoded[0];
+          return res.json().then(res => Promise.reject(res));
         }
-        return decoded;
-      },
-      toError
-    );
+      ).then(
+        decoded => {
+          if (single) {
+            resolve(decoded[0]);
+          }
+          resolve(decoded);
+        },
+        err => reject(toError(err))
+      );
+    });
   }
 
   destroyId(id) {
