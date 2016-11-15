@@ -37,6 +37,7 @@ const ClientScopesTable = ({scopes, clientScopes, onChange}) => {
         <th>Name</th>
         <th>Priority</th>
         <th>Reason</th>
+        <th>Order #</th>
       </tr>
       </thead>
       <tbody>
@@ -50,7 +51,7 @@ const ClientScopesTable = ({scopes, clientScopes, onChange}) => {
               <tr key={id}>
                 <td>{name}</td>
                 <td>
-                  <Priorities value={clientScope ? clientScope.priority : 'N/A'}
+                  <Priorities value={clientScope ? clientScope.priority : ''} placeholder="No reason given."
                               onChange={e => handleChange({clientScope, changed: {scope, priority: e.target.value}})}/>
                 </td>
                 <td>
@@ -58,6 +59,11 @@ const ClientScopesTable = ({scopes, clientScopes, onChange}) => {
                             onChange={e => handleChange({clientScope, changed: {scope, reason: e.target.value}})}
                             placeholder="N/A"
                             disabled={!clientScope || clientScope.priority === DELETE_CLIENT_SCOPE}/>
+                </td>
+                <td>
+                  <input type="number" value={clientScope ? clientScope.displayOrder : ''}
+                         style={{width: 40}}
+                         onChange={e => handleChange({clientScope, changed: {scope, displayOrder: e.target.value}})}/>
                 </td>
               </tr>
             );

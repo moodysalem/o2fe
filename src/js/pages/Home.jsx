@@ -3,7 +3,7 @@ import space from "../../res/space.jpg";
 import {Parallax, Background} from "react-parallax";
 import laptop from "../../res/blurred-laptop.jpeg";
 import {Link} from "react-router";
-import {SlideUp} from "./comps/Animations";
+import {ZoomIn} from "./comps/Animations";
 
 const PARALLAX_BUFFER = 40;
 const PADDING = {paddingTop: PARALLAX_BUFFER, paddingBottom: PARALLAX_BUFFER};
@@ -48,7 +48,7 @@ export default class Home extends PureComponent {
         </Plx>
 
         <div className="row container" style={{marginTop: 20}}>
-          <SlideUp transitionAppear={true}>
+          <ZoomIn transitionAppear={true}>
             <div className="col s12 m6">
               <Card icon="shield" title="No Passwords" text="Stop storing user passwords and worrying about breaches"/>
             </div>
@@ -67,7 +67,7 @@ export default class Home extends PureComponent {
               <Card icon="book" title="Documentation"
                     text="Code with confidence against an API that has comprehensive documentation and tests"/>
             </div>
-          </SlideUp>
+          </ZoomIn>
         </div>
 
         {/* moved 4px down for iOS weirdness with flushing image to bottom */}

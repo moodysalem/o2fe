@@ -42,3 +42,12 @@ export const Fade = (props) => (
   />
 );
 
+export const ZoomIn = props => (
+  <CSSTransitionGroup
+    transitionName="zoom-in"
+    transitionAppearTimeout={300}
+    transitionEnterTimeout={300}
+    transitionLeaveTimeout={300}
+    {...props}
+  />
+);

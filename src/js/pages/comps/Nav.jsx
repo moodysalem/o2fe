@@ -7,18 +7,23 @@ import getLoginUrl from "../../util/getLoginUrl";
 
 class NavLink extends PureComponent {
   static propTypes = {
+    icon: PropTypes.string,
     location: PropTypes.shape({
       pathname: PropTypes.string.isRequired
     }).isRequired
   };
 
   render() {
-    const {to, children, className, location, ...rest} = this.props;
+    const {to, children, icon, className, location, ...rest} = this.props;
     const {pathname} = location;
 
     return (
       <li {...rest} className={cx(className, {'active': join('', pathname) == join('', to)})}>
-        <Link to={to}>{children}</Link>
+        <Link to={to}>
+          <span>
+            {icon ? <i className={`fa fa-${icon}`}/> : null} {children}
+          </span>
+        </Link>
       </li>
     );
   }
@@ -86,23 +91,32 @@ export default class Navbar extends PureComponent {
       {open, adminOpen} = this.state;
 
     const links = [
-      <NavLink onClick={this.close} location={location} key="home" to="">Home</NavLink>,
-      <NavLink onClick={this.close} location={location} key="docs" to="docs">Docs</NavLink>,
+      <NavLink icon="home" onClick={this.close} location={location} key="home" to="">Home</NavLink>,
+      <NavLink icon="book" onClick={this.close} location={location} key="docs" to="docs">Docs</NavLink>,
+      <NavLink icon="dollar" onClick={this.close} location={location} key="pricing" to="pricing">Pricing</NavLink>,
       token != null ?
         <li key="admin" style={{position: 'relative'}}>
           <a className="dropdown-button" href="#!" onClick={this.toggleAdmin}>
-            {token.user.email} <i className="fa fa-caret-down"/>
+            <span>{token.user.email} <i className="fa fa-caret-down"/></span>
           </a>
           <ul className="dropdown-content"
               style={{
                 ...DROPDOWN_STYLE,
                 display: adminOpen ? 'block' : 'none'
               }}>
-            <NavLink onClick={this.close} location={location} key="apps" to="admin">Admin</NavLink>
-            <li onClick={this.close}><a href="#" onClick={this.logout}>Log Out</a></li>
+            <NavLink onClick={this.close} location={location} key="apps" to="admin">
+              My Apps
+            </NavLink>
+            <li onClick={this.close}>
+              <a href="#" onClick={this.logout}>Log Out</a>
+            </li>
           </ul>
         </li> :
-        <li key="login"><a href={getLoginUrl(config)}>Log In</a></li>
+        <li key="login">
+          <a href={getLoginUrl(config)}>
+            <span><i className="fa fa-sign-in"/>  Log In</span>
+          </a>
+        </li>
     ];
 
     return (
