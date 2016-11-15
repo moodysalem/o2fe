@@ -18,6 +18,28 @@ const MergeModal = ({merging, onClose, onSave, onChange}) => (
   </Modal>
 );
 
+class Filters extends PureComponent {
+  static propTypes = {
+    value: PropTypes.object,
+    onChange: PropTypes.func.isRequired
+  };
+
+  render() {
+    const {value} = this.props;
+
+    const changed = more => this.props.onChange({...value, ...more});
+
+    const {search} = value;
+
+    return (
+      <form onSubmit={e => e.preventDefault()}>
+        <input placeholder="Search..." type="text" value={search || ''}
+               onChange={e => changed({search: e.target.value})}/>
+      </form>
+    );
+  }
+}
+
 export default class Scopes extends PureComponent {
   static contextTypes = {
     dao: PropTypes.object.isRequired
@@ -30,7 +52,10 @@ export default class Scopes extends PureComponent {
   };
 
   state = {
-    merging: null
+    merging: null,
+    filters: {
+      search: ''
+    }
   };
 
   renderUsers = users => {
@@ -56,11 +81,13 @@ export default class Scopes extends PureComponent {
     this.cancelMerging();
   };
 
+  changeFilters = filters => this.setState({filters});
+
   render() {
     const {dao} = this.context;
     const {id: applicationId} = this.props.params;
 
-    const {merging} = this.state;
+    const {merging, filters} = this.state;
 
     return (
       <div>
@@ -79,7 +106,9 @@ export default class Scopes extends PureComponent {
         <MergeModal merging={merging} onClose={this.cancelMerging} onChange={this.changeMergeUsers}
                     onSave={this.doMerge}/>
 
-        <PaginatedList renderList={this.renderUsers} crud={dao.users} params={{applicationId}}/>
+        <Filters value={filters} onChange={this.changeFilters}/>
+
+        <PaginatedList renderList={this.renderUsers} crud={dao.users} params={{...filters, applicationId}}/>
       </div>
     );
   }

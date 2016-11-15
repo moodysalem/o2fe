@@ -30,20 +30,21 @@ export default class PaginatedList extends PureComponent {
   state = INITIAL_STATE;
 
   componentDidMount() {
-    this.refresh();
+    this.refresh(this.props, this.state);
   }
 
-  componentWillReceiveProps({params}) {
+  componentWillReceiveProps(nextProps) {
     // params changed
-    if (!_.isEqual(params, this.props.params)) {
+    if (!_.isEqual(nextProps.params, this.props.params)) {
       const {pageInfo} = this.state;
-      this.setState({pageInfo: {...pageInfo, pageNo: 0}}, this.refresh());
+      this.setState({pageInfo: {...pageInfo, pageNo: 0}}, () => this.refresh(nextProps, this.state));
     }
   }
 
-  refresh = ({reset = false} = {}) => {
-    const {crud, params} = this.props;
-    const {pageInfo, promise:pending} = this.state;
+  refresh = (props, state) => {
+    const {crud, params} = props,
+      {pageInfo, promise:pending} = state;
+
     if (pending != null) {
       pending.cancel();
     }
@@ -60,9 +61,7 @@ export default class PaginatedList extends PureComponent {
     });
   };
 
-  handlePageChange = (pageInfo) => {
-    this.setState({pageInfo}, this.refresh);
-  };
+  handlePageChange = pageInfo => this.setState({pageInfo}, () => this.refresh(this.props, this.state));
 
   render() {
     const {objects, promise, totalCount, pageInfo} = this.state,
