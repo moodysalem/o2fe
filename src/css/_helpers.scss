@@ -10,3 +10,11 @@
     transform: scale(1.04);
   }
 }
+
+* > .visible-on-parent-hover {
+  visibility: hidden;
+}
+
+*:hover > .visible-on-parent-hover {
+  visibility: visible;
+}
